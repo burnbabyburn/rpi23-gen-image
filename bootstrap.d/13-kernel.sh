@@ -123,7 +123,7 @@ if [ "$BUILD_KERNEL" = true ] ; then
 	  fi
 
       # enable basic KVM support; see https://www.raspberrypi.org/forums/viewtopic.php?f=63&t=210546&start=25#p1300453
-	  if [ "$KERNEL_VIRT" = true ] && { [ "$RPI_MODEL" = 2 ] || [ "$RPI_MODEL" = 3 ] || [ "$RPI_MODEL" = 3P ] ; } ; then
+	  if [ "$KERNEL_VIRT" = true ] && { [ "$RPI_MODEL" = 2 ] || [ "$RPI_MODEL" = 3 ] || [ "$RPI_MODEL" = 3P ] || [ "$RPI_MODEL" = 4 ]; } ; then
 		set_kernel_config CONFIG_HAVE_KVM_IRQCHIP y
         set_kernel_config CONFIG_HAVE_KVM_ARCH_TLB_FLUSH_ALL y
         set_kernel_config CONFIG_HAVE_KVM_CPU_RELAX_INTERCEPT y
@@ -537,20 +537,28 @@ if [ "$BUILD_KERNEL" = true ] ; then
   fi
 
 else # BUILD_KERNEL=false
-  if [ "$SET_ARCH" = 64 ] && { [ "$RPI_MODEL" = 3 ] || [ "$RPI_MODEL" = 3P ] ; } ; then
+  if [ "$SET_ARCH" = 64 ] 
+    if [ "$RPI_MODEL" = 3 ] || [ "$RPI_MODEL" = 3P ] ; then
+	  # Use Sakakis modified kernel if ZSWAP is active
+      if [ "$KERNEL_ZSWAP" = true ] || [ "$KERNEL_VIRT" = true ] || [ "$KERNEL_NF" = true ] || [ "$KERNEL_BPF" = true ] ; then
+	    RPI3_64_KERNEL_URL="${RPI3_64_BIS_KERNEL_URL}"
+	  fi
 
-	# Use Sakakis modified kernel if ZSWAP is active
-    if [ "$KERNEL_ZSWAP" = true ] || [ "$KERNEL_VIRT" = true ] || [ "$KERNEL_NF" = true ] || [ "$KERNEL_BPF" = true ] ; then
-	  RPI3_64_KERNEL_URL="${RPI3_64_BIS_KERNEL_URL}"
-	fi
+      # Create temporary directory for dl
+      temp_dir=$(as_nobody mktemp -d)
 
-    # Create temporary directory for dl
-    temp_dir=$(as_nobody mktemp -d)
+      # Fetch kernel dl
+      as_nobody wget -O "${temp_dir}"/kernel.tar.xz -c "$RPI3_64_KERNEL_URL" 
+    fi
+    if [ "$SET_ARCH" = 64 ] && [ "$RPI_MODEL" = 4 ] ; then
+      # Create temporary directory for dl
+      temp_dir=$(as_nobody mktemp -d)
 
-    # Fetch kernel dl
-    as_nobody wget -O "${temp_dir}"/kernel.tar.xz -c "$RPI3_64_KERNEL_URL" 
-
-    #extract download
+      # Fetch kernel dl
+      as_nobody wget -O "${temp_dir}"/kernel.tar.xz -c "$RPI4_64_KERNEL_URL" 
+    fi
+	
+	#extract download
     tar -xJf "${temp_dir}"/kernel.tar.xz -C "${temp_dir}"
 
     #move extracted kernel to /boot/firmware
@@ -566,15 +574,15 @@ else # BUILD_KERNEL=false
     chown -R root:root "${R}/lib/modules"
   fi
 
-  # Install Kernel from hypriot comptabile with all Raspberry PI
-  if [ "$SET_ARCH" = 32 ] ; then
+  # Install Kernel from hypriot comptabile with all Raspberry PI (dunno if its compatible with RPI4 - better compile your own kernel)
+  if [ "$SET_ARCH" = 32 ] && [ "$RPI_MODEL" != 4 ] ; then
     # Create temporary directory for dl
     temp_dir=$(as_nobody mktemp -d)
 
     # Fetch kernel
     as_nobody wget -O "${temp_dir}"/kernel.deb -c "$RPI_32_KERNEL_URL"
 
-    # Copy downloaded U-Boot sources
+    # Copy downloaded kernel package
     mv "${temp_dir}"/kernel.deb "${R}"/tmp/kernel.deb
 
     # Set permissions
