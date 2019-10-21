@@ -213,6 +213,8 @@ if [ "$ENABLE_SYSTEMDSWAP" = true ] ; then
   
   # Get Verion
   VERSION=$(git tag | tail -n 1)
+  sed "s/DEB_NAME=.*/DEB_NAME=systemd-swap_all/g"
+  
 
   # Build package
   bash ./package.sh debian
@@ -224,7 +226,7 @@ if [ "$ENABLE_SYSTEMDSWAP" = true ] ; then
   chown -R root:root "${R}/tmp/systemd-swap"
 
   # Install package - IMPROVE AND MAKE IT POSSIBLE WITHOUT VERSION NR.
-  chroot_exec dpkg -i /tmp/systemd-swap/systemd-swap_$VERSION_all.deb
+  chroot_exec dpkg -i /tmp/systemd-swap/systemd-swap_all.deb
 
   # Enable service
   chroot_exec systemctl enable systemd-swap
