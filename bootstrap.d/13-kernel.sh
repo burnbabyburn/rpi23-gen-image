@@ -52,6 +52,10 @@ if [ "$BUILD_KERNEL" = true ] ; then
   if [ "$KERNEL_THREADS" = "1" ] && [ -r /proc/cpuinfo ] ; then
     KERNEL_THREADS=$(grep -c processor /proc/cpuinfo)
   fi
+  
+  if [ "$ENABLE_QEMU" = true ] && [ "$KERNEL_ARCH" = arm64 ]; then
+  cp "${KERNEL_DIR}"/arch/arm/configs/vexpress_defconfig "${KERNEL_DIR}"/arch/arm64/configs/
+  fi
 
   # Configure and build kernel
   if [ "$KERNELSRC_PREBUILT" = false ] ; then
@@ -98,7 +102,7 @@ if [ "$BUILD_KERNEL" = true ] ; then
       #Switch to KERNELSRC_DIR so we can use set_kernel_config
       cd "${KERNEL_DIR}" || exit
 	  
-	  if [ "$KERNEL_ARCH" = arm64 ] ; then
+	  if [ "$KERNEL_ARCH" = arm64 ] && [ "$ENABLE_QEMU" = false ]; then
 	    #Fix SD_DRIVER upstream and downstream mess in 64bit RPIdeb_config
 	    # use correct driver MMC_BCM2835_MMC instead of MMC_BCM2835_SDHOST - see https://www.raspberrypi.org/forums/viewtopic.php?t=210225
 	    set_kernel_config CONFIG_MMC_BCM2835 n
@@ -118,13 +122,13 @@ if [ "$BUILD_KERNEL" = true ] ; then
         set_kernel_config CONFIG_Z3FOLD y
         set_kernel_config CONFIG_ZSMALLOC y
         set_kernel_config CONFIG_PGTABLE_MAPPING y
-		set_kernel_config CONFIG_LZO_COMPRESS y
+	set_kernel_config CONFIG_LZO_COMPRESS y
 
 	  fi
 
       # enable basic KVM support; see https://www.raspberrypi.org/forums/viewtopic.php?f=63&t=210546&start=25#p1300453
 	  if [ "$KERNEL_VIRT" = true ] && { [ "$RPI_MODEL" = 2 ] || [ "$RPI_MODEL" = 3 ] || [ "$RPI_MODEL" = 3P ] || [ "$RPI_MODEL" = 4 ]; } ; then
-		set_kernel_config CONFIG_HAVE_KVM_IRQCHIP y
+	set_kernel_config CONFIG_HAVE_KVM_IRQCHIP y
         set_kernel_config CONFIG_HAVE_KVM_ARCH_TLB_FLUSH_ALL y
         set_kernel_config CONFIG_HAVE_KVM_CPU_RELAX_INTERCEPT y
         set_kernel_config CONFIG_HAVE_KVM_EVENTFD y
@@ -215,8 +219,8 @@ if [ "$BUILD_KERNEL" = true ] ; then
         set_kernel_config CONFIG_SYSTEM_EXTRA_CERTIFICATE y
         set_kernel_config CONFIG_SECONDARY_TRUSTED_KEYRING y
         set_kernel_config CONFIG_IMA_KEYRINGS_PERMIT_SIGNED_BY_BUILTIN_OR_SECONDARY n
-		set_kernel_config CONFIG_SYSTEM_TRUSTED_KEYS m
-		set_kernel_config CONFIG_SYSTEM_EXTRA_CERTIFICATE_SIZE 4096
+	set_kernel_config CONFIG_SYSTEM_TRUSTED_KEYS m
+	set_kernel_config CONFIG_SYSTEM_EXTRA_CERTIFICATE_SIZE 4096
 
         set_kernel_config CONFIG_ARM64_CRYPTO y
         set_kernel_config CONFIG_CRYPTO_SHA256_ARM64 m
@@ -233,7 +237,7 @@ if [ "$BUILD_KERNEL" = true ] ; then
         set_kernel_config CONFIG_CRYPTO_AES_ARM64_NEON_BLK m
         set_kernel_config CONFIG_CRYPTO_CHACHA20_NEON m
         set_kernel_config CONFIG_CRYPTO_AES_ARM64_BS m
-		set_kernel_config SYSTEM_TRUSTED_KEYS
+	set_kernel_config SYSTEM_TRUSTED_KEYS
       fi
 
       # Netfilter kernel support See https://github.com/raspberrypi/linux/issues/2177#issuecomment-354647406
@@ -347,9 +351,9 @@ if [ "$BUILD_KERNEL" = true ] ; then
 
 	  # Enables BPF syscall for systemd-journald see https://github.com/torvalds/linux/blob/master/init/Kconfig#L848 or https://groups.google.com/forum/#!topic/linux.gentoo.user/_2aSc_ztGpA
 	  if [ "$KERNEL_BPF" = true ] ; then
-        set_kernel_config CONFIG_BPF_SYSCALL y
-		set_kernel_config CONFIG_BPF_EVENTS y
-		set_kernel_config CONFIG_BPF_STREAM_PARSER y
+            set_kernel_config CONFIG_BPF_SYSCALL y
+	    set_kernel_config CONFIG_BPF_EVENTS y
+	    set_kernel_config CONFIG_BPF_STREAM_PARSER y
 	    set_kernel_config CONFIG_CGROUP_BPF y
 	  fi
 
@@ -358,10 +362,10 @@ if [ "$BUILD_KERNEL" = true ] ; then
 
 	    case "$KERNEL_DEFAULT_GOV" in
           performance)
-	        set_kernel_config CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE y
+	            set_kernel_config CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE y
             ;;
           userspace)
-            set_kernel_config CONFIG_CPU_FREQ_DEFAULT_GOV_USERSPACE y
+            	    set_kernel_config CONFIG_CPU_FREQ_DEFAULT_GOV_USERSPACE y
             ;;
           ondemand)
 		    set_kernel_config CONFIG_CPU_FREQ_DEFAULT_GOV_ONDEMAND y
