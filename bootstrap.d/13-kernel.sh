@@ -351,6 +351,20 @@ if [ "$BUILD_KERNEL" = true ] ; then
         set_kernel_config CONFIG_NF_TABLES_IPV4 m
         set_kernel_config CONFIG_NF_TABLES_IPV6 m
         set_kernel_config CONFIG_NF_TABLES_NETDEV m
+	set_kernel_config CONFIG_NF_TABLES_SET m
+	set_kernel_config CONFIG_NF_TABLES_INET y
+	set_kernel_config CONFIG_NF_TABLES_NETDEV y
+	set_kernel_config CONFIG_NFT_CONNLIMIT m
+	set_kernel_config CONFIG_NFT_TUNNEL m
+	set_kernel_config CONFIG_NFT_SOCKET m
+	set_kernel_config CONFIG_NFT_TPROXY m
+	set_kernel_config CONFIG_NF_FLOW_TABLE m
+	set_kernel_config CONFIG_NFT_FLOW_OFFLOAD m
+	set_kernel_config CONFIG_NF_FLOW_TABLE_INET m
+	set_kernel_config CONFIG_NF_TABLES_ARP y
+	set_kernel_config CONFIG_NF_FLOW_TABLE_IPV4 y
+	set_kernel_config CONFIG_NF_FLOW_TABLE_IPV6 y
+	set_kernel_config CONFIG_NF_TABLES_BRIDGE y
       fi
 
 	  # Enables BPF syscall for systemd-journald see https://github.com/torvalds/linux/blob/master/init/Kconfig#L848 or https://groups.google.com/forum/#!topic/linux.gentoo.user/_2aSc_ztGpA
