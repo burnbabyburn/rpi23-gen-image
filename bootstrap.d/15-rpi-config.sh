@@ -213,7 +213,7 @@ if [ "$ENABLE_SYSTEMDSWAP" = true ] ; then
   
   # Get Verion
   VERSION=$(git tag | tail -n 1)
-  sed "s/DEB_NAME=.*/DEB_NAME=systemd-swap_all/g" "${R}/tmp/systemd-swap/package.sh"
+  sed -i "s/DEB_NAME=.*/DEB_NAME=systemd-swap_all/g" "${R}/tmp/systemd-swap/package.sh"
   
   # Build package
   bash ./package.sh debian
