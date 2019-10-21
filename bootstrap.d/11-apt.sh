@@ -16,7 +16,7 @@ install_readonly files/apt/sources.list "${ETC_DIR}/apt/sources.list"
 
 # Use specified APT server and release
 sed -i "s/\/ftp.debian.org\//\/${APT_SERVER}\//" "${ETC_DIR}/apt/sources.list"
-if [ "$APT_INCLUDES_LATE" = "bullseye" ] || [ "$APT_INCLUDES_LATE" = "testing" ]
+if [ "$APT_INCLUDES_LATE" = "bullseye" ] || [ "$APT_INCLUDES_LATE" = "testing" ] ; then
 sed -i "s,stretch\\/updates,testing-security," "${ETC_DIR}/apt/sources.list"
 else
 sed -i "s/ stretch/ ${RELEASE}/" "${ETC_DIR}/apt/sources.list"
@@ -28,7 +28,7 @@ chroot_exec apt-get -qq -y -u dist-upgrade
 
 # Install additional packages
 if [ "$APT_INCLUDES_LATE" ] ; then
-  chroot_exec apt-get -qq -y install $(echo "$APT_INCLUDES_LATE" |tr , ' ')
+  chroot_exec apt-get -qq -y install "$(echo "$APT_INCLUDES_LATE" |tr , ' ')"
 fi
 
 # Install Debian custom packages
