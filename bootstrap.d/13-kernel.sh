@@ -128,6 +128,8 @@ if [ "$BUILD_KERNEL" = true ] ; then
 
       # enable basic KVM support; see https://www.raspberrypi.org/forums/viewtopic.php?f=63&t=210546&start=25#p1300453
 	  if [ "$KERNEL_VIRT" = true ] && { [ "$RPI_MODEL" = 2 ] || [ "$RPI_MODEL" = 3 ] || [ "$RPI_MODEL" = 3P ] || [ "$RPI_MODEL" = 4 ]; } ; then
+	set_kernel_config CONFIG_HAVE_KVM y
+	set_kernel_config CONFIG_HIGH_RES_TIMERS y
 	set_kernel_config CONFIG_HAVE_KVM_IRQCHIP y
         set_kernel_config CONFIG_HAVE_KVM_ARCH_TLB_FLUSH_ALL y
         set_kernel_config CONFIG_HAVE_KVM_CPU_RELAX_INTERCEPT y
@@ -142,19 +144,21 @@ if [ "$BUILD_KERNEL" = true ] ; then
         set_kernel_config CONFIG_KVM_GENERIC_DIRTYLOG_READ_PROTECT y
         set_kernel_config CONFIG_KVM_MMIO y
         set_kernel_config CONFIG_KVM_VFIO y
+	set_kernel_config CONFIG_KVM_MMU_AUDIT y
         set_kernel_config CONFIG_VHOST m
         set_kernel_config CONFIG_VHOST_CROSS_ENDIAN_LEGACY y
         set_kernel_config CONFIG_VHOST_NET m
         set_kernel_config CONFIG_VIRTUALIZATION y
-		
-		set_kernel_config CONFIG_MMU_NOTIFIER y
-		
-		# erratum
-		set_kernel_config ARM64_ERRATUM_834220 y
-		
-		# https://sourceforge.net/p/kvm/mailman/message/18440797/
-		set_kernel_config CONFIG_PREEMPT_NOTIFIERS y
-	  fi
+        set_kernel_config CONFIG_MMU_NOTIFIER y
+	
+	set_kernel_config CONFIG_SLAB_FREELIST_RANDOM=y
+	set_kernel_config CONFIG_SLAB_FREELIST_HARDENED=y
+	
+	# erratum
+	set_kernel_config ARM64_ERRATUM_834220 y
+	# https://sourceforge.net/p/kvm/mailman/message/18440797/
+	set_kernel_config CONFIG_PREEMPT_NOTIFIERS y
+  fi
 
       # enable apparmor,integrity audit,
 	  if [ "$KERNEL_SECURITY" = true ] ; then
