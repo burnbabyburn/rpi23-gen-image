@@ -334,11 +334,11 @@ if [ "$BUILD_KERNEL" = true ] ; then
         set_kernel_config CONFIG_NF_LOG_IPV6 m
         set_kernel_config CONFIG_NF_NAT_IPV4 m
         set_kernel_config CONFIG_NF_NAT_IPV6 m
-        set_kernel_config CONFIG_NF_NAT_MASQUERADE_IPV4 m
-        set_kernel_config CONFIG_NF_NAT_MASQUERADE_IPV6 m
+        set_kernel_config CONFIG_NF_NAT_MASQUERADE_IPV4 y
+        set_kernel_config CONFIG_NF_NAT_MASQUERADE_IPV6 y
         set_kernel_config CONFIG_NF_NAT_PPTP m
         set_kernel_config CONFIG_NF_NAT_PROTO_GRE m
-        set_kernel_config CONFIG_NF_NAT_REDIRECT m
+        set_kernel_config CONFIG_NF_NAT_REDIRECT y
         set_kernel_config CONFIG_NF_NAT_SIP m
         set_kernel_config CONFIG_NF_NAT_SNMP_BASIC m
         set_kernel_config CONFIG_NF_NAT_TFTP m
@@ -348,8 +348,8 @@ if [ "$BUILD_KERNEL" = true ] ; then
         set_kernel_config CONFIG_NF_TABLES_ARP m
         set_kernel_config CONFIG_NF_TABLES_BRIDGE m
         set_kernel_config CONFIG_NF_TABLES_INET m
-        set_kernel_config CONFIG_NF_TABLES_IPV4 m
-        set_kernel_config CONFIG_NF_TABLES_IPV6 m
+        set_kernel_config CONFIG_NF_TABLES_IPV4 y
+        set_kernel_config CONFIG_NF_TABLES_IPV6 y
         set_kernel_config CONFIG_NF_TABLES_NETDEV m
 	set_kernel_config CONFIG_NF_TABLES_SET m
 	set_kernel_config CONFIG_NF_TABLES_INET y
@@ -365,6 +365,9 @@ if [ "$BUILD_KERNEL" = true ] ; then
 	set_kernel_config CONFIG_NF_FLOW_TABLE_IPV4 y
 	set_kernel_config CONFIG_NF_FLOW_TABLE_IPV6 y
 	set_kernel_config CONFIG_NF_TABLES_BRIDGE y
+	set_kernel_config CONFIG_NF_CT_NETLINK_TIMEOUT m
+	set_kernel_config CONFIG_NFT_OSF m
+	
       fi
 
 	  # Enables BPF syscall for systemd-journald see https://github.com/torvalds/linux/blob/master/init/Kconfig#L848 or https://groups.google.com/forum/#!topic/linux.gentoo.user/_2aSc_ztGpA
