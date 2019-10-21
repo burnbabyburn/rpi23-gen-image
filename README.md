@@ -421,6 +421,9 @@ Remove all `locale` translation files.
 ---
 
 #### Encrypted root partition:
+##### `KERNEL_CRYPTFS`=false
+Enable Kernel Moduls for crypto
+
 ##### `ENABLE_CRYPTFS`=false
 Enable full system encryption with dm-crypt. Setup a fully LUKS encrypted root partition (aes-xts-plain64:sha512) and generate required initramfs. The /boot directory will not be encrypted. This parameter will be ignored if `BUILD_KERNEL`=false. `ENABLE_CRYPTFS` is experimental. SSH-to-initramfs is currently not supported but will be soon - feel free to help.
 
