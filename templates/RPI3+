@@ -79,5 +79,6 @@ SSH_LIMIT_USERS=true
 #UBOOTSRC_DIR=/home/helge/u-boot
 #VIDEOCORESRC_DIR=/home/helge/userland
 APT_INCLUDES=git,usbutils,hostapd,firmware-linux-free
+APT_PROXY="http://127.0.0.1:3142/"
 IMAGE_NAME=RPI-3P
 #ENABLE_UBOOTUSB=true
