@@ -376,6 +376,7 @@ if [ "$BUILD_KERNEL" = true ] ; then
 	    set_kernel_config CONFIG_BPF_EVENTS y
 	    set_kernel_config CONFIG_BPF_STREAM_PARSER y
 	    set_kernel_config CONFIG_CGROUP_BPF y
+	    set_kernel_config CONFIG_XDP_SOCKETS y
 	  fi
 
 	  # KERNEL_DEFAULT_GOV was set by user 
