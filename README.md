@@ -317,6 +317,18 @@ Build and install the latest RPi 0/1/2/3 Linux kernel. Currently only the defaul
 ##### `CROSS_COMPILE`="arm-linux-gnueabihf-"
 This sets the cross-compile environment for the compiler.
 
+##### `KERNEL_BTRFS`="false"
+enable btrfs kernel support
+
+##### `KERNEL_POEHAT`="false"
+enable Enable RPI POE HAT fan kernel support
+
+##### `KERNEL_NSPAWN`="false"
+Enable per-interface network priority control - for systemd-nspawn
+
+##### `KERNEL_DHKEY`="true"
+Diffie-Hellman operations on retained keys - required for >keyutils-1.6
+	  
 ##### `KERNEL_ARCH`="arm"
 This sets the kernel architecture for the compiler.
 

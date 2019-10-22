@@ -194,6 +194,10 @@ KERNEL_BPF=${KERNEL_BPF:=false}
 KERNEL_DEFAULT_GOV=${KERNEL_DEFAULT_GOV:=ondemand}
 KERNEL_SECURITY=${KERNEL_SECURITY:=false}
 KERNEL_NF=${KERNEL_NF:=false}
+KERNEL_DHKEY=${KERNEL_DHKEY:=true}
+KERNEL_BTRFS=${KERNEL_BTRFS:=false}
+KERNEL_NSPAN=${KERNEL_NSPAN:=false}
+KERNEL_POEHAT=${KERNEL_POEHAT:=false}
 
 # Kernel compilation from source directory settings
 KERNELSRC_DIR=${KERNELSRC_DIR:=""}
@@ -227,7 +231,7 @@ CHROOT_SCRIPTS=${CHROOT_SCRIPTS:=""}
 
 # Packages required in the chroot build environment
 APT_INCLUDES=${APT_INCLUDES:=""}
-APT_INCLUDES="${APT_INCLUDES},libssl-dev,apt-transport-https,apt-utils,ca-certificates,debian-archive-keyring,dialog,sudo,systemd,sysvinit-utils,locales,keyboard-configuration,console-setup,libnss-systemd"
+APT_INCLUDES="${APT_INCLUDES},flex,bison,libssl-dev,apt-transport-https,apt-utils,ca-certificates,debian-archive-keyring,dialog,sudo,systemd,sysvinit-utils,locales,keyboard-configuration,console-setup,libnss-systemd"
 
 # Packages to exclude from chroot build environment
 APT_EXCLUDES=${APT_EXCLUDES:=""}
@@ -292,13 +296,15 @@ if [ -n "$SET_ARCH" ] ; then
     if [ "$RPI_MODEL" = 2 ] || [ "$RPI_MODEL" = 3 ] || [ "$RPI_MODEL" = 3P ] || [ "$RPI_MODEL" = 4 ] ; then
       if [ "$RPI_MODEL" != 4 ] ; then
         KERNEL_DEFCONFIG=${KERNEL_DEFCONFIG:=bcm2709_defconfig}
+		KERNEL_IMAGE=${KERNEL_IMAGE:=kernel7.img}
       else
         KERNEL_DEFCONFIG=${KERNEL_DEFCONFIG:=bcm2711_defconfig}
+		KERNEL_IMAGE=${KERNEL_IMAGE:=kernel7l.img}
       fi
       
       REQUIRED_PACKAGES="${REQUIRED_PACKAGES} crossbuild-essential-armhf"
       RELEASE_ARCH=${RELEASE_ARCH:=armhf}
-      KERNEL_IMAGE=${KERNEL_IMAGE:=kernel7.img}
+      
       CROSS_COMPILE=${CROSS_COMPILE:=arm-linux-gnueabihf-}
     fi
   fi
