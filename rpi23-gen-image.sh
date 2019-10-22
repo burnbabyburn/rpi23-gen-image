@@ -474,7 +474,7 @@ if [ -n "$MISSING_PACKAGES" ] ; then
 
   # Make sure all missing required packages are installed
   apt-get update
-  apt-get -qq -y install "$MISSING_PACKAGES"
+  apt-get -qq -y install `echo "${MISSING_PACKAGES}" | sed "s/ //"`
 fi
 
 # Check if ./bootstrap.d directory exists
