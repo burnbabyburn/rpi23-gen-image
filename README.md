@@ -218,6 +218,7 @@ Support for halt,init,poweroff,reboot,runlevel,shutdown,telinit commands
 #### Advanced system features:
 ##### `ENABLE_KEYGEN`=false
 Recover your lost codec license
+
 ##### `ENABLE_SYSTEMDSWAP`=false
 Enables [Systemd-swap service](https://github.com/Nefelim4ag/systemd-swap). Usefull if `KERNEL_ZSWAP` is enabled.
 

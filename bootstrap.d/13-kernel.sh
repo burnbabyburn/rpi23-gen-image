@@ -53,6 +53,7 @@ if [ "$BUILD_KERNEL" = true ] ; then
     KERNEL_THREADS=$(grep -c processor /proc/cpuinfo)
   fi
   
+  #Copy 32bit config to 64bit
   if [ "$ENABLE_QEMU" = true ] && [ "$KERNEL_ARCH" = arm64 ]; then
   cp "${KERNEL_DIR}"/arch/arm/configs/vexpress_defconfig "${KERNEL_DIR}"/arch/arm64/configs/
   fi
@@ -394,16 +395,16 @@ if [ "$BUILD_KERNEL" = true ] ; then
         set_kernel_config CONFIG_VHOST_CROSS_ENDIAN_LEGACY y
         set_kernel_config CONFIG_VHOST_NET m
         set_kernel_config CONFIG_VIRTUALIZATION y
-        set_kernel_config CONFIG_MMU_NOTIFIER y
-	
-	set_kernel_config CONFIG_SLAB_FREELIST_RANDOM=y
-	set_kernel_config CONFIG_SLAB_FREELIST_HARDENED=y
-	
-	# erratum
-	set_kernel_config ARM64_ERRATUM_834220 y
-	# https://sourceforge.net/p/kvm/mailman/message/18440797/
-	set_kernel_config CONFIG_PREEMPT_NOTIFIERS y
-  fi
+		set_kernel_config CONFIG_SLAB_FREELIST_RANDOM=y
+		set_kernel_config CONFIG_SLAB_FREELIST_HARDENED=y
+		set_kernel_config CONFIG_MMU_NOTIFIER y
+		
+		# erratum
+		set_kernel_config ARM64_ERRATUM_834220 y
+		
+		# https://sourceforge.net/p/kvm/mailman/message/18440797/
+		set_kernel_config CONFIG_PREEMPT_NOTIFIERS y
+	  fi
 
       # enable apparmor,integrity audit,
 	  if [ "$KERNEL_SECURITY" = true ] ; then
