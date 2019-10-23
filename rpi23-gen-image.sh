@@ -44,7 +44,7 @@ RPI_MODEL=${RPI_MODEL:=2}
 
 # Debian release
 RELEASE=${RELEASE:=buster}
-if [ $RELEASE = bullseye] ; then
+if [ $RELEASE = "bullseye" ] ; then
  RELEASE=testing
 fi
 
