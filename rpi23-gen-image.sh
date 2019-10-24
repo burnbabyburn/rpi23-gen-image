@@ -835,7 +835,7 @@ if [ "$ENABLE_CRYPTFS" = true ] ; then
   echo -n ${CRYPTFS_PASSWORD} > .password
 
   # Initialize encrypted partition
-  cryptsetup --verbose --debug -q luksFormat "${ROOT_LOOP}" -c "${CRYPTFS_CIPHER}" -s "${CRYPTFS_XTSKEYSIZE}" .password
+  cryptsetup --verbose --debug -q luksFormat "${ROOT_LOOP}" -c "${CRYPTFS_CIPHER}" -h "${CRYPTFS_HASH}" -s "${CRYPTFS_XTSKEYSIZE}" .password
 
   # Open encrypted partition and setup mapping
   cryptsetup luksOpen "${ROOT_LOOP}" -d .password "${CRYPTFS_MAPPING}"
