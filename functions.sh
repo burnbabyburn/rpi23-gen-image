@@ -101,7 +101,7 @@ set_kernel_config() {
   # flag as $1, value to set as $2, config must exist at "./.config"
   TGT="CONFIG_${1#CONFIG_}"
   REP="${2}"
-  if grep -q "^${TGT}[^_]" .config; then
+  if [ grep -q "^${TGT}[^_]" .config ] ; then
     sed -i "s/^\(${TGT}=.*\|# ${TGT} is not set\)/${TGT}=${REP}/" .config
   else
     echo "${TGT}"="${2}" >> .config
