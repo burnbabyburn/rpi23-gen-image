@@ -464,22 +464,6 @@ if [ "$BUILD_KERNEL" = true ] ; then
         set_kernel_config CONFIG_IMA_KEYRINGS_PERMIT_SIGNED_BY_BUILTIN_OR_SECONDARY n
 		set_kernel_config CONFIG_SYSTEM_TRUSTED_KEYS m
 		set_kernel_config CONFIG_SYSTEM_EXTRA_CERTIFICATE_SIZE 4096
-
-        set_kernel_config CONFIG_ARM64_CRYPTO y
-        set_kernel_config CONFIG_CRYPTO_SHA256_ARM64 m
-        set_kernel_config CONFIG_CRYPTO_SHA512_ARM64 m
-        set_kernel_config CONFIG_CRYPTO_SHA1_ARM64_CE m
-        set_kernel_config CRYPTO_GHASH_ARM64_CE m
-        set_kernel_config CRYPTO_SHA2_ARM64_CE m
-        set_kernel_config CONFIG_CRYPTO_CRCT10DIF_ARM64_CE m
-        set_kernel_config CONFIG_CRYPTO_CRC32_ARM64_CE m
-        set_kernel_config CONFIG_CRYPTO_AES_ARM64 m
-        set_kernel_config CONFIG_CRYPTO_AES_ARM64_CE m
-        set_kernel_config CONFIG_CRYPTO_AES_ARM64_CE_CCM y
-        set_kernel_config CONFIG_CRYPTO_AES_ARM64_CE_BLK y
-        set_kernel_config CONFIG_CRYPTO_AES_ARM64_NEON_BLK m
-        set_kernel_config CONFIG_CRYPTO_CHACHA20_NEON m
-        set_kernel_config CONFIG_CRYPTO_AES_ARM64_BS m
       fi
 
       # Netfilter kernel support See https://github.com/raspberrypi/linux/issues/2177#issuecomment-354647406
@@ -657,22 +641,35 @@ if [ "$BUILD_KERNEL" = true ] ; then
         echo "CONFIG_LBDAF=y" >> "${KERNEL_DIR}"/.config
 
         if [ "$ENABLE_CRYPTFS" = true ] ; then
-          {
-            echo "CONFIG_EMBEDDED=y"
-            echo "CONFIG_EXPERT=y"
-            echo "CONFIG_DAX=y"
-            echo "CONFIG_MD=y"
-            echo "CONFIG_BLK_DEV_MD=y"
-            echo "CONFIG_MD_AUTODETECT=y"
-            echo "CONFIG_BLK_DEV_DM=y"
-            echo "CONFIG_BLK_DEV_DM_BUILTIN=y"
-            echo "CONFIG_DM_CRYPT=y"
-            echo "CONFIG_CRYPTO_BLKCIPHER=y"
-            echo "CONFIG_CRYPTO_CBC=y"
-            echo "CONFIG_CRYPTO_XTS=y"
-            echo "CONFIG_CRYPTO_SHA512=y"
-            echo "CONFIG_CRYPTO_MANAGER=y"
-          } >> "${KERNEL_DIR}"/.config
+		set_kernel_configCONFIG_EMBEDDED y
+		set_kernel_config CONFIG_EXPERT y
+		set_kernel_config CONFIG_DAX y
+		set_kernel_config CONFIG_MD y
+		set_kernel_config CONFIG_BLK_DEV_MD y
+		set_kernel_config CONFIG_MD_AUTODETECT y
+		set_kernel_config CONFIG_BLK_DEV_DM y
+		set_kernel_config CONFIG_BLK_DEV_DM_BUILTIN y
+		set_kernel_config CONFIG_DM_CRYPT y
+		set_kernel_config CONFIG_CRYPTO_BLKCIPHER y
+		set_kernel_config CONFIG_CRYPTO_CBC y
+		set_kernel_config CONFIG_CRYPTO_XTS y
+		set_kernel_config CONFIG_CRYPTO_SHA512 y
+		set_kernel_config CONFIG_CRYPTO_MANAGER y
+		set_kernel_config CONFIG_ARM64_CRYPTO y
+        set_kernel_config CONFIG_CRYPTO_SHA256_ARM64 m
+        set_kernel_config CONFIG_CRYPTO_SHA512_ARM64 m
+        set_kernel_config CONFIG_CRYPTO_SHA1_ARM64_CE m
+        set_kernel_config CRYPTO_GHASH_ARM64_CE m
+        set_kernel_config CRYPTO_SHA2_ARM64_CE m
+        set_kernel_config CONFIG_CRYPTO_CRCT10DIF_ARM64_CE m
+        set_kernel_config CONFIG_CRYPTO_CRC32_ARM64_CE m
+        set_kernel_config CONFIG_CRYPTO_AES_ARM64 m
+        set_kernel_config CONFIG_CRYPTO_AES_ARM64_CE m
+        set_kernel_config CONFIG_CRYPTO_AES_ARM64_CE_CCM y
+        set_kernel_config CONFIG_CRYPTO_AES_ARM64_CE_BLK y
+        set_kernel_config CONFIG_CRYPTO_AES_ARM64_NEON_BLK m
+        set_kernel_config CONFIG_CRYPTO_CHACHA20_NEON m
+        set_kernel_config CONFIG_CRYPTO_AES_ARM64_BS m
         fi
       fi
 

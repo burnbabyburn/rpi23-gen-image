@@ -16,9 +16,6 @@ fi
 if [ "$ENABLE_USBBOOT" = true ] ; then
   sed -i "s/mmcblk0p1/sda1/" "${ETC_DIR}/fstab"
   sed -i "s/mmcblk0p2/sda2/" "${ETC_DIR}/fstab"
-
-  # Add usb/sda2 disk to crypttab
-  sed -i "s/mmcblk0p2/sda2/" "${ETC_DIR}/crypttab"
 fi
 
 # Generate initramfs file
@@ -60,8 +57,8 @@ if [ "$ENABLE_INITRAMFS" = true ] ; then
         # Write static ip settings to "${ETC_DIR}"/initramfs-tools/initramfs.conf
         sed -i "\$aIP=${NET_ADDRESS}::${NET_GATEWAY}:${NET_MASK}:${HOSTNAME}:" "${ETC_DIR}"/initramfs-tools/initramfs.conf
 
-        # Regenerate initramfs
-        #chroot_exec mkinitramfs -o "/boot/firmware/initramfs-${KERNEL_VERSION}" "${KERNEL_VERSION}"
+        #Regenerate initramfs
+        chroot_exec mkinitramfs -o "/boot/firmware/initramfs-${KERNEL_VERSION}" "${KERNEL_VERSION}"
       fi
     
       if [ -n "$CRYPTFS_DROPBEAR_PUBKEY" ] && [ -f "$CRYPTFS_DROPBEAR_PUBKEY" ] ; then
@@ -106,7 +103,7 @@ if [ "$ENABLE_INITRAMFS" = true ] ; then
     printf "#\n# CRYPTSETUP: [ y | n ]\n#\n\nCRYPTSETUP=y\n" >> "${ETC_DIR}/initramfs-tools/conf-hook"
 
     # Dummy mapping required by mkinitramfs
-    echo "0 1 crypt $(echo "${CRYPTFS_CIPHER}" | cut -d ':' -f 1) ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff 0 7:0 4096" | chroot_exec dmsetup create "${CRYPTFS_MAPPING}"
+    echo "0 1 crypt $(echo "${CRYPTFS_CIPHER}" | cut -d ':' -f 1) ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff 0 7:0 4096" | chroot_exec dmsetup --verbose create "${CRYPTFS_MAPPING}"
 
     # Generate initramfs with encrypted root partition support
     chroot_exec mkinitramfs -o "/boot/firmware/initramfs-${KERNEL_VERSION}" "${KERNEL_VERSION}"
