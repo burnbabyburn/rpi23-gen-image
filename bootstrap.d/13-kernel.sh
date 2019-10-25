@@ -656,7 +656,7 @@ if [ "$BUILD_KERNEL" = true ] ; then
         echo "CONFIG_FHANDLE=y" >> "${KERNEL_DIR}"/.config
         echo "CONFIG_LBDAF=y" >> "${KERNEL_DIR}"/.config
 
-        if [ "$KERNEL_CRYPTFS" = true ] ; then
+        if [ "$ENABLE_CRYPTFS" = true ] ; then
           {
             echo "CONFIG_EMBEDDED=y"
             echo "CONFIG_EXPERT=y"
