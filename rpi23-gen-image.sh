@@ -863,7 +863,7 @@ mkdir -p "$BUILDDIR/mount/boot/firmware"
 mount "$FRMW_LOOP" "$BUILDDIR/mount/boot/firmware"
 
 # Copy all files from the chroot to the loop device mount point directory
-rsync -a "${R}/" "$BUILDDIR/mount/"
+rsync -a -v --stats --progress "${R}/" "$BUILDDIR/mount/"
 
 # Unmount all temporary loop devices and mount points
 cleanup
