@@ -55,10 +55,10 @@ if [ "$ENABLE_INITRAMFS" = true ] ; then
         NET_MASK=$(cdr2mask "$cdir")
 	
         # Write static ip settings to "${ETC_DIR}"/initramfs-tools/initramfs.conf
-        sed -i "\$aIP=${NET_ADDRESS}::${NET_GATEWAY}:${NET_MASK}:${HOSTNAME}:" "${ETC_DIR}"/initramfs-tools/initramfs.conf
+        sed -i "\$a\nIP=${NET_ADDRESS}::${NET_GATEWAY}:${NET_MASK}:${HOSTNAME}:" "${ETC_DIR}"/initramfs-tools/initramfs.conf
 
         #Regenerate initramfs
-        chroot_exec mkinitramfs -o "/boot/firmware/initramfs-${KERNEL_VERSION}" "${KERNEL_VERSION}"
+        #chroot_exec mkinitramfs -o "/boot/firmware/initramfs-${KERNEL_VERSION}" "${KERNEL_VERSION}"
       fi
     
       if [ -n "$CRYPTFS_DROPBEAR_PUBKEY" ] && [ -f "$CRYPTFS_DROPBEAR_PUBKEY" ] ; then
