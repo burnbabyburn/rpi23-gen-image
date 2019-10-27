@@ -8,23 +8,20 @@
 # Install and setup fstab
 install_readonly files/mount/fstab "${ETC_DIR}/fstab"
 
-# Add usb/sda disk root partition to fstab
-if [ "$ENABLE_SPLITFS" = true ] && [ "$ENABLE_CRYPTFS" = false ] ; then
-  sed -i "s/mmcblk0p2/sda1/" "${ETC_DIR}/fstab"
-fi
-
-if [ "$ENABLE_USBBOOT" = true ] ; then
+#USB BOOT /boot on sda1 / on sda2
+if [ "$ENABLE_USBBOOT" = true ] && [ "$ENABLE_CRYPTFS" = false ]; then
   sed -i "s/mmcblk0p1/sda1/" "${ETC_DIR}/fstab"
   sed -i "s/mmcblk0p2/sda2/" "${ETC_DIR}/fstab"
+fi
+
+# Add usb/sda disk root partition to fstab
+if [ "$ENABLE_SPLITFS" = true ] && [ "$ENABLE_CRYPTFS" = false ]; then
+  sed -i "s/mmcblk0p2/sda1/" "${ETC_DIR}/fstab"
 fi
 
 # Generate initramfs file
 if [ "$ENABLE_INITRAMFS" = true ] ; then
   if [ "$ENABLE_CRYPTFS" = true ] ; then
-    if [ "$ENABLE_USBBOOT" = true ] ; then
-      # Add usb/sda2 disk to crypttab
-      sed -i "s/mmcblk0p2/sda2/" "${ETC_DIR}/crypttab"
-    fi
     
     # Include initramfs scripts to auto expand encrypted root partition
     if [ "$EXPANDROOT" = true ] ; then
@@ -39,9 +36,15 @@ if [ "$ENABLE_INITRAMFS" = true ] ; then
     # Add encrypted partition to crypttab and fstab
     install_readonly files/mount/crypttab "${ETC_DIR}/crypttab"
     echo "${CRYPTFS_MAPPING} /dev/mmcblk0p2 none luks,initramfs" >> "${ETC_DIR}/crypttab"
+	
+	if [ "$ENABLE_USBBOOT" = true ] && [ "$ENABLE_SPLITFS" = false ]; then
+	  sed -i "s/mmcblk0p1/sda1/" "${ETC_DIR}/fstab"
+      # Add usb/sda2 disk to crypttab
+      sed -i "s/mmcblk0p2/sda2/" "${ETC_DIR}/crypttab"
+    fi
     
     # Add encrypted root partition to fstab and crypttab
-    if [ "$ENABLE_SPLITFS" = true ] ; then
+    if [ "$ENABLE_SPLITFS" = true ] && [ "$ENABLE_USBBOOT" = false ]; then
       # Add usb/sda1 disk to crypttab
       sed -i "s/mmcblk0p2/sda1/" "${ETC_DIR}/crypttab"
     fi
@@ -56,9 +59,6 @@ if [ "$ENABLE_INITRAMFS" = true ] ; then
 	
         # Write static ip settings to "${ETC_DIR}"/initramfs-tools/initramfs.conf
         sed -i "\$a\nIP=${NET_ADDRESS}::${NET_GATEWAY}:${NET_MASK}:${HOSTNAME}:" "${ETC_DIR}"/initramfs-tools/initramfs.conf
-
-        #Regenerate initramfs
-        #chroot_exec mkinitramfs -o "/boot/firmware/initramfs-${KERNEL_VERSION}" "${KERNEL_VERSION}"
       fi
     
       if [ -n "$CRYPTFS_DROPBEAR_PUBKEY" ] && [ -f "$CRYPTFS_DROPBEAR_PUBKEY" ] ; then
@@ -100,10 +100,10 @@ if [ "$ENABLE_INITRAMFS" = true ] ; then
     fi
 
     # Add cryptsetup modules to initramfs
-    printf "#\n# CRYPTSETUP: [ y | n ]\n#\n\nCRYPTSETUP=y\n" >> "${ETC_DIR}/initramfs-tools/conf-hook"
+    #printf "#\n# CRYPTSETUP: [ y | n ]\n#\n\nCRYPTSETUP=y\n" >> "${ETC_DIR}/initramfs-tools/conf-hook"
 
     # Dummy mapping required by mkinitramfs
-    echo "0 1 crypt $(echo "${CRYPTFS_CIPHER}" | cut -d ':' -f 1) ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff 0 7:0 4096" | chroot_exec dmsetup create "${CRYPTFS_MAPPING}"
+    echo "0 1 crypt "${CRYPTFS_CIPHER}" ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff 0 7:0 4096" | chroot_exec dmsetup create "${CRYPTFS_MAPPING}"
 
     # Generate initramfs with encrypted root partition support
     chroot_exec mkinitramfs -o "/boot/firmware/initramfs-${KERNEL_VERSION}" "${KERNEL_VERSION}"
