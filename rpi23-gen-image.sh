@@ -837,15 +837,15 @@ if [ "$ENABLE_CRYPTFS" = true ] ; then
 
   # Initialize encrypted partition
   cryptsetup --verbose --debug -q luksFormat "${ROOT_LOOP}" -c "${CRYPTFS_CIPHER}" -h "${CRYPTFS_HASH}" -s "${CRYPTFS_XTSKEYSIZE}" .password
+  
+  # Update temporary loop device
+  ROOT_LOOP="/dev/mapper/${CRYPTFS_MAPPING}"
 
   # Open encrypted partition and setup mapping
   cryptsetup luksOpen "${ROOT_LOOP}" -d .password "${CRYPTFS_MAPPING}"
 
   # Secure delete password keyfile
   shred -zu .password
-
-  # Update temporary loop device
-  ROOT_LOOP="/dev/mapper/${CRYPTFS_MAPPING}"
 
   # Wipe encrypted partition (encryption cipher is used for randomness)
   dd if=/dev/zero of="${ROOT_LOOP}" bs=512 count="$(blockdev --getsz "${ROOT_LOOP}")"
