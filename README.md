@@ -230,7 +230,8 @@ Use debootstrap script variant `minbase` which only includes essential packages 
 Reduce the disk space usage by deleting packages and files. See `REDUCE_*` parameters for detailed information.
 
 ##### `ENABLE_UBOOT`=false
-Replace the default RPi 0/1/2/3/4 second stage bootloader (bootcode.bin) with [U-Boot bootloader](https://git.denx.de/?p=u-boot.git;a=summary). U-Boot can boot images via the network using the BOOTP/TFTP protocol.
+Replace the default RPi 0/1/2/3 second stage bootloader (bootcode.bin) with [U-Boot bootloader](https://git.denx.de/?p=u-boot.git;a=summary). U-Boot can boot images via the network using the BOOTP/TFTP protocol.
+RPI4 needs tbd
 
 ##### `UBOOTSRC_DIR`=""
 Path to a directory (`u-boot`) of [U-Boot bootloader sources](https://git.denx.de/?p=u-boot.git;a=summary) that will be copied, configured, build and installed inside the chroot.
@@ -322,7 +323,7 @@ Precompiled 64bit kernel for RPI3/4 by [https://github.com/sakaki-/](sakaki)
 
 ##### `CROSS_COMPILE`="arm-linux-gnueabihf-"
 This sets the cross-compile environment for the compiler.
-	  
+
 ##### `KERNEL_ARCH`="arm"
 This sets the kernel architecture for the compiler.
 

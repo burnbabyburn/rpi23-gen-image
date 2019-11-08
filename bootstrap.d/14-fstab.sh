@@ -1,4 +1,4 @@
-#!/bin/sh
+#
 # Setup fstab and initramfs
 #
 
@@ -7,17 +7,6 @@
 
 # Install and setup fstab
 install_readonly files/mount/fstab "${ETC_DIR}/fstab"
-
-#USB BOOT /boot on sda1 / on sda2
-if [ "$ENABLE_USBBOOT" = true ] && [ "$ENABLE_CRYPTFS" = false ]; then
-  sed -i "s/mmcblk0p1/sda1/" "${ETC_DIR}/fstab"
-  sed -i "s/mmcblk0p2/sda2/" "${ETC_DIR}/fstab"
-fi
-
-# Add usb/sda disk root partition to fstab
-if [ "$ENABLE_SPLITFS" = true ] && [ "$ENABLE_CRYPTFS" = false ]; then
-  sed -i "s/mmcblk0p2/sda1/" "${ETC_DIR}/fstab"
-fi
 
 # Generate initramfs file
 if [ "$ENABLE_INITRAMFS" = true ] ; then
@@ -49,7 +38,7 @@ if [ "$ENABLE_INITRAMFS" = true ] ; then
       sed -i "s/mmcblk0p2/sda1/" "${ETC_DIR}/crypttab"
     fi
 
-    if [ "$CRYPTFS_DROPBEAR" = true ]; then
+    if [ "$CRYPTFS_DROPBEAR" = true ] ; then
       if [ "$ENABLE_DHCP" = false ] ; then
         # Get cdir from NET_ADDRESS e.g. 24
         cdir=$(printf "%s" "${NET_ADDRESS}" | cut -d '/' -f2)
@@ -58,7 +47,10 @@ if [ "$ENABLE_INITRAMFS" = true ] ; then
         NET_MASK=$(cdr2mask "$cdir")
 	
         # Write static ip settings to "${ETC_DIR}"/initramfs-tools/initramfs.conf
+        # ip=<client-ip>:<server-ip>:<gw-ip>:<netmask>:<hostname>:<device>:<autoconf>
         sed -i "\$a\nIP=${NET_ADDRESS}::${NET_GATEWAY}:${NET_MASK}:${HOSTNAME}:" "${ETC_DIR}"/initramfs-tools/initramfs.conf
+      else
+        sed -i "\$a\nIP=::::${HOSTNAME}::dhcp" "${ETC_DIR}"/initramfs-tools/initramfs.conf
       fi
     
       if [ -n "$CRYPTFS_DROPBEAR_PUBKEY" ] && [ -f "$CRYPTFS_DROPBEAR_PUBKEY" ] ; then
@@ -112,6 +104,16 @@ if [ "$ENABLE_INITRAMFS" = true ] ; then
     chroot_exec cryptsetup close "${CRYPTFS_MAPPING}"
   # CRYPTFS=false
   else
+  	#USB BOOT /boot on sda1 / on sda2
+	if [ "$ENABLE_USBBOOT" = true ] ; then
+  	  sed -i "s/mmcblk0p1/sda1/" "${ETC_DIR}/fstab"
+  	  sed -i "s/mmcblk0p2/sda2/" "${ETC_DIR}/fstab"
+	fi
+
+	# Add usb/sda disk root partition to fstab
+	if [ "$ENABLE_SPLITFS" = true ] ; then
+  	  sed -i "s/mmcblk0p2/sda1/" "${ETC_DIR}/fstab"
+	fi
     # Generate initramfs without encrypted root partition support
     chroot_exec mkinitramfs -o "/boot/firmware/initramfs-${KERNEL_VERSION}" "${KERNEL_VERSION}"
   fi
