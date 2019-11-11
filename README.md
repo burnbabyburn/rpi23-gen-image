@@ -123,35 +123,74 @@ Set extra xkb configuration options.
 ---
 
 #### Networking settings (DHCP):
-This parameter is used to set up networking auto-configuration in `/etc/systemd/network/eth.network`. The default location of network configuration files in the Debian `stretch` release was changed to `/lib/systemd/network`.`
+This parameter `ENABLE_ETH_DHCP` is used to set up networking auto-configuration in `/etc/systemd/network/eth0.network`. This parameter `ENABLE_WIFI_DHCP` is used to set up networking auto-configuration in `/etc/systemd/network/wlan0.network`. The default location of network configuration files in the Debian `stretch` release was changed to `/lib/systemd/network`.`
 
-##### `ENABLE_DHCP`=true
+##### `ENABLE_ETH_DHCP`=true
+Set the system to use DHCP. This requires an DHCP server.
+
+##### `ENABLE_WIFI_DHCP`=true
 Set the system to use DHCP. This requires an DHCP server.
 
 ---
 
-#### Networking settings (static):
-These parameters are used to set up a static networking configuration in `/etc/systemd/network/eth.network`. The following static networking parameters are only supported if `ENABLE_DHCP` was set to `false`. The default location of network configuration files in the Debian `stretch` release was changed to `/lib/systemd/network`.
+#### Networking settings (ethernet static):
+These parameters are used to set up a static networking configuration in `/etc/systemd/network/eth0.network`. The following static networking parameters are only supported if `ENABLE_ETH_DHCP` was set to `false`. The default location of network configuration files in the Debian `stretch` release was changed to `/lib/systemd/network`.
 
-##### `NET_ADDRESS`=""
+##### `NET_ETH_ADDRESS`=""
 Set a static IPv4 or IPv6 address and its prefix, separated by "/", eg. "192.169.0.3/24".
 
-##### `NET_GATEWAY`=""
+##### `NET_ETH_GATEWAY`=""
 Set the IP address for the default gateway.
 
-##### `NET_DNS_1`=""
+##### `NET_ETH_DNS_1`=""
 Set the IP address for the first DNS server.
 
-##### `NET_DNS_2`=""
+##### `NET_ETH_DNS_2`=""
 Set the IP address for the second DNS server.
 
-##### `NET_DNS_DOMAINS`=""
+##### `NET_ETH_DNS_DOMAINS`=""
 Set the default DNS search domains to use for non fully qualified hostnames.
 
-##### `NET_NTP_1`=""
+##### `NET_ETH_NTP_1`=""
 Set the IP address for the first NTP server.
 
-##### `NET_NTP_2`=""
+##### `NET_ETH_NTP_2`=""
+Set the IP address for the second NTP server.
+
+---
+
+#### Networking settings (WIFI):
+
+##### `NET_WIFI_SSID`=""
+Set to your WIFI SSID
+
+##### `NET_WIFI_WPAPSK`=""
+Set your WPA/WPA2 PSK
+
+---
+
+#### Networking settings (WIFI static):
+These parameters are used to set up a static networking configuration in `/etc/systemd/network/wlan0.network`. The following static networking parameters are only supported if `ENABLE_WIFI_DHCP` was set to `false`. The default location of network configuration files in the Debian `stretch` release was changed to `/lib/systemd/network`.
+
+##### `NET_WIFI_ADDRESS`=""
+Set a static IPv4 or IPv6 address and its prefix, separated by "/", eg. "192.169.0.3/24".
+
+##### `NET_WIFI_GATEWAY`=""
+Set the IP address for the default gateway.
+
+##### `NET_WIFI_DNS_1`=""
+Set the IP address for the first DNS server.
+
+##### `NET_WIFI_DNS_2`=""
+Set the IP address for the second DNS server.
+
+##### `NET_WIFI_DNS_DOMAINS`=""
+Set the default DNS search domains to use for non fully qualified hostnames.
+
+##### `NET_WIFI_NTP_1`=""
+Set the IP address for the first NTP server.
+
+##### `NET_WIFI_NTP_2`=""
 Set the IP address for the second NTP server.
 
 ---
@@ -188,7 +227,7 @@ Install and enable OpenSSH service. The default configuration of the service doe
 Allow the installation of non-free Debian packages that do not comply with the DFSG. This is required to install closed-source firmware binary blobs.
 
 ##### `ENABLE_WIRELESS`=false
-Download and install the [closed-source firmware binary blob](https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm) that is required to run the internal wireless interface of the Raspberry Pi model `3`. This parameter is ignored if the specified `RPI_MODEL` is not `3`.
+Download and install the [closed-source firmware binary blob](https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm) that is required to run the internal wireless interface of the Raspberry Pi model `3`. This parameter is ignored if the specified `RPI_MODEL` is not `0`,`3`,`3P`,`4`.
 
 ##### `ENABLE_RSYSLOG`=true
 If set to false, disable and uninstall rsyslog (so logs will be available only in journal files)

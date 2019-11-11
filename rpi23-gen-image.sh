@@ -113,16 +113,29 @@ XKB_VARIANT=${XKB_VARIANT:=""}
 XKB_OPTIONS=${XKB_OPTIONS:=""}
 
 # Network settings (DHCP)
-ENABLE_DHCP=${ENABLE_DHCP:=true}
+ENABLE_ETH_DHCP=${ENABLE_ETH_DHCP:=true}
+ENABLE_WIFI_DHCP=${ENABLE_ETH_DHCP:=true}
 
 # Network settings (static)
-NET_ADDRESS=${NET_ADDRESS:=""}
-NET_GATEWAY=${NET_GATEWAY:=""}
-NET_DNS_1=${NET_DNS_1:=""}
-NET_DNS_2=${NET_DNS_2:=""}
-NET_DNS_DOMAINS=${NET_DNS_DOMAINS:=""}
-NET_NTP_1=${NET_NTP_1:=""}
-NET_NTP_2=${NET_NTP_2:=""}
+NET_ETH_ADDRESS=${NET_ETH_ADDRESS:=""}
+NET_ETH_GATEWAY=${NET_ETH_GATEWAY:=""}
+NET_ETH_DNS_1=${NET_ETH_DNS_1:=""}
+NET_ETH_DNS_2=${NET_ETH_DNS_2:=""}
+NET_ETH_DNS_DOMAINS=${NET_ETH_DNS_DOMAINS:=""}
+NET_ETH_NTP_1=${NET_ETH_NTP_1:=""}
+NET_ETH_NTP_2=${NET_ETH_NTP_2:=""}
+
+NET_WIFI_SSID=${NET_SSID:=""}
+NET_WIFI_WPAPSK=${NET_WPAPSK:=""}
+
+# Network settings (static)
+NET_WIFI_ADDRESS=${NET_WIFI_ADDRESS:=""}
+NET_WIFI_GATEWAY=${NET_WIFI_GATEWAY:=""}
+NET_WIFI_DNS_1=${NET_WIFI_DNS_1:=""}
+NET_WIFI_DNS_2=${NET_WIFI_DNS_2:=""}
+NET_WIFI_DNS_DOMAINS=${NET_WIFI_DNS_DOMAINS:=""}
+NET_WIFI_NTP_1=${NET_WIFI_NTP_1:=""}
+NET_WIFI_NTP_2=${NET_WIFI_NTP_2:=""}
 
 # APT settings
 APT_PROXY=${APT_PROXY:=""}
@@ -361,7 +374,7 @@ if [ "$RPI_MODEL" = 0 ] || [ "$RPI_MODEL" = 3 ] || [ "$RPI_MODEL" = 3P ] || [ "$
     APT_INCLUDES="${APT_INCLUDES},bluetooth,bluez"
   fi
   if [ "$ENABLE_WIRELESS" = true ] ; then
-    APT_INCLUDES="${APT_INCLUDES},wireless-tools,crda,wireless-regdb"
+    APT_INCLUDES="${APT_INCLUDES},wireless-tools,crda,wireless-regdb,wpasupplicant"
   fi
 else # Raspberry PI 1,1P,2 without Wifi and bluetooth onboard
   # Check if the internal wireless interface is not supported by the RPi model
