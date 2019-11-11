@@ -25,4 +25,8 @@ if [ ! -z INTERFACE_NAME_WIFI ] ; then
   fi
   # Move config to new interface name
   mv /etc/systemd/network/wlan0.network /etc/systemd/network/"${INTERFACE_NAME_WIFI}".network
+  
+  systemctl disable wpa_supplicant@wlan0.service 
+  systemctl enable wpa_supplicant@"${INTERFACE_NAME_WIFI}".service 
+  systemctl start wpa_supplicant@"${INTERFACE_NAME_WIFI}".service 
 fi

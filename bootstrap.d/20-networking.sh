@@ -88,21 +88,23 @@ else # ENABLE_ETH_DHCP=false
   "${ETC_DIR}/systemd/network/wlan0.network"
 fi
 
-printf "
-ctrl_interface=/run/wpa_supplicant
-ctrl_interface_group=wheel
-update_config=1
-eapol_version=1
-ap_scan=1
-fast_reauth=1
+if [ -z "$NET_WIFI_SSID" ] && [ -z "$NET_WIFI_PSK" ] ; then
+  printf "
+  ctrl_interface=/run/wpa_supplicant
+  ctrl_interface_group=wheel
+  update_config=1
+  eapol_version=1
+  ap_scan=1
+  fast_reauth=1
 
-" > /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+  " > /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
 
-#Configure WPA_supplicant
-chroot_exec wpa_passphrase "$NET_SSID" "$NET_WPAPSK" >> /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+  #Configure WPA_supplicant
+  chroot_exec wpa_passphrase "$NET_SSID" "$NET_WPAPSK" >> /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
 
-chroot_exec systemctl enable wpa_supplicant.service
-chroot_exec systemctl enable wpa_supplicant@wlan0.service 
+  chroot_exec systemctl enable wpa_supplicant.service
+  chroot_exec systemctl enable wpa_supplicant@wlan0.service 
+fi
 
 # Remove empty settings from network configuration
 sed -i "/.*=\$/d" "${ETC_DIR}/systemd/network/eth0.network"

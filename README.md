@@ -164,7 +164,7 @@ Set the IP address for the second NTP server.
 ##### `NET_WIFI_SSID`=""
 Set to your WIFI SSID
 
-##### `NET_WIFI_WPAPSK`=""
+##### `NET_WIFI_PSK`=""
 Set your WPA/WPA2 PSK
 
 ---
