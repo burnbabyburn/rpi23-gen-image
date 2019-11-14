@@ -308,6 +308,19 @@ if [ -n "$SET_ARCH" ] ; then
       RELEASE_ARCH=${RELEASE_ARCH:=armel}
       KERNEL_IMAGE=${KERNEL_IMAGE:=kernel.img}
       CROSS_COMPILE=${CROSS_COMPILE:=arm-linux-gnueabi-}
+	  
+	  if [ $ENABLE_XORG = true ] ; then
+	    if [$RELEASE = "stretch" ] || [$RELEASE = "oldstable" ] ; then
+	      printf "\nBest support for armel architecture is provided under Debian stretch/oldstable. Choose yes to change release to Debian stretch[y/n] "
+	      read -r confirm
+          if [ "$confirm" = "y" ] ; then
+		    $RELEASE = "stretch"
+		  fi
+	    fi
+	  fi
+
+  # Make sure all missing required packages are installed
+  apt-get update && apt-get -qq -y install `echo "${MISSING_PACKAGES}" | sed "s/ //"`
     fi
 
     # Raspberry Pi model specific settings
