@@ -63,6 +63,8 @@ else # ENABLE_ETH_DHCP=false
   -e "0,/NTP=\$/ s|NTP=\$|NTP=${NET_ETH_NTP_2}|"\
   "${ETC_DIR}/systemd/network/eth0.network"
 fi
+
+
 if [ "$ENABLE_WIRELESS" = true ] ; then
   if [ "$ENABLE_WIFI_DHCP" = true ] ; then
     # Enable DHCP configuration for interface eth0
@@ -87,9 +89,8 @@ if [ "$ENABLE_WIRELESS" = true ] ; then
     -e "0,/NTP=\$/ s|NTP=\$|NTP=${NET_WIFI_NTP_2}|"\
     "${ETC_DIR}/systemd/network/wlan0.network"
   fi
-fi
-
-if [ -z "$NET_WIFI_SSID" ] && [ -z "$NET_WIFI_PSK" ] ; then
+  
+  if [ -z "$NET_WIFI_SSID" ] && [ -z "$NET_WIFI_PSK" ] ; then
   printf "
   ctrl_interface=/run/wpa_supplicant
   ctrl_interface_group=wheel
@@ -105,19 +106,20 @@ if [ -z "$NET_WIFI_SSID" ] && [ -z "$NET_WIFI_PSK" ] ; then
 
   chroot_exec systemctl enable wpa_supplicant.service
   chroot_exec systemctl enable wpa_supplicant@wlan0.service 
+  fi
+  # Remove empty settings from wlan configuration
+  sed -i "/.*=\$/d" "${ETC_DIR}/systemd/network/wlan0.network"
+  # If WLAN is enabled copy wlan configuration too
+  mv -v "${ETC_DIR}/systemd/network/wlan0.network" "${LIB_DIR}/systemd/network/11-wlan0.network"
 fi
 
 # Remove empty settings from network configuration
 sed -i "/.*=\$/d" "${ETC_DIR}/systemd/network/eth0.network"
-# Remove empty settings from wlan configuration
-sed -i "/.*=\$/d" "${ETC_DIR}/systemd/network/wlan0.network"
 
 # Move systemd network configuration if required by Debian release
 mv -v "${ETC_DIR}/systemd/network/eth0.network" "${LIB_DIR}/systemd/network/10-eth0.network"
-# If WLAN is enabled copy wlan configuration too
-if [ "$ENABLE_WIRELESS" = true ] ; then
-  mv -v "${ETC_DIR}/systemd/network/wlan0.network" "${LIB_DIR}/systemd/network/11-wlan0.network"
-fi
+
+#Clean up
 rm -fr "${ETC_DIR}/systemd/network"
 
 # Enable systemd-networkd service
