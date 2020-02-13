@@ -63,29 +63,30 @@ else # ENABLE_ETH_DHCP=false
   -e "0,/NTP=\$/ s|NTP=\$|NTP=${NET_ETH_NTP_2}|"\
   "${ETC_DIR}/systemd/network/eth0.network"
 fi
+if [ "$ENABLE_WIRELESS" = true ] ; then
+  if [ "$ENABLE_WIFI_DHCP" = true ] ; then
+    # Enable DHCP configuration for interface eth0
+    sed -i -e "s/DHCP=.*/DHCP=yes/" -e "/DHCP/q" "${ETC_DIR}/systemd/network/wlan0.network"
 
-if [ "$ENABLE_WIFI_DHCP" = true ] ; then
-  # Enable DHCP configuration for interface eth0
-  sed -i -e "s/DHCP=.*/DHCP=yes/" -e "/DHCP/q" "${ETC_DIR}/systemd/network/wlan0.network"
-  
-  # Set DHCP configuration to IPv4 only
-  if [ "$ENABLE_IPV6" = false ] ; then
-    sed -i "s/DHCP=.*/DHCP=v4/" "${ETC_DIR}/systemd/network/wlan0.network"
-	sed '/IPv6PrivacyExtensions=true/d' "${ETC_DIR}/systemd/network/wlan0.network"
+    # Set DHCP configuration to IPv4 only
+    if [ "$ENABLE_IPV6" = false ] ; then
+      sed -i "s/DHCP=.*/DHCP=v4/" "${ETC_DIR}/systemd/network/wlan0.network"
+	  sed '/IPv6PrivacyExtensions=true/d' "${ETC_DIR}/systemd/network/wlan0.network"
+    fi
+
+  else # ENABLE_ETH_DHCP=false
+    # Set static network configuration for interface eth0
+    sed -i\
+    -e "s|DHCP=.*|DHCP=no|"\
+    -e "s|Address=\$|Address=${NET_WIFI_ADDRESS}|"\
+    -e "s|Gateway=\$|Gateway=${NET_WIFI_GATEWAY}|"\
+    -e "0,/DNS=\$/ s|DNS=\$|DNS=${NET_WIFI_DNS_1}|"\
+    -e "0,/DNS=\$/ s|DNS=\$|DNS=${NET_WIFI_DNS_2}|"\
+    -e "s|Domains=\$|Domains=${NET_WIFI_DNS_DOMAINS}|"\
+    -e "0,/NTP=\$/ s|NTP=\$|NTP=${NET_WIFI_NTP_1}|"\
+    -e "0,/NTP=\$/ s|NTP=\$|NTP=${NET_WIFI_NTP_2}|"\
+    "${ETC_DIR}/systemd/network/wlan0.network"
   fi
-
-else # ENABLE_ETH_DHCP=false
-  # Set static network configuration for interface eth0
-  sed -i\
-  -e "s|DHCP=.*|DHCP=no|"\
-  -e "s|Address=\$|Address=${NET_WIFI_ADDRESS}|"\
-  -e "s|Gateway=\$|Gateway=${NET_WIFI_GATEWAY}|"\
-  -e "0,/DNS=\$/ s|DNS=\$|DNS=${NET_WIFI_DNS_1}|"\
-  -e "0,/DNS=\$/ s|DNS=\$|DNS=${NET_WIFI_DNS_2}|"\
-  -e "s|Domains=\$|Domains=${NET_WIFI_DNS_DOMAINS}|"\
-  -e "0,/NTP=\$/ s|NTP=\$|NTP=${NET_WIFI_NTP_1}|"\
-  -e "0,/NTP=\$/ s|NTP=\$|NTP=${NET_WIFI_NTP_2}|"\
-  "${ETC_DIR}/systemd/network/wlan0.network"
 fi
 
 if [ -z "$NET_WIFI_SSID" ] && [ -z "$NET_WIFI_PSK" ] ; then
