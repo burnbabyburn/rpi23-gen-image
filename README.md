@@ -41,7 +41,9 @@ CONFIG_TEMPLATE=rpi2stretch ./rpi23-gen-image.sh
 ```
 
 ## Supported parameters and settings
+
 #### APT settings:
+
 ##### `APT_SERVER`="ftp.debian.org"
 Set Debian packages server address. Choose a server from the list of Debian worldwide [mirror sites](https://www.debian.org/mirror/list). Using a nearby server will probably speed-up all required downloads within the bootstrapping process.
 
@@ -76,17 +78,8 @@ Specify the target Raspberry Pi hardware model. The script at this time supports
 ##### `RELEASE`="buster"
 Set the desired Debian release name. The script at this time supports the bootstrapping of the Debian releases `stretch` and `buster`.
 
-##### `RELEASE_ARCH`="armhf"
-Set the desired Debian release architecture.
-
 ##### `HOSTNAME`="rpi$RPI_MODEL-$RELEASE"
 Set system hostname. It's recommended that the hostname is unique in the corresponding subnet.
-
-##### `PASSWORD`="raspberry"
-Set system `root` password. It's **STRONGLY** recommended that you choose a custom password.
-
-##### `USER_PASSWORD`="raspberry"
-Set password for the created non-root user `USER_NAME`=pi. Ignored if `ENABLE_USER`=false. It's **STRONGLY** recommended that you choose a custom password.
 
 ##### `DEFLOCAL`="en_US.UTF-8"
 Set default system locale. This setting can also be changed inside the running OS using the `dpkg-reconfigure locales` command. Please note that on using this parameter the script will automatically install the required packages `locales`, `keyboard-configuration` and `console-setup`.
@@ -97,11 +90,25 @@ Set default system timezone. All available timezones can be found in the `/usr/s
 ##### `EXPANDROOT`=true
 Expand the root partition and filesystem automatically on first boot.
 
-##### `ENABLE_DPHYSSWAP`=true
-Enable swap. The size of the swapfile is chosen relative to the size of the root partition. It'll use the `dphys-swapfile` package for that.
+---
 
-##### `ENABLE_QEMU`=false
-Generate kernel (`vexpress_defconfig`), file system image (`qcow2`) and DTB files that can be used for QEMU full system emulation (`vexpress-A15`). The output files are stored in the `$(pwd)/images/qemu` directory. You can find more information about running the generated image in the QEMU section of this readme file.
+#### User settings:
+
+##### `ENABLE_ROOT`=false
+Set root user password so root login will be enabled
+
+##### `ROOT_PASSWORD`="raspberry"
+Set system `root` password. It's **STRONGLY** recommended that you choose a custom password.
+
+##### `ENABLE_USER`=true
+Create non-root user with password `USER_PASSWORD`=raspberry. Unless overridden with `USER_NAME`=user, the username will be `pi`.
+
+##### `USER_NAME`=pi
+Non-root user to create.  Ignored if `ENABLE_USER`=false
+
+##### `USER_PASSWORD`="raspberry"
+Set password for the created non-root user `USER_NAME`=pi. Ignored if `ENABLE_USER`=false. It's **STRONGLY** recommended that you choose a custom password.
+
 
 ---
 
@@ -122,6 +129,25 @@ Set extra xkb configuration options.
 
 ---
 
+#### Networking settings:
+
+##### `ENABLE_IPV6`=true
+Enable IPv6 support. The network interface configuration is managed via systemd-networkd.
+
+##### `ENABLE_WIRELESS`=false
+Download and install the [closed-source firmware binary blob](https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm) that is required to run the internal wireless interface of the Raspberry Pi model `3`. This parameter is ignored if the specified `RPI_MODEL` is not `0`,`3`,`3P`,`4`.
+
+##### `ENABLE_IPTABLES`=false
+Enable iptables IPv4/IPv6 firewall. Simplified ruleset: Allow all outgoing connections. Block all incoming connections except to OpenSSH service.
+
+##### `ENABLE_HARDNET`=false
+Enable IPv4/IPv6 network stack hardening settings.
+
+##### `ENABLE_IFNAMES`=true
+Enable automatic assignment of predictable, stable network interface names for all local Ethernet, WLAN interfaces. This might create complex and long interface names.
+
+---
+
 #### Networking settings (DHCP):
 This parameter `ENABLE_ETH_DHCP` is used to set up networking auto-configuration in `/etc/systemd/network/eth0.network`. This parameter `ENABLE_WIFI_DHCP` is used to set up networking auto-configuration in `/etc/systemd/network/wlan0.network`. The default location of network configuration files in the Debian `stretch` release was changed to `/lib/systemd/network`.`
 
@@ -129,7 +155,7 @@ This parameter `ENABLE_ETH_DHCP` is used to set up networking auto-configuration
 Set the system to use DHCP. This requires an DHCP server.
 
 ##### `ENABLE_WIFI_DHCP`=true
-Set the system to use DHCP. This requires an DHCP server.
+Set the system to use DHCP. This requires an DHCP server. Requires ENABLE_WIRELESS
 
 ---
 
@@ -196,6 +222,7 @@ Set the IP address for the second NTP server.
 ---
 
 #### Basic system features:
+
 ##### `ENABLE_CONSOLE`=true
 Enable serial console interface. Recommended if no monitor or keyboard is connected to the RPi2/3. In case of problems fe. if the network (auto) configuration failed - the serial console can be used to access the system. On RPI `0` `3` `3P` the CPU speed is locked at lowest speed.
 
@@ -217,17 +244,11 @@ Enable I2C interface on the RPi 0/1/2/3. Please check the [RPi 0/1/2/3 pinout di
 ##### `ENABLE_SPI`=false
 Enable SPI interface on the RPi 0/1/2/3. Please check the [RPi 0/1/2/3 pinout diagrams](https://elinux.org/RPi_Low-level_peripherals) to connect the right GPIO pins.
 
-##### `ENABLE_IPV6`=true
-Enable IPv6 support. The network interface configuration is managed via systemd-networkd.
-
 ##### `ENABLE_SSHD`=true
 Install and enable OpenSSH service. The default configuration of the service doesn't allow `root` to login. Please use the user `pi` instead and `su -` or `sudo` to execute commands as root.
 
 ##### `ENABLE_NONFREE`=false
-Allow the installation of non-free Debian packages that do not comply with the DFSG. This is required to install closed-source firmware binary blobs.
-
-##### `ENABLE_WIRELESS`=false
-Download and install the [closed-source firmware binary blob](https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm) that is required to run the internal wireless interface of the Raspberry Pi model `3`. This parameter is ignored if the specified `RPI_MODEL` is not `0`,`3`,`3P`,`4`.
+Enable non-free packages in sources.list
 
 ##### `ENABLE_RSYSLOG`=true
 If set to false, disable and uninstall rsyslog (so logs will be available only in journal files)
@@ -241,9 +262,6 @@ Enable Hardware Random Number Generator. Strong random numbers are important for
 ##### `ENABLE_MINGPU`=false
 Minimize the amount of shared memory reserved for the GPU. It doesn't seem to be possible to fully disable the GPU.
 
-##### `ENABLE_DBUS`=true
-Install and enable D-Bus message bus. Please note that systemd should work without D-bus but it's recommended to be enabled.
-
 ##### `ENABLE_XORG`=false
 Install Xorg open-source X Window System.
 
@@ -251,22 +269,41 @@ Install Xorg open-source X Window System.
 Install a user-defined window manager for the X Window System. To make sure all X related package dependencies are getting installed `ENABLE_XORG` will automatically get enabled if `ENABLE_WM` is used. The `rpi23-gen-image.sh` script has been tested with the following list of window managers: `blackbox`, `openbox`, `fluxbox`, `jwm`, `dwm`, `xfce4`, `awesome`.
 
 ##### `ENABLE_SYSVINIT`=false
-Support for halt,init,poweroff,reboot,runlevel,shutdown,telinit commands
+Support for halt,init,poweroff,reboot,runlevel,shutdown,init commands
+
+##### `ENABLE_SPLASH`=true
+Enable default Raspberry Pi boot up rainbow splash screen.
+
+##### `ENABLE_LOGO`=true
+Enable default Raspberry Pi console logo (image of four raspberries in the top left corner).
+
+##### `ENABLE_SILENT_BOOT`=false
+Set the verbosity of console messages shown during boot up to a strict minimum.
+
+##### `DISABLE_UNDERVOLT_WARNINGS`=
+Disable RPi2/3 under-voltage warnings and overlays. Setting the parameter to `1` will disable the warning overlay. Setting it to `2` will additionally allow RPi2/3 turbo mode when low-voltage is present.
 
 ---
 
 #### Advanced system features:
-##### `ENABLE_KEYGEN`=false
-Recover your lost codec license
+
+##### `ENABLE_DPHYSSWAP`=true
+Enable swap. The size of the swapfile is chosen relative to the size of the root partition. It'll use the `dphys-swapfile` package for that.
 
 ##### `ENABLE_SYSTEMDSWAP`=false
 Enables [Systemd-swap service](https://github.com/Nefelim4ag/systemd-swap). Usefull if `KERNEL_ZSWAP` is enabled.
 
+##### `ENABLE_QEMU`=false
+Generate kernel (`vexpress_defconfig`), file system image (`qcow2`) and DTB files that can be used for QEMU full system emulation (`vexpress-A15`). The output files are stored in the `$(pwd)/images/qemu` directory. You can find more information about running the generated image in the QEMU section of this readme file.
+
+##### `QEMU_BINARY`=""
+Sets the QEMU enviornment for the Debian archive. Set by RPI_MODEL
+
+##### `ENABLE_KEYGEN`=false
+Recover your lost codec license
+
 ##### `ENABLE_MINBASE`=false
 Use debootstrap script variant `minbase` which only includes essential packages and apt. This will reduce the disk usage by about 65 MB.
-
-##### `ENABLE_REDUCE`=false
-Reduce the disk space usage by deleting packages and files. See `REDUCE_*` parameters for detailed information.
 
 ##### `ENABLE_UBOOT`=false
 Replace the default RPi 0/1/2/3 second stage bootloader (bootcode.bin) with [U-Boot bootloader](https://git.denx.de/?p=u-boot.git;a=summary). U-Boot can boot images via the network using the BOOTP/TFTP protocol.
@@ -293,21 +330,6 @@ Install and enable the [Source code for a C-based firmware patching framework fo
 ##### `NEXMONSRC_DIR`=""
 Path to a directory (`nexmon`) of [Source code for ARM side libraries for interfacing to Raspberry Pi GPU](https://github.com/raspberrypi/userland) that will be copied, configured, build and installed inside the chroot.
 
-##### `ENABLE_IPTABLES`=false
-Enable iptables IPv4/IPv6 firewall. Simplified ruleset: Allow all outgoing connections. Block all incoming connections except to OpenSSH service.
-
-##### `ENABLE_USER`=true
-Create non-root user with password `USER_PASSWORD`=raspberry. Unless overridden with `USER_NAME`=user, the username will be `pi`.
-
-##### `USER_NAME`=pi
-Non-root user to create.  Ignored if `ENABLE_USER`=false
-
-##### `ENABLE_ROOT`=false
-Set root user password so root login will be enabled
-
-##### `ENABLE_HARDNET`=false
-Enable IPv4/IPv6 network stack hardening settings.
-
 ##### `ENABLE_SPLITFS`=false
 Enable having root partition on an USB drive by creating two image files: one for the `/boot/firmware` mount point, and another for `/`.
 
@@ -317,20 +339,8 @@ Path to a directory with scripts that should be run in the chroot before the ima
 ##### `ENABLE_INITRAMFS`=false
 Create an initramfs that that will be loaded during the Linux startup process. `ENABLE_INITRAMFS` will automatically get enabled if `ENABLE_CRYPTFS`=true. This parameter will be ignored if `BUILD_KERNEL`=false.
 
-##### `ENABLE_IFNAMES`=true
-Enable automatic assignment of predictable, stable network interface names for all local Ethernet, WLAN interfaces. This might create complex and long interface names.
-
-##### `ENABLE_SPLASH`=true
-Enable default Raspberry Pi boot up rainbow splash screen.
-
-##### `ENABLE_LOGO`=true
-Enable default Raspberry Pi console logo (image of four raspberries in the top left corner).
-
-##### `ENABLE_SILENT_BOOT`=false
-Set the verbosity of console messages shown during boot up to a strict minimum.
-
-##### `DISABLE_UNDERVOLT_WARNINGS`=
-Disable RPi2/3 under-voltage warnings and overlays. Setting the parameter to `1` will disable the warning overlay. Setting it to `2` will additionally allow RPi2/3 turbo mode when low-voltage is present.
+##### `ENABLE_DBUS`=true
+Install and enable D-Bus message bus. Please note that systemd should work without D-bus but it's recommended to be enabled.
 
 ---
 
@@ -345,44 +355,40 @@ Disable password-based SSH authentication. Only public key based SSH (v2) authen
 Limit the users that are allowed to login via SSH. Only allow user `USER_NAME`=pi and root if `SSH_ENABLE_ROOT`=true to login. This parameter will be ignored if `dropbear` SSH is used (`REDUCE_SSHD`=true).
 
 ##### `SSH_ROOT_PUB_KEY`=""
-Add SSH (v2) public key(s) from specified file to `authorized_keys` file to enable public key based SSH (v2) authentication of user `root`. The specified file can also contain multiple SSH (v2) public keys. SSH protocol version 1 is not supported. `ENABLE_ROOT` **and** `SSH_ENABLE_ROOT` must be set to `true`.
+Use full path to file. Add SSH (v2) public key(s) from specified file to `authorized_keys` file to enable public key based SSH (v2) authentication of user `root`. The specified file can also contain multiple SSH (v2) public keys. SSH protocol version 1 is not supported. `ENABLE_ROOT` **and** `SSH_ENABLE_ROOT` must be set to `true`.
 
 ##### `SSH_USER_PUB_KEY`=""
-Add SSH (v2) public key(s) from specified file to `authorized_keys` file to enable public key based SSH (v2) authentication of user `USER_NAME`=pi. The specified file can also contain multiple SSH (v2) public keys. SSH protocol version 1 is not supported.
+Use full path to file. Add SSH (v2) public key(s) from specified file to `authorized_keys` file to enable public key based SSH (v2) authentication of user `USER_NAME`=pi. The specified file can also contain multiple SSH (v2) public keys. SSH protocol version 1 is not supported.
 
 ---
 
-#### Kernel compilation:
+#### Kernel settings:
 ##### `BUILD_KERNEL`=true
 Build and install the latest RPi 0/1/2/3/4 Linux kernel. The default RPi 0/1/2/3/ kernel configuration is used most of the time. 
 ENABLE_NEXMON - Changes Kernel Source to [https://github.com/Re4son/](Kali Linux Kernel)
 Precompiled 32bit kernel for RPI0/1/2/3 by [https://github.com/hypriot/](hypriot)
 Precompiled 64bit kernel for RPI3/4 by [https://github.com/sakaki-/](sakaki)
 
+##### `CROSS_COMPILE`=""
+This sets the cross-compile environment for the compiler. Set by RPI_MODEL
 
-##### `CROSS_COMPILE`="arm-linux-gnueabihf-"
-This sets the cross-compile environment for the compiler.
+##### `KERNEL_ARCH`=""
+This sets the kernel architecture for the compiler. Set by RPI_MODEL
 
-##### `KERNEL_ARCH`="arm"
-This sets the kernel architecture for the compiler.
-
-##### `KERNEL_IMAGE`="kernel7.img"
-Name of the image file in the boot partition. If not set, `KERNEL_IMAGE` will be set to "kernel8.img" automatically if building for arm64.
+##### `KERNEL_IMAGE`=""
+Name of the image file in the boot partition. Set by RPI_MODEL
 
 ##### `KERNEL_BRANCH`=""
 Name of the requested branch from the GIT location for the RPi Kernel. Default is using the current default branch from the GIT site.
 
-##### `QEMU_BINARY`="/usr/bin/qemu-arm-static"
-Sets the QEMU enviornment for the Debian archive. If not set, `QEMU_BINARY` will be set to "/usr/bin/qemu-aarch64-static" automatically if building for arm64.
-
-##### `KERNEL_DEFCONFIG`="bcm2709_defconfig"
-Sets the default config for kernel compiling. If not set, `KERNEL_DEFCONFIG` will be set to "bcmrpi3\_defconfig" automatically if building for arm64.
+##### `KERNEL_DEFCONFIG`=""
+Sets the default config for kernel compiling. Set by RPI_MODEL
 
 ##### `KERNEL_REDUCE`=false
 Reduce the size of the generated kernel by removing unwanted devices, network and filesystem drivers (experimental).
 
-##### `KERNEL_THREADS`=1
-Number of parallel kernel building threads. If the parameter is left untouched the script will automatically determine the number of CPU cores to set the number of parallel threads to speed the kernel compilation.
+##### `KERNEL_THREADS`=
+Number of threads to build the kernel. If not set, the script will automatically determine the maximum number of CPU cores to speed up kernel compilation.
 
 ##### `KERNEL_HEADERS`=true
 Install kernel headers with the built kernel.
@@ -421,7 +427,7 @@ The directory (`firmware`) containing a local copy of the firmware from the [Ras
 Set the default cpu governor at kernel compilation. Supported values are: PERFORMANCE POWERSAVE USERSPACE ONDEMAND CONSERVATIVE SCHEDUTIL
 
 ##### `KERNEL_NF`=false
-Enable Netfilter modules as kernel modules
+Enable Netfilter modules as kernel modules. You want that for iptables.
 
 ##### `KERNEL_VIRT`=false
 Enable Kernel KVM support (/dev/kvm)
@@ -430,7 +436,7 @@ Enable Kernel KVM support (/dev/kvm)
 Enable Kernel Zswap support. Best use on high RAM load and mediocre CPU load usecases
 
 ##### `KERNEL_BPF`=true
-Allow attaching eBPF programs to a cgroup using the bpf syscall (CONFIG_BPF_SYSCALL CONFIG_CGROUP_BPF) [systemd compilations about it - File /lib/systemd/system/systemd-journald.server:36 configures an IP firewall (IPAddressDeny=all), but the local system does not support BPF/cgroup based firewalls]
+Allow attaching eBPF programs to a cgroup using the bpf syscall (CONFIG_BPF_SYSCALL CONFIG_CGROUP_BPF) [systemd wants it - File /lib/systemd/system/systemd-journald.server:36 configures an IP firewall (IPAddressDeny=all), but the local system does not support BPF/cgroup based firewalls]
 
 ##### `KERNEL_SECURITY`=false
 Enables Apparmor, integrity subsystem, auditing.
@@ -451,6 +457,9 @@ Diffie-Hellman operations on retained keys - required for >keyutils-1.6
 
 #### Reduce disk usage:
 The following list of parameters is ignored if `ENABLE_REDUCE`=false.
+
+##### `ENABLE_REDUCE`=false
+Reduce the disk space usage by deleting packages and files. See `REDUCE_*` parameters for detailed information.
 
 ##### `REDUCE_APT`=true
 Configure APT to use compressed package repository lists and no package caching files.
@@ -479,6 +488,7 @@ Remove all `locale` translation files.
 ---
 
 #### Encrypted root partition:
+
 ##### `ENABLE_CRYPTFS`=false
 Enable full system encryption with dm-crypt. Setup a fully LUKS encrypted root partition (aes-xts-plain64:sha512) and generate required initramfs. The /boot directory will not be encrypted. This parameter will be ignored if `BUILD_KERNEL`=false. `ENABLE_CRYPTFS` is experimental. SSH-to-initramfs is currently not supported but will be soon - feel free to help.
 
@@ -491,10 +501,10 @@ Set name of dm-crypt managed device-mapper mapping.
 ##### `CRYPTFS_CIPHER`="aes-xts-plain64"
 Set cipher specification string. `aes-xts*` ciphers are strongly recommended.
 
-##### `CRYPTFS_HASH`=sha512
+##### `CRYPTFS_HASH`=sha256
 Hash function and size to be used
 
-##### `CRYPTFS_XTSKEYSIZE`=512
+##### `CRYPTFS_XTSKEYSIZE`=256
 Sets key size in bits. The argument has to be a multiple of 8.
 
 ##### `CRYPTFS_DROPBEAR`=false
@@ -506,10 +516,11 @@ Provide path to dropbear Public RSA-OpenSSH Key
 ---
 
 #### Build settings:
-##### `BASEDIR`=$(pwd)/images/${RELEASE}
+
+##### `BASEDIR`="$(pwd)/images/${RELEASE}"
 Set a path to a working directory used by the script to generate an image.
 
-##### `IMAGE_NAME`=${BASEDIR}/${DATE}-${KERNEL_ARCH}-${KERNEL_BRANCH}-rpi${RPI_MODEL}-${RELEASE}-${RELEASE_ARCH}
+##### `IMAGE_NAME`="${BASEDIR}/${DATE}-${KERNEL_ARCH}-${KERNEL_BRANCH}-rpi${RPI_MODEL}-${RELEASE}-${RELEASE_ARCH}"
 Set a filename for the output file(s). Note: the script will create $IMAGE_NAME.img if `ENABLE_SPLITFS`=false or $IMAGE_NAME-frmw.img and $IMAGE_NAME-root.img if `ENABLE_SPLITFS`=true. Note 2: If the KERNEL_BRANCH is not set, the word "CURRENT" is used.
 
 ## Understanding the script
