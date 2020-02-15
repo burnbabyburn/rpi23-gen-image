@@ -106,21 +106,10 @@ These options are used to configure keyboard layout in `/etc/default/keyboard` f
 #### Networking settings (DHCP):
 This parameter `ENABLE_ETH_DHCP` is used to set up networking auto-configuration in `/etc/systemd/network/eth0.network`. This parameter `ENABLE_WIFI_DHCP` is used to set up networking auto-configuration in `/etc/systemd/network/wlan0.network`. The default location of network configuration files in the Debian `stretch` release was changed to `/lib/systemd/network`.`
 
-##### `ENABLE_ETH_DHCP`=true
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Set the system to use DHCP. This requires an DHCP server.
-
-##### `ENABLE_WIFI_DHCP`=true
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Set the system to use DHCP. This requires an DHCP server. Requires ENABLE_WIRELESS
+|Option|Value|default value|desciption|
+|---|---|---|---|
+|ENABLE_ETH_DHCP|boolean|true|Set the system to use DHCP on wired interface. This requires an DHCP server|
+|ENABLE_WIFI_DHCP|boolean|true|Set the system to use DHCP on wifi interface. This requires an DHCP server. Requires ENABLE_WIRELESS|
 
 ---
 
