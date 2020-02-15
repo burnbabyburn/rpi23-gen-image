@@ -57,7 +57,7 @@ CONFIG_TEMPLATE=rpi2stretch ./rpi23-gen-image.sh
 |KEEP_APT_PROXY|boolean|false|`true`\|`false`|true=Keep the APT_PROXY settings used in the bootsrapping process in the generated image|
 |APT_INCLUDES|string list||`packageA`,`packageB`,...|A comma-separated list of additional packages to be installed by debootstrap during bootstrapping.|
 |APT_INCLUDES_LATE|string list||`packageA`,`packageB`,...|A comma-separated list of additional packages to be installed by apt after bootstrapping and after APT sources are set up.  This is useful for packages with pre-depends, which debootstrap do not handle well.|
-
+|APT_EXCLUDES|string list||`packageA`,`packageB`,...|A comma-separated list of packages to exclude. Use carefully|
 ---
 
 #### General system settings:
@@ -173,7 +173,7 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 |ENABLE_TURBO|boolean|false|`true`\|`false`|true=Enable Turbo mode. This setting locks cpu at the highest frequency. As setting ENABLE_CONSOLE=true locks RPI to lowest CPU speed, this is can be used additionally to lock cpu hat max speed. Need a good power supply and probably cooling for the Raspberry PI|
 |ENABLE_I2C|boolean|true|`true`\|`false`|true=Enable I2C interface on the RPi 0/1/2/3. Please check the [RPi 0/1/2/3 pinout diagrams](https://elinux.org/RPi_Low-level_peripherals) to connect the right GPIO pins|
 |ENABLE_SPI|boolean|true|`true`\|`false`|true=Enable SPI interface on the RPi 0/1/2/3. Please check the [RPi 0/1/2/3 pinout diagrams](https://elinux.org/RPi_Low-level_peripherals) to connect the right GPIO pins|
-|ENABLE_SSHD|boolean|true|`true`\|`false`|Install and enable OpenSSH service. The default configuration of the service doesn't allow `root` to login. Please use the user `pi` instead and `su -` or `sudo` to execute commands as root|
+|SSH_ENABLE|boolean|true|`true`\|`false`|Install and enable OpenSSH service. The default configuration of the service doesn't allow `root` to login. Please use the user `pi` instead and `su -` or `sudo` to execute commands as root|
 |ENABLE_NONFREE|boolean|false|`true`\|`false`|true=enable non-free\|false=disable non free. Edits /etc/apt/sources.list in your resulting image|
 |ENABLE_RSYSLOG|boolean|false|`true`\|`false`|true=keep rsyslog\|false=remove rsyslog. If rsyslog is removed (false), logs will be available only in journal files)|
 |ENABLE_SOUND|boolean|false|`true`\|`false`|true=Enable sound\|false=Disable sound|
@@ -237,7 +237,6 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 |KERNEL_IMAGE|string|||Name of the image file in the boot partition. Set by RPI_MODEL|
 |KERNEL_BRANCH|string|||Name of the requested branch from the GIT location for the RPi Kernel. Default is using the current default branch from the GIT site|
 |KERNEL_DEFCONFIG|string|||Sets the default config for kernel compiling. Set by RPI_MODEL|
-
 |KERNEL_THREADS|integer||`1`\|`2`\|`3`\|...|Number of threads to build the kernel. If not set, the script will automatically determine the maximum number of CPU cores to speed up kernel compilation|
 |KERNEL_HEADERS|boolean|true|`true`\|`false`|Install kernel headers with the built kernel|
 |KERNEL_MENUCONFIG|boolean|false|`true`\|`false`|Start `make menuconfig` interactive menu-driven kernel configuration. The script will continue after `make menuconfig` was terminated|

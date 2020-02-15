@@ -24,7 +24,7 @@ if [ "$EXPANDROOT" = true ] ; then
 fi
 
 # Ensure openssh server host keys are regenerated on first boot
-if [ "$ENABLE_SSHD" = true ] ; then
+if [ "$SSH_ENABLE" = true ] ; then
   cat files/firstboot/30-generate-ssh-keys.sh >> "${ETC_DIR}/rc.firstboot"
 fi
 

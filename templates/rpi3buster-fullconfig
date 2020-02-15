@@ -74,7 +74,6 @@ ENABLE_MINIUART_OVERLAY=false
 ENABLE_TURBO=false
 ENABLE_I2C=true
 ENABLE_SPI=true
-ENABLE_SSHD=true
 ENABLE_NONFREE=false
 ENABLE_RSYSLOG=false
 ENABLE_SOUND=false
@@ -120,6 +119,7 @@ NEXMONSRC_DIR=
 ############################
 ########SSH settings########
 ############################
+SSH_ENABLE=true
 SSH_ENABLE_ROOT=false
 SSH_DISABLE_PASSWORD_AUTH=false
 SSH_LIMIT_USERS=false
