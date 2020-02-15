@@ -91,13 +91,13 @@ CONFIG_TEMPLATE=rpi2stretch ./rpi23-gen-image.sh
 * **format:** `[ 0 | 1 | 1P | 2 | 3 | 3P | 4]`
 * **description:** Set Architecture. This option will set most build options accordingly.
 Specify the target Raspberry Pi hardware model. The script at this time supports the following Raspberry Pi models:
-- `0`  = Raspberry Pi 0 and Raspberry Pi 0 W
-- `1`  = Raspberry Pi 1 model A and B
-- `1P` = Raspberry Pi 1 model B+ and A+
-- `2`  = Raspberry Pi 2 model B
-- `3`  = Raspberry Pi 3 model B
-- `3P` = Raspberry Pi 3 model B+
-- `4`  = Raspberry Pi 4 model B
+  *  `0`  = Raspberry Pi 0 and Raspberry Pi 0 W
+  *  `1`  = Raspberry Pi 1 model A and B
+  *  `1P` = Raspberry Pi 1 model B+ and A+
+  *  `2`  = Raspberry Pi 2 model B
+  *  `3`  = Raspberry Pi 3 model B
+  *  `3P` = Raspberry Pi 3 model B+
+  *  `4`  = Raspberry Pi 4 model B
 
 ##### `RELEASE`="buster"
 Set the desired Debian release name. The script at this time supports the bootstrapping of the Debian releases `stretch` and `buster`.
