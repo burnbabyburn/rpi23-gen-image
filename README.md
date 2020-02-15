@@ -39,6 +39,8 @@ To avoid long lists of command-line parameters and to help to store the favourit
 CONFIG_TEMPLATE=rpi3stretch ./rpi23-gen-image.sh
 CONFIG_TEMPLATE=rpi2stretch ./rpi23-gen-image.sh
 ```
+
+## Working with the your template:
  * **A Pipe ("|") represents a logical OR**
  * **A valuetype of boolean represents the options true or false**
  * **Values without a default are required if you want do use that feature. It is possible that not every feature has a (working) sanity check.**
