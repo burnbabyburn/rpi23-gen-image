@@ -235,9 +235,9 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 |KERNEL_REDUCE|boolean|false|true\|false|Reduce the size of the generated kernel by removing unwanted devices, network and filesystem drivers (experimental)|
 |KERNEL_THREADS|integer||1\|2\|3\|...|Number of threads to build the kernel. If not set, the script will automatically determine the maximum number of CPU cores to speed up kernel compilation|
 |KERNEL_HEADERS|boolean|true|true\|false|Install kernel headers with the built kernel|
-|KERNEL_MENUCONFIG|boolean|false||Start `make menuconfig` interactive menu-driven kernel configuration. The script will continue after `make menuconfig` was terminated|
+|KERNEL_MENUCONFIG|boolean|false|true\|false|Start `make menuconfig` interactive menu-driven kernel configuration. The script will continue after `make menuconfig` was terminated|
 |KERNEL_OLDDEFCONFIG|boolean|false|true\|false|Run `make olddefconfig` to automatically set all new kernel configuration options to their recommended default values|
-|KERNEL_CCACHE|boolean|false||Compile the kernel using ccache. This speeds up kernel recompilation by caching previous compilations and detecting when the same compilation is being done again|
+|KERNEL_CCACHE|boolean|false|true\|false|Compile the kernel using ccache. This speeds up kernel recompilation by caching previous compilations and detecting when the same compilation is being done again|
 |KERNEL_REMOVESRC|boolean|true|true\|false|Remove all kernel sources from the generated OS image after it was built and installed|
 |KERNELSRC_DIR|string||FullPathToKernelSrcDir|Full path to a directory named `linux` of [RaspberryPi Linux kernel sources](https://github.com/raspberrypi/linux) that will be copied, configured, build and installed inside the chroot|
 |KERNELSRC_CLEAN|boolean|false|true\|false|Clean the existing kernel sources directory `KERNELSRC_DIR` (using `make mrproper`) after it was copied to the chroot and before the compilation of the kernel has started. This parameter will be ignored if no `KERNELSRC_DIR` was specified or if `KERNELSRC_PREBUILT`=true|
