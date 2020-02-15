@@ -42,7 +42,7 @@ CONFIG_TEMPLATE=rpi2stretch ./rpi23-gen-image.sh
 
 ## Supported parameters and settings
 
-### APT settings:
+#### APT settings:
 
 ##### `APT_SERVER`="ftp.debian.org"
 
@@ -63,8 +63,7 @@ A comma-separated list of additional packages to be installed by apt after boots
 
 ---
 
-### General system settings:(#General system settings)
-
+#### General system settings:
 ##### `SET_ARCH`=32
 Set Architecture to default 32bit. If you want to compile 64-bit (RPI3/RPI3+/RPI4) set it to `64`. This option will set every needed cross-compiler or board specific option for a successful build.
 
@@ -95,7 +94,7 @@ Expand the root partition and filesystem automatically on first boot.
 
 ---
 
-### User settings:
+#### User settings:
 
 ##### `ENABLE_ROOT`=false
 Set root user password so root login will be enabled
@@ -115,7 +114,7 @@ Set password for the created non-root user `USER_NAME`=pi. Ignored if `ENABLE_US
 
 ---
 
-### Keyboard settings:
+#### Keyboard settings:
 These options are used to configure keyboard layout in `/etc/default/keyboard` for console and Xorg. These settings can also be changed inside the running OS using the `dpkg-reconfigure keyboard-configuration` command.
 
 ##### `XKB_MODEL`=""
@@ -132,7 +131,7 @@ Set extra xkb configuration options.
 
 ---
 
-### Networking settings:
+#### Networking settings:
 
 ##### `ENABLE_IPV6`=true
 Enable IPv6 support. The network interface configuration is managed via systemd-networkd.
