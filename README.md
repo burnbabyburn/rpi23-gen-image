@@ -58,36 +58,12 @@ CONFIG_TEMPLATE=rpi2stretch ./rpi23-gen-image.sh
 |Option|Value|default value|value format|desciption|
 |---|---|---|---|---|
 |SET_ARCH|integer|32|32\|64|Set Architecture to default 32bit. If you want to compile 64-bit (RPI3/RPI3+/RPI4) set it to `64`. This option will set every needed cross-compiler or board specific option for a successful build.|
-|RPI_MODEL|string|2|0\|1\|1P\|2\|3\|3P\|4\||Set Architecture. This option will set most build options accordingly. Specify the target Raspberry Pi hardware model.|
+|RPI_MODEL|string|2|0\|1\|1P\|2\|3\|3P\|4|Set Architecture. This option will set most build options accordingly. Specify the target Raspberry Pi hardware model.|
 |RELEASE||string|buster|jessie\|buster\|stretch\|bullseye\|testing\|stable\|oldstable|Set the desired Debian release name. The script at this time supports the bootstrapping of the Debian releases `stretch` and `buster`.|
-|HOSTNAME|string|"rpi$RPI_MODEL-$RELEASE" e.g. RPI3-buster|SomeImageName|Set system hostname. It's recommended that the hostname is unique in the corresponding subnet.|
+|HOSTNAME|string|RPI_MODEL-RELEASE(RPI3-buster)|SomeImageName|Set system hostname. It's recommended that the hostname is unique in the corresponding subnet.|
 |DEFLOCAL|string|en_US.UTF-8|Locale|Set default system locale. This setting can also be changed inside the running OS using the `dpkg-reconfigure locales` command. Please note that on using this parameter the script will automatically install the required packages `locales`, `keyboard-configuration` and `console-setup`.|
 |TIMEZONE|string|Europe/Berlin|Timezone|Set default system timezone. All available timezones can be found in the `/usr/share/zoneinfo/` directory. This setting can also be changed inside the running OS using the `dpkg-reconfigure tzdata` command.|
 |EXPANDROOT|boolean|true|true\|false|true=Expand the root partition and filesystem automatically on first boot|
-
-##### ``
-||
-|default:** "buster"
-|format| [  ]`
-|description:** 
-
-##### ``=""
-|string|
-|default:** 
-|format:**
-|description:** 
-
-##### ``
-|string|
-|default:** ""
-|format|`
-|description:** 
-
-##### ``=
-|string|
-|default:** ""
-|format|`
-|description:** 
 
 ---
 
