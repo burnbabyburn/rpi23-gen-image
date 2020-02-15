@@ -173,7 +173,7 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 |ENABLE_RSYSLOG|boolean|true||true=keep rsyslog\|false=remove rsyslog. If rsyslog is removed (false), logs will be available only in journal files)|
 |ENABLE_SOUND|boolean|true||true=Enable sound\|false=Disable sound|
 |ENABLE_HWRANDOM|boolean|true||true=Enable Hardware Random Number Generator(RNG)\|false=Disable Hardware RNG\|Strong random numbers are important for most network-based communications that use encryption. It's recommended to be enabled|
-|ENABLE_MINGPU|boolean|false||true=GPU 16MB RAM\|false=64MB RAM\|Minimize the amount of shared memory reserved for the GPU. It doesn't seem to be possible to fully disable the GPU|
+|ENABLE_MINGPU|boolean|false||true=GPU 16MB RAM\|false=64MB RAM\|Minimize the amount of shared memory reserved for the GPU. It doesn't seem to be possible to fully disable the GPU. Also removes start.elf,fixup.dat,start_x.elf,fixup_x.dat form /boot|
 |ENABLE_XORG|boolean|false||true=Install Xorg X Window System|\false=install no Xorg|
 |ENABLE_WM|string||`blackbox`, `openbox`, `fluxbox`, `jwm`, `dwm`, `xfce4`, `awesome`|Install a user-defined window manager for the X Window System. To make sure all X related package dependencies are getting installed `ENABLE_XORG` will automatically set true if `ENABLE_WM` is used|
 |ENABLE_SYSVINIT|boolean|false||true=Support for halt,init,poweroff,reboot,runlevel,shutdown,init commands\|false=use systemd commands|
