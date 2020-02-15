@@ -60,7 +60,7 @@ CONFIG_TEMPLATE=rpi2stretch ./rpi23-gen-image.sh
 |---|---|---|---|---|
 |SET_ARCH|integer|32|32\|64|Set Architecture to default 32bit. If you want to compile 64-bit (RPI3/RPI3+/RPI4) set it to `64`. This option will set every needed cross-compiler or board specific option for a successful build.|
 |RPI_MODEL|string|2|0\|1\|1P\|2\|3\|3P\|4|Set Architecture. This option will set most build options accordingly. Specify the target Raspberry Pi hardware model.|
-|RELEASE|string|buster|`jessie`\|`buster`\|`stretch`\|`bullseye`\|`testing`\|`stable`\|`oldstable`|Set the desired Debian release name. The script at this time supports the bootstrapping of the Debian releases `stretch` and `buster`.|
+|RELEASE|string|buster|`jessie`\|`buster`\|`stretch`<br>\|`bullseye`\|`testing`\|`stable`<br>\|`oldstable`|Set the desired Debian release name. The script at this time supports the bootstrapping of the Debian releases `stretch` and `buster`.|
 |HOSTNAME|string|RPI_MODEL-RELEASE(e.g. RPI3-buster)|SomeImageName|Set system hostname. It's recommended that the hostname is unique in the corresponding subnet.|
 |DEFLOCAL|string|en_US.UTF-8|Locale|Set default system locale. This setting can also be changed inside the running OS using the `dpkg-reconfigure locales` command. Please note that on using this parameter the script will automatically install the required packages `locales`, `keyboard-configuration` and `console-setup`.|
 |TIMEZONE|string|Europe/Berlin|Timezone|Set default system timezone. All available timezones can be found in the `/usr/share/zoneinfo/` directory. This setting can also be changed inside the running OS using the `dpkg-reconfigure tzdata` command.|
@@ -177,8 +177,8 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 |ENABLE_XORG|boolean|false|true\|false|true=Install Xorg X Window System|\false=install no Xorg|
 |ENABLE_WM|string||`blackbox`, `openbox`, `fluxbox`,<br> `jwm`, `dwm`, `xfce4`, `awesome`|Install a user-defined window manager for the X Window System. To make sure all X related package dependencies are getting installed `ENABLE_XORG` will automatically set true if `ENABLE_WM` is used|
 |ENABLE_SYSVINIT|boolean|false|true\|false|true=Support for halt,init,poweroff,reboot,runlevel,shutdown,init commands\|false=use systemd commands|
-|ENABLE_SPLASH|boolean|true||true=Enable default Raspberry Pi boot up rainbow splash screen|
-|ENABLE_LOGO|boolean|true||Enable default Raspberry Pi console logo (image of four raspberries in the top left corner)|
+|ENABLE_SPLASH|boolean|true|true\|false|true=Enable default Raspberry Pi boot up rainbow splash screen|
+|ENABLE_LOGO|boolean|true|true\|false|Enable default Raspberry Pi console logo (image of four raspberries in the top left corner)|
 |ENABLE_SILENT_BOOT|boolean|false|true\|false|Set the verbosity of console messages shown during boot up to a strict minimum|
 |DISABLE_UNDERVOLT_WARNINGS|integer||1\|2|Disable RPi2/3 under-voltage warnings and overlays. Setting the parameter to `1` will disable the warning overlay. Setting it to `2` will additionally allow RPi2/3 turbo mode when low-voltage is present|
 
@@ -190,7 +190,7 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 |---|---|---|---|---|
 |ENABLE_DPHYSSWAP|boolean|true|true\|false|Enable swap. The size of the swapfile is chosen relative to the size of the root partition. It'll use the `dphys-swapfile` package for that|
 |ENABLE_SYSTEMDSWAP|boolean|false|true\|false|Enables [Systemd-swap service](https://github.com/Nefelim4ag/systemd-swap). Usefull if `KERNEL_ZSWAP` is enabled|
-|ENABLE_QEMU|boolean|false||Generate kernel (`vexpress_defconfig`), file system image (`qcow2`) and DTB files that can be used for QEMU full system emulation (`vexpress-A15`). The output files are stored in the `$(pwd)/images/qemu` directory. You can find more information about running the generated image in the QEMU section of this readme file|
+|ENABLE_QEMU|boolean|false|true\|false|Generate kernel (`vexpress_defconfig`), file system image (`qcow2`) and DTB files that can be used for QEMU full system emulation (`vexpress-A15`). The output files are stored in the `$(pwd)/images/qemu` directory. You can find more information about running the generated image in the QEMU section of this readme file|
 |QEMU_BINARY|string||FullPathToFile|Sets the QEMU enviornment for the Debian archive. **Set by RPI_MODEL**|
 |ENABLE_KEYGEN|boolean|false|true\|false|Recover your lost codec license|
 |ENABLE_MINBASE|boolean|false|true\|false|Use debootstrap script variant `minbase` which only includes essential packages and apt. This will reduce the disk usage by about 65 MB|
@@ -233,23 +233,23 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 |KERNEL_BRANCH|string|||Name of the requested branch from the GIT location for the RPi Kernel. Default is using the current default branch from the GIT site|
 |KERNEL_DEFCONFIG|string|||Sets the default config for kernel compiling. Set by RPI_MODEL|
 |KERNEL_REDUCE|boolean|false|true\|false|Reduce the size of the generated kernel by removing unwanted devices, network and filesystem drivers (experimental)|
-|KERNEL_THREADS|integer|||Number of threads to build the kernel. If not set, the script will automatically determine the maximum number of CPU cores to speed up kernel compilation|
+|KERNEL_THREADS|integer||1\|2\|3\|...|Number of threads to build the kernel. If not set, the script will automatically determine the maximum number of CPU cores to speed up kernel compilation|
 |KERNEL_HEADERS|boolean|true|true\|false|Install kernel headers with the built kernel|
 |KERNEL_MENUCONFIG|boolean|false||Start `make menuconfig` interactive menu-driven kernel configuration. The script will continue after `make menuconfig` was terminated|
 |KERNEL_OLDDEFCONFIG|boolean|false|true\|false|Run `make olddefconfig` to automatically set all new kernel configuration options to their recommended default values|
 |KERNEL_CCACHE|boolean|false||Compile the kernel using ccache. This speeds up kernel recompilation by caching previous compilations and detecting when the same compilation is being done again|
 |KERNEL_REMOVESRC|boolean|true|true\|false|Remove all kernel sources from the generated OS image after it was built and installed|
-|KERNELSRC_DIR|string|||Full path to a directory named `linux` of [RaspberryPi Linux kernel sources](https://github.com/raspberrypi/linux) that will be copied, configured, build and installed inside the chroot|
+|KERNELSRC_DIR|string||FullPathToKernelSrcDir|Full path to a directory named `linux` of [RaspberryPi Linux kernel sources](https://github.com/raspberrypi/linux) that will be copied, configured, build and installed inside the chroot|
 |KERNELSRC_CLEAN|boolean|false|true\|false|Clean the existing kernel sources directory `KERNELSRC_DIR` (using `make mrproper`) after it was copied to the chroot and before the compilation of the kernel has started. This parameter will be ignored if no `KERNELSRC_DIR` was specified or if `KERNELSRC_PREBUILT`=true|
 |KERNELSRC_CONFIG|boolean|true|true\|false|Run `make bcm2709_defconfig` (and optional `make menuconfig`) to configure the kernel sources before building. This parameter is automatically set to `true` if no existing kernel sources directory was specified using `KERNELSRC_DIR`. This parameter is ignored if `KERNELSRC_PREBUILT`=true|
-|KERNELSRC_USRCONFIG|string|||Copy own config file to kernel `.config`. If `KERNEL_MENUCONFIG`=true then running after copy|
+|KERNELSRC_USRCONFIG|string||FullPathToUserKernel.config|Copy own config file to kernel `.config`. If `KERNEL_MENUCONFIG`=true then running after copy|
 |KERNELSRC_PREBUILT|boolean|false|true\|false|With this parameter set to true the script expects the existing kernel sources directory to be already successfully cross-compiled. The parameters `KERNELSRC_CLEAN`, `KERNELSRC_CONFIG`, `KERNELSRC_USRCONFIG` and `KERNEL_MENUCONFIG` are ignored and no kernel compilation tasks are performed|
-|RPI_FIRMWARE_DIR|string|||full path to a directory named `firmware`, containing a local copy of the firmware from the [RaspberryPi firmware project](https://github.com/raspberrypi/firmware). Default is to download the latest firmware directly from the project|
+|RPI_FIRMWARE_DIR|string||FullPathToFolder|Full path to a directory named `firmware`, containing a local copy of the firmware from the [RaspberryPi firmware project](https://github.com/raspberrypi/firmware). Default is to download the latest firmware directly from the project|
 |KERNEL_DEFAULT_GOV|string||`performance`\|`powersave`<br>\|`userspace`\|`ondemand`<br>\|`conservative`\|`schedutil`|Set the default cpu governor at kernel compilation. Possivle values: |
 |KERNEL_NF|boolean|false|true\|false|Enable Netfilter modules as kernel modules. You want that for iptables|
 |KERNEL_VIRT|boolean|false|true\|false|Enable Kernel KVM support (/dev/kvm)|
 |KERNEL_ZSWAP|boolean|false|true\|false|Enable Kernel Zswap support. Best use on high RAM load and mediocre CPU load usecases|
-|KERNEL_BPF|boolean|true||Allow attaching eBPF programs to a cgroup using the bpf syscall (CONFIG_BPF_SYSCALL CONFIG_CGROUP_BPF) [systemd wants it - File /lib/systemd/system/systemd-journald.server:36 configures an IP firewall (IPAddressDeny=all), but the local system does not support BPF/cgroup based firewalls]|
+|KERNEL_BPF|boolean|true|true\|false|Allow attaching eBPF programs to a cgroup using the bpf syscall (CONFIG_BPF_SYSCALL CONFIG_CGROUP_BPF) [systemd wants it - File /lib/systemd/system/systemd-journald.server:36 configures an IP firewall (IPAddressDeny=all), but the local system does not support BPF/cgroup based firewalls]|
 |KERNEL_SECURITY|boolean|false|true\|false|Enables Apparmor, integrity subsystem, auditing|
 |KERNEL_BTRFS|boolean|false|true\|false|enable btrfs kernel support|
 |KERNEL_POEHAT|boolean|false|true\|false|enable Enable RPI POE HAT fan kernel support|
@@ -263,7 +263,7 @@ The following list of parameters is ignored if `ENABLE_REDUCE`=false.
 
 |Option|Value|default value|value format|desciption|
 |---|---|---|---|---|
-|ENABLE_REDUCE|boolean|false||Reduce the disk space usage by deleting packages and files. See `REDUCE_*` parameters for detailed information|
+|ENABLE_REDUCE|boolean|false|true\|false|Reduce the disk space usage by deleting packages and files. See `REDUCE_*` parameters for detailed information|
 |REDUCE_APT|boolean|true|true\|false|Configure APT to use compressed package repository lists and no package caching files|
 |REDUCE_DOC|boolean|true|true\|false|Remove all doc files (harsh). Configure APT to not include doc files on future `apt-get` package installations|
 |REDUCE_MAN|boolean|true|true\|false|Remove all man pages and info files (harsh).  Configure APT to not include man pages on future `apt-get` package installations|

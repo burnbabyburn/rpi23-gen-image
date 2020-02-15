@@ -270,7 +270,7 @@ fi
 # Setup architecture specific settings
 if [ -n "$SET_ARCH" ] ; then
   # 64-bit configuration
-  if [ $SET_ARCH = 64 ] ; then
+  if [ "$SET_ARCH" = 64 ] ; then
     # General 64-bit depended settings
     QEMU_BINARY=${QEMU_BINARY:=/usr/bin/qemu-aarch64-static}
     KERNEL_ARCH=${KERNEL_ARCH:=arm64}
