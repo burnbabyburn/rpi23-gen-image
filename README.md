@@ -146,8 +146,8 @@ The following static networking parameters are only supported if `ENABLE_ETH_DHC
 The following static networking parameters are only supported if `ENABLE_WIFI_DHCP` was set to `false`.
 
 
-|Option|Value|default value|value format|desciption|
-|---|---|---|---|---|
+|Option|Value|value format|desciption|
+|---|---|---|---|
 |NET_WIFI_ADDRESS|string|CIDR|static IPv4 or IPv6 address and its prefix, separated by "/", eg. "192.169.0.3/24"|
 |NET_WIFI_GATEWAY|string|IP|default gateway|
 |NET_WIFI_DNS_1|string|IP|first DNS server|
