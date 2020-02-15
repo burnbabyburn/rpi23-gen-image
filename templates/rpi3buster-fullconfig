@@ -5,7 +5,8 @@ APT_SERVER=ftp.debian.org
 APT_PROXY=http://127.0.0.1:3142
 KEEP_APT_PROXY=false
 APT_INCLUDES_LATE=
-APT_INCLUDES=git,usbutils,firmware-linux-free
+APT_INCLUDES=
+#APT_INCLUDES=git,usbutils,firmware-linux-free
 ############################
 ##General system settings###
 ############################
