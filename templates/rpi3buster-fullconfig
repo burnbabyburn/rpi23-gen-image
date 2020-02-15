@@ -134,7 +134,7 @@ KERNEL_ARCH=
 KERNEL_IMAGE=
 KERNEL_BRANCH=
 KERNEL_DEFCONFIG=
-KERNEL_REDUCE=false
+
 KERNEL_THREADS=
 KERNEL_HEADERS=true
 KERNEL_MENUCONFIG=false
@@ -169,6 +169,7 @@ REDUCE_BASH=false
 REDUCE_HWDB=false
 REDUCE_SSHD=false
 REDUCE_LOCALE=false
+REDUCE_KERNEL=false
 ############################
 ######CryptFS Settings######
 ############################

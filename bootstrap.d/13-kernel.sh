@@ -67,7 +67,7 @@ if [ "$BUILD_KERNEL" = true ] ; then
   # Configure and build kernel
   if [ "$KERNELSRC_PREBUILT" = false ] ; then
     # Remove device, network and filesystem drivers from kernel configuration
-    if [ "$KERNEL_REDUCE" = true ] ; then
+    if [ "$REDUCE_KERNEL" = true ] ; then
       make -C "${KERNEL_DIR}" ARCH="${KERNEL_ARCH}" CROSS_COMPILE="${CROSS_COMPILE}" "${KERNEL_DEFCONFIG}"
       sed -i\
       -e "s/\(^CONFIG_SND.*\=\).*/\1n/"\
@@ -735,7 +735,7 @@ if [ "$BUILD_KERNEL" = true ] ; then
   fi
 
   # Install kernel headers
-  if [ "$KERNEL_HEADERS" = true ] && [ "$KERNEL_REDUCE" = false ] ; then
+  if [ "$KERNEL_HEADERS" = true ] && [ "$REDUCE_KERNEL" = false ] ; then
     make -C "${KERNEL_DIR}" ARCH="${KERNEL_ARCH}" CROSS_COMPILE="${CROSS_COMPILE}" INSTALL_HDR_PATH=../.. headers_install
   fi
 

@@ -237,7 +237,7 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 |KERNEL_IMAGE|string|||Name of the image file in the boot partition. Set by RPI_MODEL|
 |KERNEL_BRANCH|string|||Name of the requested branch from the GIT location for the RPi Kernel. Default is using the current default branch from the GIT site|
 |KERNEL_DEFCONFIG|string|||Sets the default config for kernel compiling. Set by RPI_MODEL|
-|KERNEL_REDUCE|boolean|false|`true`\|`false`|Reduce the size of the generated kernel by removing unwanted devices, network and filesystem drivers (experimental)|
+
 |KERNEL_THREADS|integer||`1`\|`2`\|`3`\|...|Number of threads to build the kernel. If not set, the script will automatically determine the maximum number of CPU cores to speed up kernel compilation|
 |KERNEL_HEADERS|boolean|true|`true`\|`false`|Install kernel headers with the built kernel|
 |KERNEL_MENUCONFIG|boolean|false|`true`\|`false`|Start `make menuconfig` interactive menu-driven kernel configuration. The script will continue after `make menuconfig` was terminated|
@@ -246,7 +246,7 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 |KERNEL_REMOVESRC|boolean|true|`true`\|`false`|Remove all kernel sources from the generated OS image after it was built and installed|
 |KERNELSRC_DIR|string||`FullPathToKernelSrcDir`|Full path to a directory named `linux` of [RaspberryPi Linux kernel sources](https://github.com/raspberrypi/linux) that will be copied, configured, build and installed inside the chroot|
 |KERNELSRC_CLEAN|boolean|false|`true`\|`false`|Clean the existing kernel sources directory `KERNELSRC_DIR` (using `make mrproper`) after it was copied to the chroot and before the compilation of the kernel has started. This parameter will be ignored if no `KERNELSRC_DIR` was specified or if `KERNELSRC_PREBUILT`=true|
-|KERNELSRC_CONFIG|boolean|true|`true`\|`false`|Run `make bcm2709_defconfig` (and optional `make menuconfig`) to configure the kernel sources before building. This parameter is automatically set to `true` if no existing kernel sources directory was specified using `KERNELSRC_DIR`. This parameter is ignored if `KERNELSRC_PREBUILT`=true|
+|KERNELSRC_CONFIG|boolean|true|`true`\|`false`|true=enable custom kernel options. This parameter is automatically set to `true` if no existing kernel sources directory was specified using `KERNELSRC_DIR`. This parameter is ignored if `KERNELSRC_PREBUILT`=true|
 |KERNELSRC_USRCONFIG|string||`FullPathToUserKernel.config`|Copy own config file to kernel `.config`. If `KERNEL_MENUCONFIG`=true then running after copy|
 |KERNELSRC_PREBUILT|boolean|false|`true`\|`false`|With this parameter set to true the script expects the existing kernel sources directory to be already successfully cross-compiled. The parameters `KERNELSRC_CLEAN`, `KERNELSRC_CONFIG`, `KERNELSRC_USRCONFIG` and `KERNEL_MENUCONFIG` are ignored and no kernel compilation tasks are performed|
 |RPI_FIRMWARE_DIR|string||`FullPathToFolder`|Full path to a directory named `firmware`, containing a local copy of the firmware from the [RaspberryPi firmware project](https://github.com/raspberrypi/firmware). Default is to download the latest firmware directly from the project|
@@ -277,7 +277,7 @@ The following list of parameters is ignored if `ENABLE_REDUCE`=false.
 |REDUCE_HWDB|boolean|false|`true`\|`false`|Remove PCI related hwdb files (experimental)|
 |REDUCE_SSHD|boolean|false|`true`\|`false`|Replace `openssh-server` with `dropbear`|
 |REDUCE_LOCALE|boolean|false|`true`\|`false`|Remove all `locale` translation files|
-
+|REDUCE_KERNEL|boolean|false|`true`\|`false`|Reduce the size of the generated kernel by removing unwanted devices, network and filesystem drivers (experimental)|
 ---
 
 #### Encrypted root partition:
