@@ -119,17 +119,17 @@ The default location of network configuration files in the Debian `stretch` rele
 ---
 
 #### Networking settings (ethernet static):
-
+The following static networking parameters are only supported if `ENABLE_ETH_DHCP` was set to `false`.
 
 |Option|Value|value format|desciption|
 |---|---|---|---|
 |NET_ETH_ADDRESS|string|CIDR|static IPv4 or IPv6 address and its prefix, separated by "/", eg. "192.169.0.3/24"|
-|NET_ETH_GATEWAY|string|IP|IP address for the default gateway|
-|NET_ETH_DNS_1|string|IP|IP address for the first DNS server|
-|NET_ETH_DNS_2|string|IP|IP address for the second DNS server|
+|NET_ETH_GATEWAY|string|IP|default gateway|
+|NET_ETH_DNS_1|string|IP|first DNS server|
+|NET_ETH_DNS_2|string|IP|second DNS server|
 |NET_ETH_DNS_DOMAINS|string|example.local|default DNS search domains to use for non fully qualified hostnames|
-|NET_ETH_NTP_1|string|IP|IP address for the first NTP server|
-|NET_ETH_NTP_2|string|IP|IP address for the second NTP server|
+|NET_ETH_NTP_1|string|IP|first NTP server|
+|NET_ETH_NTP_2|string|IP|second NTP server|
 
 ---
 
@@ -143,175 +143,44 @@ The default location of network configuration files in the Debian `stretch` rele
 ---
 
 #### Networking settings (WIFI static):
-These parameters are used to set up a static networking configuration in `/etc/systemd/network/wlan0.network`. The following static networking parameters are only supported if `ENABLE_WIFI_DHCP` was set to `false`. The default location of network configuration files in the Debian `stretch` release was changed to `/lib/systemd/network`.
+The following static networking parameters are only supported if `ENABLE_WIFI_DHCP` was set to `false`.
+
 
 |Option|Value|default value|value format|desciption|
 |---|---|---|---|---|
 |NET_WIFI_ADDRESS|string|CIDR|static IPv4 or IPv6 address and its prefix, separated by "/", eg. "192.169.0.3/24"|
-|NET_WIFI_GATEWAY|string|IP|IP address for the default gateway|
-|NET_WIFI_DNS_1|string|IP|IP address for the first DNS server|
-|NET_WIFI_DNS_2|string|IP|IP address for the second DNS server|
+|NET_WIFI_GATEWAY|string|IP|default gateway|
+|NET_WIFI_DNS_1|string|IP|first DNS server|
+|NET_WIFI_DNS_2|string|IP|second DNS server|
 |NET_WIFI_DNS_DOMAINS|string|example.local|default DNS search domains to use for non fully qualified hostnames|
-|NET_WIFI_NTP_1|string|IP|IP address for the first NTP server|
-|NET_WIFI_NTP_2|string|IP|IP address for the second NTP server|
+|NET_WIFI_NTP_1|string|IP|first NTP server|
+|NET_WIFI_NTP_2|string|IP|second NTP server|
 
 ---
 
 #### Basic system features:
-
-##### `ENABLE_CONSOLE`=true
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Enable serial console interface. Recommended if no monitor or keyboard is connected to the RPi2/3. In case of problems fe. if the network (auto) configuration failed - the serial console can be used to access the system. On RPI `0` `3` `3P` the CPU speed is locked at lowest speed.
-
-##### `ENABLE_PRINTK`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Enables printing kernel messages to konsole. printk is `3 4 1 3` as in raspbian.
-
-##### `ENABLE_BLUETOOTH`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Enable onboard Bluetooth interface on the RPi0/3/3P. See: [Configuring the GPIO serial port on Raspbian jessie and stretch](https://spellfoundry.com/2016/05/29/configuring-gpio-serial-port-raspbian-jessie-including-pi-3/).
-
-##### `ENABLE_MINIUART_OVERLAY`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Enable Bluetooth to use this. Adds overlay to swap UART0 with UART1. Enabling (slower) Bluetooth and full speed serial console. - RPI `0` `3` `3P` have a fast `hardware UART0` (ttyAMA0) and a `mini UART1` (ttyS0)! RPI `1` `1P` `2` only have a `hardware UART0`. `UART0` is considered better, because is faster and more stable than `mini UART1`. By default the Bluetooth modem is mapped to the `hardware UART0` and `mini UART` is used for console. The `mini UART` is a problem for the serial console, because its baudrate depends on the CPU frequency, which is changing on runtime. Resulting in a volatile baudrate and thus in an unusable serial console.
- 
-##### `ENABLE_TURBO`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Enable Turbo mode. This setting locks cpu at the highest frequency. As setting ENABLE_CONSOLE=true locks RPI to lowest CPU speed, this is can be used additionally to lock cpu hat max speed. Need a good power supply and probably cooling for the Raspberry PI.
-
-##### `ENABLE_I2C`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Enable I2C interface on the RPi 0/1/2/3. Please check the [RPi 0/1/2/3 pinout diagrams](https://elinux.org/RPi_Low-level_peripherals) to connect the right GPIO pins.
-
-##### `ENABLE_SPI`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Enable SPI interface on the RPi 0/1/2/3. Please check the [RPi 0/1/2/3 pinout diagrams](https://elinux.org/RPi_Low-level_peripherals) to connect the right GPIO pins.
-
-##### `ENABLE_SSHD`=true
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Install and enable OpenSSH service. The default configuration of the service doesn't allow `root` to login. Please use the user `pi` instead and `su -` or `sudo` to execute commands as root.
-
-##### `ENABLE_NONFREE`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Enable non-free packages in sources.list
-
-##### `ENABLE_RSYSLOG`=true
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-If set to false, disable and uninstall rsyslog (so logs will be available only in journal files)
-
-##### `ENABLE_SOUND`=true
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Enable sound hardware and install Advanced Linux Sound Architecture.
-
-##### `ENABLE_HWRANDOM`=true
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Enable Hardware Random Number Generator. Strong random numbers are important for most network-based communications that use encryption. It's recommended to be enabled.
-
-##### `ENABLE_MINGPU`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Minimize the amount of shared memory reserved for the GPU. It doesn't seem to be possible to fully disable the GPU.
-
-##### `ENABLE_XORG`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Install Xorg open-source X Window System.
-
-##### `ENABLE_WM`=""
-Install a user-defined window manager for the X Window System. To make sure all X related package dependencies are getting installed `ENABLE_XORG` will automatically get enabled if `ENABLE_WM` is used. The `rpi23-gen-image.sh` script has been tested with the following list of window managers: `blackbox`, `openbox`, `fluxbox`, `jwm`, `dwm`, `xfce4`, `awesome`.
-
-##### `ENABLE_SYSVINIT`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Support for halt,init,poweroff,reboot,runlevel,shutdown,init commands
-
-##### `ENABLE_SPLASH`=true
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Enable default Raspberry Pi boot up rainbow splash screen.
-
-##### `ENABLE_LOGO`=true
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Enable default Raspberry Pi console logo (image of four raspberries in the top left corner).
-
-##### `ENABLE_SILENT_BOOT`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Set the verbosity of console messages shown during boot up to a strict minimum.
-
-##### `DISABLE_UNDERVOLT_WARNINGS`=
-|value|integer`
-|default|
-|format:** `[ 1 | 2 ]`
-|description:** 
-Disable RPi2/3 under-voltage warnings and overlays. Setting the parameter to `1` will disable the warning overlay. Setting it to `2` will additionally allow RPi2/3 turbo mode when low-voltage is present.
+|Option|Value|default value|value format|desciption|
+|---|---|---|---|---|
+|ENABLE_CONSOLE|boolean|true||true=Enable serial console interface. Recommended if no monitor or keyboard is connected to the RPi2/3. In case of problems fe. if the network (auto) configuration failed - the serial console can be used to access the system. On RPI `0` `3` `3P` the CPU speed is locked at lowest speed.|
+|ENABLE_PRINTK|boolean|false||true=Enables printing kernel messages to konsole. printk is `3 4 1 3` as in raspbian|
+|ENABLE_BLUETOOTH|boolean|false||true=Enable onboard Bluetooth interface on the RPi0/3/3P. See: [Configuring the GPIO serial port on Raspbian jessie and stretch](https://spellfoundry.com/2016/05/29/configuring-gpio-serial-port-raspbian-jessie-including-pi-3/)|
+|ENABLE_MINIUART_OVERLAY|boolean|false||true=Enable Bluetooth to use this. Adds overlay to swap UART0 with UART1. Enabling (slower) Bluetooth and full speed serial console. - RPI `0` `3` `3P` have a fast `hardware UART0` (ttyAMA0) and a `mini UART1` (ttyS0)! RPI `1` `1P` `2` only have a `hardware UART0`. `UART0` is considered better, because is faster and more stable than `mini UART1`. By default the Bluetooth modem is mapped to the `hardware UART0` and `mini UART` is used for console. The `mini UART` is a problem for the serial console, because its baudrate depends on the CPU frequency, which is changing on runtime. Resulting in a volatile baudrate and thus in an unusable serial console.|
+|ENABLE_TURBO|boolean|false||true=Enable Turbo mode. This setting locks cpu at the highest frequency. As setting ENABLE_CONSOLE=true locks RPI to lowest CPU speed, this is can be used additionally to lock cpu hat max speed. Need a good power supply and probably cooling for the Raspberry PI|
+|ENABLE_I2C|boolean|false||true=Enable I2C interface on the RPi 0/1/2/3. Please check the [RPi 0/1/2/3 pinout diagrams](https://elinux.org/RPi_Low-level_peripherals) to connect the right GPIO pins|
+|ENABLE_SPI|boolean|false||true=Enable SPI interface on the RPi 0/1/2/3. Please check the [RPi 0/1/2/3 pinout diagrams](https://elinux.org/RPi_Low-level_peripherals) to connect the right GPIO pins|
+|ENABLE_SSHD|boolean|true||Install and enable OpenSSH service. The default configuration of the service doesn't allow `root` to login. Please use the user `pi` instead and `su -` or `sudo` to execute commands as root|
+|ENABLE_NONFREE|boolean|false||true=enable non-free\|false=disable non free. Edits /etc/apt/sources.list in your resulting image|
+|ENABLE_RSYSLOG|boolean|true||true=keep rsyslog\|false=remove rsyslog. If rsyslog is removed (false), logs will be available only in journal files)|
+|ENABLE_SOUND|boolean|true||true=Enable sound\|false=Disable sound|
+|ENABLE_HWRANDOM|boolean|true||true=Enable Hardware Random Number Generator(RNG)\|false=Disable Hardware RNG\|Strong random numbers are important for most network-based communications that use encryption. It's recommended to be enabled|
+|ENABLE_MINGPU|boolean|false||true=GPU 16MB RAM\|false=64MB RAM\|Minimize the amount of shared memory reserved for the GPU. It doesn't seem to be possible to fully disable the GPU|
+|ENABLE_XORG|boolean|false||true=Install Xorg X Window System|\false=install no Xorg|
+|ENABLE_WM|string||`blackbox`, `openbox`, `fluxbox`, `jwm`, `dwm`, `xfce4`, `awesome`|Install a user-defined window manager for the X Window System. To make sure all X related package dependencies are getting installed `ENABLE_XORG` will automatically set true if `ENABLE_WM` is used|
+|ENABLE_SYSVINIT|boolean|false||true=Support for halt,init,poweroff,reboot,runlevel,shutdown,init commands\|false=use systemd commands|
+|ENABLE_SPLASH||true||true=Enable default Raspberry Pi boot up rainbow splash screen|
+|ENABLE_LOGO||true||Enable default Raspberry Pi console logo (image of four raspberries in the top left corner)|
+|ENABLE_SILENT_BOOT||false||Set the verbosity of console messages shown during boot up to a strict minimum|
+|DISABLE_UNDERVOLT_WARNINGS|||1\2|Disable RPi2/3 under-voltage warnings and overlays. Setting the parameter to `1` will disable the warning overlay. Setting it to `2` will additionally allow RPi2/3 turbo mode when low-voltage is present|
 
 ---
 
