@@ -93,6 +93,11 @@ These options are used to configure keyboard layout in `/etc/default/keyboard` f
 ---
 
 #### Networking settings:
+ethernet setting go to `/etc/systemd/network/eth0.network`.
+wifi settings go to `/etc/systemd/network/wlan0.network`.
+
+The default location of network configuration files in the Debian `stretch` release was changed to `/lib/systemd/network`.`
+
 |Option|Value|default value|desciption|
 |---|---|---|---|
 |ENABLE_IPV6|boolean|true|true=Enable IPv6 support via systemd-networkd|
@@ -104,9 +109,7 @@ These options are used to configure keyboard layout in `/etc/default/keyboard` f
 ---
 
 #### Networking settings (DHCP):
-`ENABLE_ETH_DHCP` is used to set up networking auto-configuration in `/etc/systemd/network/eth0.network`.
-`ENABLE_WIFI_DHCP` is used to set up networking auto-configuration in `/etc/systemd/network/wlan0.network`.
-The default location of network configuration files in the Debian `stretch` release was changed to `/lib/systemd/network`.`
+
 
 |Option|Value|default value|desciption|
 |---|---|---|---|
@@ -116,128 +119,41 @@ The default location of network configuration files in the Debian `stretch` rele
 ---
 
 #### Networking settings (ethernet static):
-These parameters are used to set up a static networking configuration in `/etc/systemd/network/eth0.network`. The following static networking parameters are only supported if `ENABLE_ETH_DHCP` was set to `false`. The default location of network configuration files in the Debian `stretch` release was changed to `/lib/systemd/network`.
 
-##### `NET_ETH_ADDRESS`
-|string|
-|default|
-|format|
-|description:** 
-Set a static IPv4 or IPv6 address and its prefix, separated by "/", eg. "192.169.0.3/24".
 
-##### `NET_ETH_GATEWAY`
-|string|
-|default|
-|format|
-|description:** 
-Set the IP address for the default gateway.
-
-##### `NET_ETH_DNS_1`
-|string|
-|default|
-|format|
-|description:** 
-Set the IP address for the first DNS server.
-
-##### `NET_ETH_DNS_2`
-|string|
-|default|
-|format|
-|description:** 
-Set the IP address for the second DNS server.
-
-##### `NET_ETH_DNS_DOMAINS`
-|string|
-|default|
-|format|
-|description:** 
-Set the default DNS search domains to use for non fully qualified hostnames.
-
-##### `NET_ETH_NTP_1`
-|string|
-|default|
-|format|
-|description:** 
-Set the IP address for the first NTP server.
-
-##### `NET_ETH_NTP_2`
-|string|
-|default|
-|format|
-|description:** 
-Set the IP address for the second NTP server.
+|Option|Value|value format|desciption|
+|---|---|---|---|
+|NET_ETH_ADDRESS|string|CIDR|static IPv4 or IPv6 address and its prefix, separated by "/", eg. "192.169.0.3/24"|
+|NET_ETH_GATEWAY|string|IP|IP address for the default gateway|
+|NET_ETH_DNS_1|string|IP|IP address for the first DNS server|
+|NET_ETH_DNS_2|string|IP|IP address for the second DNS server|
+|NET_ETH_DNS_DOMAINS|string|example.local|default DNS search domains to use for non fully qualified hostnames|
+|NET_ETH_NTP_1|string|IP|IP address for the first NTP server|
+|NET_ETH_NTP_2|string|IP|IP address for the second NTP server|
 
 ---
 
 #### Networking settings (WIFI):
 
-##### `NET_WIFI_SSID`
-|string|
-|default|
-|format|
-|description:** 
-Set to your WIFI SSID
-
-##### `NET_WIFI_PSK`
-|string|
-|default|
-|format|
-|description:** 
-Set your WPA/WPA2 PSK
+|Option|Value|value format|desciption|
+|---|---|---|---|
+|NET_WIFI_SSID|string|yourwifiname|your WIFI SSID|
+|NET_WIFI_PSK|string|yourwifikeytojoinnetwork|your WPA/WPA2 PSK|
 
 ---
 
 #### Networking settings (WIFI static):
 These parameters are used to set up a static networking configuration in `/etc/systemd/network/wlan0.network`. The following static networking parameters are only supported if `ENABLE_WIFI_DHCP` was set to `false`. The default location of network configuration files in the Debian `stretch` release was changed to `/lib/systemd/network`.
 
-##### `NET_WIFI_ADDRESS`
-|string|
-|default|
-|format|
-|description:** 
-Set a static IPv4 or IPv6 address and its prefix, separated by "/", eg. "192.169.0.3/24".
-
-##### `NET_WIFI_GATEWAY`
-|string|
-|default|
-|format|
-|description:** 
-Set the IP address for the default gateway.
-
-##### `NET_WIFI_DNS_1`
-|string|
-|default|
-|format|
-|description:** 
-Set the IP address for the first DNS server.
-
-##### `NET_WIFI_DNS_2`
-|string|
-|default|
-|format|
-|description:** 
-Set the IP address for the second DNS server.
-
-##### `NET_WIFI_DNS_DOMAINS`
-|string|
-|default|
-|format|
-|description:** 
-Set the default DNS search domains to use for non fully qualified hostnames.
-
-##### `NET_WIFI_NTP_1`
-|string|
-|default|
-|format|
-|description:** 
-Set the IP address for the first NTP server.
-
-##### `NET_WIFI_NTP_2`
-|string|
-|default|
-|format|
-|description:** 
-Set the IP address for the second NTP server.
+|Option|Value|default value|value format|desciption|
+|---|---|---|---|---|
+|NET_WIFI_ADDRESS|string|CIDR|static IPv4 or IPv6 address and its prefix, separated by "/", eg. "192.169.0.3/24"|
+|NET_WIFI_GATEWAY|string|IP|IP address for the default gateway|
+|NET_WIFI_DNS_1|string|IP|IP address for the first DNS server|
+|NET_WIFI_DNS_2|string|IP|IP address for the second DNS server|
+|NET_WIFI_DNS_DOMAINS|string|example.local|default DNS search domains to use for non fully qualified hostnames|
+|NET_WIFI_NTP_1|string|IP|IP address for the first NTP server|
+|NET_WIFI_NTP_2|string|IP|IP address for the second NTP server|
 
 ---
 
