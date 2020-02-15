@@ -318,7 +318,7 @@ if [ -n "$SET_ARCH" ] ; then
 		  fi
 	    fi
 	  fi
-
+    fi
     # Raspberry Pi model specific settings
     if [ "$RPI_MODEL" = 2 ] || [ "$RPI_MODEL" = 3 ] || [ "$RPI_MODEL" = 3P ] || [ "$RPI_MODEL" = 4 ] ; then
       if [ "$RPI_MODEL" != 4 ] ; then
