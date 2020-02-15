@@ -10,7 +10,7 @@ APT_INCLUDES=git,usbutils,firmware-linux-free
 ##General system settings###
 ############################
 SET_ARCH=64
-RPI_MODEL="3P"
+RPI_MODEL=3P
 RELEASE=buster
 HOSTNAME=
 DEFLOCAL=en_US.UTF-8
