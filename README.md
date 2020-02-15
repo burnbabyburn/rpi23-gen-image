@@ -177,10 +177,10 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 |ENABLE_XORG|boolean|false||true=Install Xorg X Window System|\false=install no Xorg|
 |ENABLE_WM|string||`blackbox`, `openbox`, `fluxbox`, `jwm`, `dwm`, `xfce4`, `awesome`|Install a user-defined window manager for the X Window System. To make sure all X related package dependencies are getting installed `ENABLE_XORG` will automatically set true if `ENABLE_WM` is used|
 |ENABLE_SYSVINIT|boolean|false||true=Support for halt,init,poweroff,reboot,runlevel,shutdown,init commands\|false=use systemd commands|
-|ENABLE_SPLASH||true||true=Enable default Raspberry Pi boot up rainbow splash screen|
-|ENABLE_LOGO||true||Enable default Raspberry Pi console logo (image of four raspberries in the top left corner)|
-|ENABLE_SILENT_BOOT||false||Set the verbosity of console messages shown during boot up to a strict minimum|
-|DISABLE_UNDERVOLT_WARNINGS|||1\2|Disable RPi2/3 under-voltage warnings and overlays. Setting the parameter to `1` will disable the warning overlay. Setting it to `2` will additionally allow RPi2/3 turbo mode when low-voltage is present|
+|ENABLE_SPLASH|boolean|true||true=Enable default Raspberry Pi boot up rainbow splash screen|
+|ENABLE_LOGO|boolean|true||Enable default Raspberry Pi console logo (image of four raspberries in the top left corner)|
+|ENABLE_SILENT_BOOT|boolean|false||Set the verbosity of console messages shown during boot up to a strict minimum|
+|DISABLE_UNDERVOLT_WARNINGS|integer||1\/2|Disable RPi2/3 under-voltage warnings and overlays. Setting the parameter to `1` will disable the warning overlay. Setting it to `2` will additionally allow RPi2/3 turbo mode when low-voltage is present|
 
 ---
 
