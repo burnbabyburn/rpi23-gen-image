@@ -264,7 +264,7 @@ COMPILER_PACKAGES=""
 # Check if apt-cacher-ng has port 3142 open and set APT_PROXY
 APT_CACHER_RUNNING=$(lsof -i :3142 | cut -d ' ' -f3 | uniq | sed '/^\s*$/d')
 if [ "${APT_CACHER_RUNNING}" = "apt-cacher-ng" ] ; then
-  APT_PROXY=http://127.0.0.1:3142/
+  APT_PROXY="http://127.0.0.1:3142/"
 fi
 
 # Setup architecture specific settings
@@ -308,7 +308,7 @@ if [ -n "$SET_ARCH" ] ; then
       RELEASE_ARCH=${RELEASE_ARCH:=armel}
       KERNEL_IMAGE=${KERNEL_IMAGE:=kernel.img}
       CROSS_COMPILE=${CROSS_COMPILE:=arm-linux-gnueabi-}
-	  
+	
       if [ $ENABLE_XORG = true ] ; then
         if [ $RELEASE = "stretch" ] || [ $RELEASE = "oldstable" ] ; then
           printf "\nBest support for armel architecture (RPI 0|1|1P) is provided under Debian stretch/oldstable. Choose yes to change release to Debian stretch[y/n] "
