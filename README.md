@@ -40,6 +40,7 @@ CONFIG_TEMPLATE=rpi3stretch ./rpi23-gen-image.sh
 CONFIG_TEMPLATE=rpi2stretch ./rpi23-gen-image.sh
 ```
 **A Pipe ("|") represents a logical OR**
+**A valuetype of boolean represents the options true or false
 
 ## Supported parameters and settings
 
@@ -68,39 +69,39 @@ CONFIG_TEMPLATE=rpi2stretch ./rpi23-gen-image.sh
 ---
 
 #### User settings:
+|Option|Value|default value|value format|desciption|
+|---|---|---|---|---|
+|ENABLE_ROOT|boolean|false||Enable=root login if ROOT_PASSWORD is set|
+|ROOT_PASSWORD|string|raspberry||Set system `root` password. It's **STRONGLY** recommended that you choose a custom password.|
+|ENABLE_USER|boolean|true||Create non-root user with password `USER_PASSWORD` and username `USER_NAME`|
+|USER_NAME|string|pi||Set username|
+|USER_PASSWORD|string|raspberry||Set password for non-root user. It's **STRONGLY** recommended that you choose a custom password.|
 
-##### `ENABLE_ROOT`
-*  **value:** `[ true | false ]`
-*  **true|Enable root login if ROOT_PASSWORD is set`
-*  **false|Disable root login`
-*  **default:** false
-|description:** Set root user password so root login will be enabled
-
-##### `ROOT_PASSWORD`
-|string|
+##### ``
+||
 |default:** "raspberry"
 |format:** ``
-|description:** Set system `root` password. It's **STRONGLY** recommended that you choose a custom password.
+|description:** 
 
-##### `ENABLE_USER`
+##### ``
 *  **value:** `[ true | false ]`
 *  **true|Create user`
 *  **false|Create no user`
 *  **default|true`
-|description:** Create non-root user with password `USER_PASSWORD`=raspberry. Unless overridden with `USER_NAME`=user, the username will be `pi`.
+|description:** 
 
-##### `USER_NAME`
+##### ``
 |string|
 |default:** "pi"
 |format:** 
 |description:** Non-root user to create.  Ignored if `ENABLE_USER`=false
 
-##### `USER_PASSWORD`
+##### ``
 |string|
 |default:** "raspberry"
 |format:** 
 |description:** 
-Set password for the created non-root user `USER_NAME`=pi. Ignored if `ENABLE_USER`=false. It's **STRONGLY** recommended that you choose a custom password.
+Set password for the created non-root user `USER_NAME`=pi. Ignored if `ENABLE_USER`=false. 
 
 
 ---
