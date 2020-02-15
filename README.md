@@ -44,28 +44,20 @@ CONFIG_TEMPLATE=rpi2stretch ./rpi23-gen-image.sh
 
 #### APT settings:
 |Option|Value|default value|value format|desciption|
-|---|-|---|---|---|
+|---|---|---|---|---|
 |APT_SERVER|string|ftp.debian.org|URL|Set Debian packages server address. Choose a server from the list of Debian worldwide [mirror sites](https://www.debian.org/mirror/list). Using a nearby server will probably speed-up all required downloads within the bootstrapping process.|
 |APT_PROXY|string||URL|Set Proxy server address. Using a local Proxy-Cache like `apt-cacher-ng` will speed-up the bootstrapping process because all required Debian packages will only be downloaded from the Debian mirror site once. If `apt-cacher-ng` is running on default `http://127.0.0.1:3142` it is autodetected and you don't need to set this.|
 |KEEP_APT_PROXY|boolean|false|true\|false|Keep the APT_PROXY settings used in the bootsrapping process in the generated image|
-|APT_INCLUDES|string list||package0,package1,package2...|A comma-separated list of additional packages to be installed by debootstrap during bootstrapping.|
-|APT_INCLUDES_LATE|string list||package0,package1,package2...|A comma-separated list of additional packages to be installed by apt after bootstrapping and after APT sources are set up.  This is useful for packages with pre-depends, which debootstrap do not handle well.|
+|APT_INCLUDES|string list||package0,package1,...|A comma-separated list of additional packages to be installed by debootstrap during bootstrapping.|
+|APT_INCLUDES_LATE|string list||package0,package1,...|A comma-separated list of additional packages to be installed by apt after bootstrapping and after APT sources are set up.  This is useful for packages with pre-depends, which debootstrap do not handle well.|
 
 ---
 
 #### General system settings:
-
-##### `SET_ARCH`
-|value|integer`
-|default:*32*
-|format:** `[ 32 | 64 ]`
-|description:** Set Architecture to default 32bit. If you want to compile 64-bit (RPI3/RPI3+/RPI4) set it to `64`. This option will set every needed cross-compiler or board specific option for a successful build.
-
-##### `RPI_MODEL`
-|string|
-|default:*2*
-|format:** `[ 0 | 1 | 1P | 2 | 3 | 3P | 4 ]`
-|description:** Set Architecture. This option will set most build options accordingly.
+|Option|Value|default value|value format|desciption|
+|---|---|---|---|---|
+|SET_ARCH|integer|32|32\|64]|Set Architecture to default 32bit. If you want to compile 64-bit (RPI3/RPI3+/RPI4) set it to `64`. This option will set every needed cross-compiler or board specific option for a successful build.|
+|RPI_MODEL|string|2|0\|1\|1P\|2\|3\|3P\|4\|Set Architecture. This option will set most build options accordingly.
 Specify the target Raspberry Pi hardware model. The script at this time supports the following Raspberry Pi models:
   *  `0`  = Raspberry Pi 0 and Raspberry Pi 0 W
   *  `1`  = Raspberry Pi 1 model A and B
@@ -73,7 +65,12 @@ Specify the target Raspberry Pi hardware model. The script at this time supports
   *  `2`  = Raspberry Pi 2 model B
   *  `3`  = Raspberry Pi 3 model B
   *  `3P` = Raspberry Pi 3 model B+
-  *  `4`  = Raspberry Pi 4 model B
+  *  `4`  = Raspberry Pi 4 model B|
+||||||
+||||||
+||||||
+||||||
+||||||
 
 ##### `RELEASE`
 |string|
