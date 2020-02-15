@@ -52,16 +52,18 @@ if [ "$ENABLE_ETH_DHCP" = true ] ; then
 
 else # ENABLE_ETH_DHCP=false
   # Set static network configuration for interface eth0
-  sed -i\
-  -e "s|DHCP=.*|DHCP=no|"\
-  -e "s|Address=\$|Address=${NET_ETH_ADDRESS}|"\
-  -e "s|Gateway=\$|Gateway=${NET_ETH_GATEWAY}|"\
-  -e "0,/DNS=\$/ s|DNS=\$|DNS=${NET_ETH_DNS_1}|"\
-  -e "0,/DNS=\$/ s|DNS=\$|DNS=${NET_ETH_DNS_2}|"\
-  -e "s|Domains=\$|Domains=${NET_ETH_DNS_DOMAINS}|"\
-  -e "0,/NTP=\$/ s|NTP=\$|NTP=${NET_ETH_NTP_1}|"\
-  -e "0,/NTP=\$/ s|NTP=\$|NTP=${NET_ETH_NTP_2}|"\
-  "${ETC_DIR}/systemd/network/eth0.network"
+  if [ -n NET_ETH_ADDRESS ] && [ -n NET_ETH_GATEWAY ] && [ -n NET_ETH_DNS_1 ] ; then
+    sed -i\
+    -e "s|DHCP=.*|DHCP=no|"\
+    -e "s|Address=\$|Address=${NET_ETH_ADDRESS}|"\
+    -e "s|Gateway=\$|Gateway=${NET_ETH_GATEWAY}|"\
+    -e "0,/DNS=\$/ s|DNS=\$|DNS=${NET_ETH_DNS_1}|"\
+    -e "0,/DNS=\$/ s|DNS=\$|DNS=${NET_ETH_DNS_2}|"\
+    -e "s|Domains=\$|Domains=${NET_ETH_DNS_DOMAINS}|"\
+    -e "0,/NTP=\$/ s|NTP=\$|NTP=${NET_ETH_NTP_1}|"\
+    -e "0,/NTP=\$/ s|NTP=\$|NTP=${NET_ETH_NTP_2}|"\
+    "${ETC_DIR}/systemd/network/eth0.network"
+  fi
 fi
 
 
@@ -76,18 +78,20 @@ if [ "$ENABLE_WIRELESS" = true ] ; then
 	  sed '/IPv6PrivacyExtensions=true/d' "${ETC_DIR}/systemd/network/wlan0.network"
     fi
 
-  else # ENABLE_ETH_DHCP=false
+  else # ENABLE_WIFI_DHCP=false
     # Set static network configuration for interface eth0
-    sed -i\
-    -e "s|DHCP=.*|DHCP=no|"\
-    -e "s|Address=\$|Address=${NET_WIFI_ADDRESS}|"\
-    -e "s|Gateway=\$|Gateway=${NET_WIFI_GATEWAY}|"\
-    -e "0,/DNS=\$/ s|DNS=\$|DNS=${NET_WIFI_DNS_1}|"\
-    -e "0,/DNS=\$/ s|DNS=\$|DNS=${NET_WIFI_DNS_2}|"\
-    -e "s|Domains=\$|Domains=${NET_WIFI_DNS_DOMAINS}|"\
-    -e "0,/NTP=\$/ s|NTP=\$|NTP=${NET_WIFI_NTP_1}|"\
-    -e "0,/NTP=\$/ s|NTP=\$|NTP=${NET_WIFI_NTP_2}|"\
-    "${ETC_DIR}/systemd/network/wlan0.network"
+	if [ -n NET_WIFI_ADDRESS ] && [ -n NET_WIFI_GATEWAY ] && [ -n NET_WIFI_DNS_1 ] ; then
+      sed -i\
+      -e "s|DHCP=.*|DHCP=no|"\
+      -e "s|Address=\$|Address=${NET_WIFI_ADDRESS}|"\
+      -e "s|Gateway=\$|Gateway=${NET_WIFI_GATEWAY}|"\
+      -e "0,/DNS=\$/ s|DNS=\$|DNS=${NET_WIFI_DNS_1}|"\
+      -e "0,/DNS=\$/ s|DNS=\$|DNS=${NET_WIFI_DNS_2}|"\
+      -e "s|Domains=\$|Domains=${NET_WIFI_DNS_DOMAINS}|"\
+      -e "0,/NTP=\$/ s|NTP=\$|NTP=${NET_WIFI_NTP_1}|"\
+      -e "0,/NTP=\$/ s|NTP=\$|NTP=${NET_WIFI_NTP_2}|"\
+      "${ETC_DIR}/systemd/network/wlan0.network"
+	fi
   fi
   
   if [ -z "$NET_WIFI_SSID" ] && [ -z "$NET_WIFI_PSK" ] ; then

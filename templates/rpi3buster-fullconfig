@@ -103,6 +103,7 @@ ENABLE_REDUCE=false
 ENABLE_SPLITFS=false
 ENABLE_INITRAMFS=false
 ENABLE_DBUS=true
+CHROOT_SCRIPTS=
 ############################
 ENABLE_UBOOT=false
 UBOOTSRC_DIR=
@@ -115,11 +116,6 @@ VIDEOCORESRC_DIR=
 ############################
 ENABLE_NEXMON=false
 NEXMONSRC_DIR=
-############################
-CHROOT_SCRIPTS=
-ENABLE_SPLITFS=false
-ENABLE_INITRAMFS=false
-ENABLE_DBUS=true
 ############################
 ########SSH settings########
 ############################
@@ -148,7 +144,7 @@ KERNELSRC_DIR=
 KERNELSRC_CLEAN=false
 KERNELSRC_CONFIG=true
 KERNELSRC_USRCONFIG=
-KERNELSRC_PREBUILT=true
+KERNELSRC_PREBUILT=false
 RPI_FIRMWARE_DIR=
 KERNEL_DEFAULT_GOV=ondemand
 KERNEL_NF=false
