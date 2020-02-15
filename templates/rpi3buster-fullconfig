@@ -2,15 +2,14 @@
 ########APT settings########
 ############################
 APT_SERVER=ftp.debian.org
-APT_PROXY=http://127.0.0.1:3142
+APT_PROXY=
 KEEP_APT_PROXY=false
 APT_INCLUDES_LATE=
 APT_INCLUDES=
-#APT_INCLUDES=git,usbutils,firmware-linux-free
 ############################
 ##General system settings###
 ############################
-SET_ARCH=64
+SET_ARCH=32
 RPI_MODEL=3P
 RELEASE=buster
 HOSTNAME=
@@ -21,7 +20,7 @@ EXPANDROOT=true
 #######User settings########
 ############################
 ENABLE_ROOT=false
-ROOT_PASSWORD=password
+ROOT_PASSWORD=raspberry
 ENABLE_USER=true
 USER_NAME=pi
 USER_PASSWORD=raspberry
@@ -76,9 +75,9 @@ ENABLE_TURBO=false
 ENABLE_I2C=true
 ENABLE_SPI=true
 ENABLE_SSHD=true
-ENABLE_NONFREE=true
-ENABLE_RSYSLOG=true
-ENABLE_SOUND=true
+ENABLE_NONFREE=false
+ENABLE_RSYSLOG=false
+ENABLE_SOUND=false
 ENABLE_HWRANDOM=true
 ENABLE_MINGPU=false
 ENABLE_XORG=false
@@ -97,12 +96,14 @@ ENABLE_DPHYSSWAP=true
 ENABLE_SYSTEMDSWAP=false
 ############################
 ENABLE_QEMU=false
+QEMU_BINARY=
 ENABLE_KEYGEN=false
 ENABLE_MINBASE=false
-ENABLE_REDUCE=false
 ENABLE_SPLITFS=false
 ENABLE_INITRAMFS=false
 ENABLE_DBUS=true
+ENABLE_USBBOOT=false
+############################
 CHROOT_SCRIPTS=
 ############################
 ENABLE_UBOOT=false
@@ -161,13 +162,13 @@ KERNEL_DHKEY=true
 ############################
 ENABLE_REDUCE=false
 REDUCE_APT=true
-REDUCE_DOC=true
-REDUCE_MAN=true
+REDUCE_DOC=false
+REDUCE_MAN=false
 REDUCE_VIM=false
 REDUCE_BASH=false
-REDUCE_HWDB=true
-REDUCE_SSHD=true
-REDUCE_LOCALE=true
+REDUCE_HWDB=false
+REDUCE_SSHD=false
+REDUCE_LOCALE=false
 ############################
 ######CryptFS Settings######
 ############################

@@ -64,7 +64,7 @@ CONFIG_TEMPLATE=rpi2stretch ./rpi23-gen-image.sh
 |Option|Value|default value|value format|desciption|
 |---|---|---|---|---|
 |SET_ARCH|integer|32|`32`\|`64`|Set Architecture to default 32bit. If you want to compile 64-bit (RPI3/RPI3+/RPI4) set it to `64`. This option will set every needed cross-compiler or board specific option for a successful build.|
-|RPI_MODEL|string|2|`0`\|`1`\|`1P`\|`2`\|`3`\|`3P`\|`4`|Set Architecture. This option will set most build options accordingly. Specify the target Raspberry Pi hardware model.|
+|RPI_MODEL|string|3P|`0`\|`1`\|`1P`\|`2`\|`3`\|`3P`\|`4`|Set Architecture. This option will set most build options accordingly. Specify the target Raspberry Pi hardware model.|
 |RELEASE|string|buster|`jessie`\|`buster`\|`stretch`<br>\|`bullseye`\|`testing`\|`stable`<br>\|`oldstable`|Set the desired Debian release name. The script at this time supports the bootstrapping of the Debian releases `stretch` and `buster`.|
 |HOSTNAME|string|RPI_MODEL-RELEASE(e.g. RPI3-buster)|SomeImageName|Set system hostname. It's recommended that the hostname is unique in the corresponding subnet.|
 |DEFLOCAL|string|en_US.UTF-8|Locale|Set default system locale. This setting can also be changed inside the running OS using the `dpkg-reconfigure locales` command. Please note that on using this parameter the script will automatically install the required packages `locales`, `keyboard-configuration` and `console-setup`.|
@@ -128,13 +128,13 @@ The following static networking parameters are only supported if `ENABLE_ETH_DHC
 
 |Option|Value|value format|desciption|
 |---|---|---|---|
-|NET_ETH_ADDRESS|string|CIDR|static IPv4 or IPv6 address and its prefix, separated by "/", eg. "192.169.0.3/24"|
-|NET_ETH_GATEWAY|string|IP|default gateway|
-|NET_ETH_DNS_1|string|IP|first DNS server|
-|NET_ETH_DNS_2|string|IP|second DNS server|
-|NET_ETH_DNS_DOMAINS|string|example.local|default DNS search domains to use for non fully qualified hostnames|
-|NET_ETH_NTP_1|string|IP|first NTP server|
-|NET_ETH_NTP_2|string|IP|second NTP server|
+|NET_ETH_ADDRESS|string|`CIDR`|static IPv4 or IPv6 address and its prefix, separated by "/", eg. "192.169.0.3/24"|
+|NET_ETH_GATEWAY|string|`IP`|default gateway|
+|NET_ETH_DNS_1|string|`IP`|first DNS server|
+|NET_ETH_DNS_2|string|`IP`|second DNS server|
+|NET_ETH_DNS_DOMAINS|string|`example.local`|default DNS search domains to use for non fully qualified hostnames|
+|NET_ETH_NTP_1|string|`IP`|first NTP server|
+|NET_ETH_NTP_2|string|`IP`|second NTP server|
 
 ---
 
@@ -142,8 +142,8 @@ The following static networking parameters are only supported if `ENABLE_ETH_DHC
 
 |Option|Value|value format|desciption|
 |---|---|---|---|
-|NET_WIFI_SSID|string|yourwifiname|your WIFI SSID|
-|NET_WIFI_PSK|string|yourwifikeytojoinnetwork|your WPA/WPA2 PSK|
+|NET_WIFI_SSID|string|`yourwifiname`|WIFI SSID|
+|NET_WIFI_PSK|string|`yourwifikeytojoinnetwork`|WPA/WPA2 PSK|
 
 ---
 
@@ -152,13 +152,13 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 
 |Option|Value|value format|desciption|
 |---|---|---|---|
-|NET_WIFI_ADDRESS|string|CIDR|static IPv4 or IPv6 address and its prefix, separated by "/", eg. "192.169.0.3/24"|
-|NET_WIFI_GATEWAY|string|IP|default gateway|
-|NET_WIFI_DNS_1|string|IP|first DNS server|
-|NET_WIFI_DNS_2|string|IP|second DNS server|
+|NET_WIFI_ADDRESS|string|`CIDR`|static IPv4 or IPv6 address and its prefix, separated by "/", eg. "192.169.0.3/24"|
+|NET_WIFI_GATEWAY|string|`IP`|default gateway|
+|NET_WIFI_DNS_1|string|`IP`|first DNS server|
+|NET_WIFI_DNS_2|string|`IP`|second DNS server|
 |NET_WIFI_DNS_DOMAINS|string|example.local|default DNS search domains to use for non fully qualified hostnames|
-|NET_WIFI_NTP_1|string|IP|first NTP server|
-|NET_WIFI_NTP_2|string|IP|second NTP server|
+|NET_WIFI_NTP_1|string|`IP`|first NTP server|
+|NET_WIFI_NTP_2|string|`IP`|second NTP server|
 
 ---
 
@@ -166,25 +166,25 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 
 |Option|Value|default value|value format|desciption|
 |---|---|---|---|---|
-|ENABLE_CONSOLE|boolean|true|`true`\|`false`|true=Enable serial console interface.Recommended if no monitor or keyboard is connected to the RPi2/3. In case of problems fe. if the network (auto) configuration failed - the serial console can be used to access the system. On RPI `0` `3` `3P` the CPU speed is locked at lowest speed.|
+|ENABLE_CONSOLE|boolean|false|`true`\|`false`|true=Enable serial console interface.Recommended if no monitor or keyboard is connected to the RPi2/3. In case of problems fe. if the network (auto) configuration failed - the serial console can be used to access the system. On RPI `0` `3` `3P` the CPU speed is locked at lowest speed.|
 |ENABLE_PRINTK|boolean|false|`true`\|`false`|true=Enables printing kernel messages to konsole. printk is `3 4 1 3` as in raspbian|
 |ENABLE_BLUETOOTH|boolean|false|`true`\|`false`|true=Enable onboard Bluetooth interface on the RPi0/3/3P. See: [Configuring the GPIO serial port on Raspbian jessie and stretch](https://spellfoundry.com/2016/05/29/configuring-gpio-serial-port-raspbian-jessie-including-pi-3/)|
 |ENABLE_MINIUART_OVERLAY|boolean|false|`true`\|`false`|true=Enable Bluetooth to use this. Adds overlay to swap UART0 with UART1. Enabling (slower) Bluetooth and full speed serial console. - RPI `0` `3` `3P` have a fast `hardware UART0` (ttyAMA0) and a `mini UART1` (ttyS0)! RPI `1` `1P` `2` only have a `hardware UART0`. `UART0` is considered better, because is faster and more stable than `mini UART1`. By default the Bluetooth modem is mapped to the `hardware UART0` and `mini UART` is used for console. The `mini UART` is a problem for the serial console, because its baudrate depends on the CPU frequency, which is changing on runtime. Resulting in a volatile baudrate and thus in an unusable serial console.|
 |ENABLE_TURBO|boolean|false|`true`\|`false`|true=Enable Turbo mode. This setting locks cpu at the highest frequency. As setting ENABLE_CONSOLE=true locks RPI to lowest CPU speed, this is can be used additionally to lock cpu hat max speed. Need a good power supply and probably cooling for the Raspberry PI|
-|ENABLE_I2C|boolean|false|`true`\|`false`|true=Enable I2C interface on the RPi 0/1/2/3. Please check the [RPi 0/1/2/3 pinout diagrams](https://elinux.org/RPi_Low-level_peripherals) to connect the right GPIO pins|
-|ENABLE_SPI|boolean|false|`true`\|`false`|true=Enable SPI interface on the RPi 0/1/2/3. Please check the [RPi 0/1/2/3 pinout diagrams](https://elinux.org/RPi_Low-level_peripherals) to connect the right GPIO pins|
+|ENABLE_I2C|boolean|true|`true`\|`false`|true=Enable I2C interface on the RPi 0/1/2/3. Please check the [RPi 0/1/2/3 pinout diagrams](https://elinux.org/RPi_Low-level_peripherals) to connect the right GPIO pins|
+|ENABLE_SPI|boolean|true|`true`\|`false`|true=Enable SPI interface on the RPi 0/1/2/3. Please check the [RPi 0/1/2/3 pinout diagrams](https://elinux.org/RPi_Low-level_peripherals) to connect the right GPIO pins|
 |ENABLE_SSHD|boolean|true|`true`\|`false`|Install and enable OpenSSH service. The default configuration of the service doesn't allow `root` to login. Please use the user `pi` instead and `su -` or `sudo` to execute commands as root|
 |ENABLE_NONFREE|boolean|false|`true`\|`false`|true=enable non-free\|false=disable non free. Edits /etc/apt/sources.list in your resulting image|
-|ENABLE_RSYSLOG|boolean|true|`true`\|`false`|true=keep rsyslog\|false=remove rsyslog. If rsyslog is removed (false), logs will be available only in journal files)|
-|ENABLE_SOUND|boolean|true|`true`\|`false`|true=Enable sound\|false=Disable sound|
+|ENABLE_RSYSLOG|boolean|false|`true`\|`false`|true=keep rsyslog\|false=remove rsyslog. If rsyslog is removed (false), logs will be available only in journal files)|
+|ENABLE_SOUND|boolean|false|`true`\|`false`|true=Enable sound\|false=Disable sound|
 |ENABLE_HWRANDOM|boolean|true|`true`\|`false`|true=Enable Hardware Random Number Generator(RNG)\|false=Disable Hardware RNG\|Strong random numbers are important for most network-based communications that use encryption. It's recommended to be enabled|
 |ENABLE_MINGPU|boolean|false|`true`\|`false`|true=GPU 16MB RAM\|false=64MB RAM\|Minimize the amount of shared memory reserved for the GPU. It doesn't seem to be possible to fully disable the GPU. Also removes start.elf,fixup.dat,start_x.elf,fixup_x.dat form /boot|
 |ENABLE_XORG|boolean|false|`true`\|`false`|true=Install Xorg X Window System|\false=install no Xorg|
 |ENABLE_WM|string||`blackbox`, `openbox`, `fluxbox`,<br> `jwm`, `dwm`, `xfce4`, `awesome`|Install a user-defined window manager for the X Window System. To make sure all X related package dependencies are getting installed `ENABLE_XORG` will automatically set true if `ENABLE_WM` is used|
 |ENABLE_SYSVINIT|boolean|false|`true`\|`false`|true=Support for halt,init,poweroff,reboot,runlevel,shutdown,init commands\|false=use systemd commands|
 |ENABLE_SPLASH|boolean|true|`true`\|`false`|true=Enable default Raspberry Pi boot up rainbow splash screen|
-|ENABLE_LOGO|boolean|true|`true`\|`false`|Enable default Raspberry Pi console logo (image of four raspberries in the top left corner)|
-|ENABLE_SILENT_BOOT|boolean|false|`true`\|`false`|Set the verbosity of console messages shown during boot up to a strict minimum|
+|ENABLE_LOGO|boolean|true|`true`\|`false`|true=Enable default Raspberry Pi console logo (image of four raspberries in the top left corner)|
+|ENABLE_SILENT_BOOT|boolean|false|`true`\|`false`|true=Set the verbosity of console messages shown during boot up to a strict minimum|
 |DISABLE_UNDERVOLT_WARNINGS|integer||`1`\|`2`|Unset to keep default behaviour. Setting the parameter to `1` will disable the warning overlay. Setting it to `2` will additionally allow RPi2/3 turbo mode when low-voltage is present|
 
 ---
@@ -199,6 +199,11 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 |QEMU_BINARY|string||`FullPathToQemuBinaryFile`|Sets the QEMU enviornment for the Debian archive. **Set by RPI_MODEL**|
 |ENABLE_KEYGEN|boolean|false|`true`\|`false`|Recover your lost codec license|
 |ENABLE_MINBASE|boolean|false|`true`\|`false`|Use debootstrap script variant `minbase` which only includes essential packages and apt. This will reduce the disk usage by about 65 MB|
+|ENABLE_SPLITFS|boolean|false|`true`\|`false`|Enable having root partition on an USB drive by creating two image files: one for the `/boot/firmware` mount point, and another for `/`|
+|ENABLE_INITRAMFS|boolean|false|`true`\|`false`|Create an initramfs that that will be loaded during the Linux startup process. `ENABLE_INITRAMFS` will automatically get enabled if `ENABLE_CRYPTFS`=true. This parameter will be ignored if `BUILD_KERNEL`=false|
+|ENABLE_DBUS|boolean|true|`true`\|`false`|Install and enable D-Bus message bus. Please note that systemd should work without D-bus but it's recommended to be enabled|
+|ENABLE_USBBOOT|boolean|false|`true`\|`false`|true=prepare image for usbboot. use with `ENABLE_SPLTFS`=true|
+|CHROOT_SCRIPTS|string||`FullPathToScriptFolder`|Full path to a directory with scripts that should be run in the chroot before the image is finally built. Every executable file in this directory is run in lexicographical order|
 |ENABLE_UBOOT|boolean|false|`true`\|`false`|Replace the default RPi 0/1/2/3 second stage bootloader (bootcode.bin) with [U-Boot bootloader](https://git.denx.de/?p=u-boot.git;a=summary). U-Boot can boot images via the network using the BOOTP/TFTP protocol. RPI4 needs tbd|
 |UBOOTSRC_DIR|string||`FullPathToUBootFolder`|Full path to a directory named `u-boot` of [U-Boot bootloader sources](https://git.denx.de/?p=u-boot.git;a=summary) that will be copied, configured, build and installed inside the chroot|
 |ENABLE_FBTURBO|boolean|false|`true`\|`false`|Install and enable the [hardware accelerated Xorg video driver](https://github.com/ssvb/xf86-video-fbturbo) `fbturbo`. Please note that this driver is currently limited to hardware accelerated window moving and scrolling|
@@ -207,11 +212,6 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 |VIDEOCORESRC_DIR|string||`FullPathToVideoSrcFolder`|Full path to a directory named `userland` of [ARM side libraries for interfacing to Raspberry Pi GPU](https://github.com/raspberrypi/userland) that will be copied, configured, build and installed inside the chroot|
 |ENABLE_NEXMON|boolean|false|`true`\|`false`|Install and enable the source code for a C-based firmware patching framework for Broadcom/Cypress WiFi chips that enables you to write your own firmware patches, for example, to enable monitor mode with radiotap headers and frame injection](https://github.com/seemoo-lab/nexmon.git)|
 |NEXMONSRC_DIR|string||`FullPathToNexmonFolder`|Full path to a directory named `nexmon` of [Source code for ARM side libraries for interfacing to Raspberry Pi GPU](https://github.com/raspberrypi/userland) that will be copied, configured, build and installed inside the chroot|
-|ENABLE_USBBOOT|boolean|false|`true`\|`false`|true=prepare image for usbboot. use with `ENABLE_SPLTFS`=true|
-|ENABLE_SPLITFS|boolean|false|`true`\|`false`|Enable having root partition on an USB drive by creating two image files: one for the `/boot/firmware` mount point, and another for `/`|
-|CHROOT_SCRIPTS|string||`FullPathToScriptFolder`|Full path to a directory with scripts that should be run in the chroot before the image is finally built. Every executable file in this directory is run in lexicographical order|
-|ENABLE_INITRAMFS|boolean|false|`true`\|`false`|Create an initramfs that that will be loaded during the Linux startup process. `ENABLE_INITRAMFS` will automatically get enabled if `ENABLE_CRYPTFS`=true. This parameter will be ignored if `BUILD_KERNEL`=false|
-|ENABLE_DBUS|boolean|true|`true`\|`false`|Install and enable D-Bus message bus. Please note that systemd should work without D-bus but it's recommended to be enabled|
 
 ---
 
@@ -250,7 +250,7 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 |KERNELSRC_USRCONFIG|string||`FullPathToUserKernel.config`|Copy own config file to kernel `.config`. If `KERNEL_MENUCONFIG`=true then running after copy|
 |KERNELSRC_PREBUILT|boolean|false|`true`\|`false`|With this parameter set to true the script expects the existing kernel sources directory to be already successfully cross-compiled. The parameters `KERNELSRC_CLEAN`, `KERNELSRC_CONFIG`, `KERNELSRC_USRCONFIG` and `KERNEL_MENUCONFIG` are ignored and no kernel compilation tasks are performed|
 |RPI_FIRMWARE_DIR|string||`FullPathToFolder`|Full path to a directory named `firmware`, containing a local copy of the firmware from the [RaspberryPi firmware project](https://github.com/raspberrypi/firmware). Default is to download the latest firmware directly from the project|
-|KERNEL_DEFAULT_GOV|string||`performance`\|`powersave`<br>\|`userspace`\|`ondemand`<br>\|`conservative`\|`schedutil`|Set the default cpu governor at kernel compilation. Possivle values: |
+|KERNEL_DEFAULT_GOV|string|ondemand|`performance`\|`powersave`<br>\|`userspace`\|`ondemand`<br>\|`conservative`\|`schedutil`|Set the default cpu governor at kernel compilation|
 |KERNEL_NF|boolean|false|`true`\|`false`|Enable Netfilter modules as kernel modules. You want that for iptables|
 |KERNEL_VIRT|boolean|false|`true`\|`false`|Enable Kernel KVM support (/dev/kvm)|
 |KERNEL_ZSWAP|boolean|false|`true`\|`false`|Enable Kernel Zswap support. Best use on high RAM load and mediocre CPU load usecases|
@@ -270,13 +270,13 @@ The following list of parameters is ignored if `ENABLE_REDUCE`=false.
 |---|---|---|---|---|
 |ENABLE_REDUCE|boolean|false|`true`\|`false`|Reduce the disk space usage by deleting packages and files. See `REDUCE_*` parameters for detailed information|
 |REDUCE_APT|boolean|true|`true`\|`false`|Configure APT to use compressed package repository lists and no package caching files|
-|REDUCE_DOC|boolean|true|`true`\|`false`|Remove all doc files (harsh). Configure APT to not include doc files on future `apt-get` package installations|
-|REDUCE_MAN|boolean|true|`true`\|`false`|Remove all man pages and info files (harsh).  Configure APT to not include man pages on future `apt-get` package installations|
+|REDUCE_DOC|boolean|false|`true`\|`false`|Remove all doc files (harsh). Configure APT to not include doc files on future `apt-get` package installations|
+|REDUCE_MAN|boolean|false|`true`\|`false`|Remove all man pages and info files (harsh).  Configure APT to not include man pages on future `apt-get` package installations|
 |REDUCE_VIM|boolean|false|`true`\|`false`|Replace `vim-tiny` package by `levee` a tiny vim clone|
 |REDUCE_BASH|boolean|false|`true`\|`false`|Remove `bash` package and switch to `dash` shell (experimental)|
-|REDUCE_HWDB|boolean|true|`true`\|`false`|Remove PCI related hwdb files (experimental)|
-|REDUCE_SSHD|boolean|true|`true`\|`false`|Replace `openssh-server` with `dropbear`|
-|REDUCE_LOCALE|boolean|true|`true`\|`false`|Remove all `locale` translation files|
+|REDUCE_HWDB|boolean|false|`true`\|`false`|Remove PCI related hwdb files (experimental)|
+|REDUCE_SSHD|boolean|false|`true`\|`false`|Replace `openssh-server` with `dropbear`|
+|REDUCE_LOCALE|boolean|false|`true`\|`false`|Remove all `locale` translation files|
 
 ---
 
@@ -288,10 +288,10 @@ The following list of parameters is ignored if `ENABLE_REDUCE`=false.
 |---|---|---|---|---|
 |ENABLE_CRYPTFS|boolean|false|`true`\|`false`|Enable full system encryption with dm-crypt. Setup a fully LUKS encrypted root partition (aes-xts-plain64:sha512) and generate required initramfs. The /boot directory will not be encrypted. This parameter will be ignored if `BUILD_KERNEL`=false. `ENABLE_CRYPTFS` is experimental|
 |CRYPTFS_PASSWORD|string||`YourPasswordToUnlockCrypto`|Set password of the encrypted root partition. This parameter is mandatory if `ENABLE_CRYPTFS`=true|
-|CRYPTFS_MAPPING|string|`secure`|YourDmName|crypsetup device-mapper name|
-|CRYPTFS_CIPHER|string|`aes-xts-plain64`|aes-cbc-essiv:sha256|cryptsetup cipher `aes-xts*` ciphers are strongly recommended|
+|CRYPTFS_MAPPING|string|secure|YourDmName|crypsetup device-mapper name|
+|CRYPTFS_CIPHER|string|aes-xts-plain64|`aes-cbc-essiv:sha256`|cryptsetup cipher `aes-xts*` ciphers are strongly recommended|
 |CRYPTFS_HASH|string|sha256|`sha256`\|`sha512`|cryptsetup hash algorithm|
-|CRYPTFS_XTSKEYSIZE|integer|`256`\|`512`||Sets key size in bits. The argument has to be a multiple of 8|
+|CRYPTFS_XTSKEYSIZE|integer|256|`256`\|`512`||Sets key size in bits. The argument has to be a multiple of 8|
 |CRYPTFS_DROPBEAR|boolean|false|`true`\|`false`|true=Enable Dropbear Initramfs support\|false=disable dropbear|
 |CRYPTFS_DROPBEAR_PUBKEY|string||`PathToYourPublicDropbearKeyFile`|Full path to dropbear Public RSA-OpenSSH Key|
 
