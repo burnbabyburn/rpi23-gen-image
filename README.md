@@ -88,7 +88,7 @@ CONFIG_TEMPLATE=rpi2stretch ./rpi23-gen-image.sh
 ##### `RPI_MODEL`
 * **value:** `string`
 * **default:*2*
-* **format:** `[ 0 | 1 | 1P | 2 | 3 | 3P | 4]`
+* **format:** `[ 0 | 1 | 1P | 2 | 3 | 3P | 4 ]`
 * **description:** Set Architecture. This option will set most build options accordingly.
 Specify the target Raspberry Pi hardware model. The script at this time supports the following Raspberry Pi models:
   *  `0`  = Raspberry Pi 0 and Raspberry Pi 0 W
@@ -99,17 +99,29 @@ Specify the target Raspberry Pi hardware model. The script at this time supports
   *  `3P` = Raspberry Pi 3 model B+
   *  `4`  = Raspberry Pi 4 model B
 
-##### `RELEASE`="buster"
-Set the desired Debian release name. The script at this time supports the bootstrapping of the Debian releases `stretch` and `buster`.
+##### `RELEASE`
+* **value:** `string`
+* **default:** "buster"
+* **format:** ` [ jessie | buster | stretch | bullseye | testing | stable | oldstable ]`
+* **description:** Set the desired Debian release name. The script at this time supports the bootstrapping of the Debian releases `stretch` and `buster`.
 
-##### `HOSTNAME`="rpi$RPI_MODEL-$RELEASE"
-Set system hostname. It's recommended that the hostname is unique in the corresponding subnet.
+##### `HOSTNAME`=""
+* **value:** `string`
+* **default:** "rpi$RPI_MODEL-$RELEASE" e.g. RPI3-buster
+* **format:**
+* **description:** Set system hostname. It's recommended that the hostname is unique in the corresponding subnet.
 
-##### `DEFLOCAL`="en_US.UTF-8"
-Set default system locale. This setting can also be changed inside the running OS using the `dpkg-reconfigure locales` command. Please note that on using this parameter the script will automatically install the required packages `locales`, `keyboard-configuration` and `console-setup`.
+##### `DEFLOCAL`
+* **value:** `string`
+* **default:** "en_US.UTF-8"
+* **format:** `Locale`
+* **description:** Set default system locale. This setting can also be changed inside the running OS using the `dpkg-reconfigure locales` command. Please note that on using this parameter the script will automatically install the required packages `locales`, `keyboard-configuration` and `console-setup`.
 
-##### `TIMEZONE`="Europe/Berlin"
-Set default system timezone. All available timezones can be found in the `/usr/share/zoneinfo/` directory. This setting can also be changed inside the running OS using the `dpkg-reconfigure tzdata` command.
+##### `TIMEZONE`=
+* **value:** `string`
+* **default:** "Europe/Berlin"
+* **format:** `Timezone`
+* **description:** Set default system timezone. All available timezones can be found in the `/usr/share/zoneinfo/` directory. This setting can also be changed inside the running OS using the `dpkg-reconfigure tzdata` command.
 
 ##### `EXPANDROOT`=true
 Expand the root partition and filesystem automatically on first boot.
@@ -120,39 +132,71 @@ Expand the root partition and filesystem automatically on first boot.
 
 ##### `ENABLE_ROOT`=false
 *  **value:** `[ true | false ]`
-*  **true:**
-*  **false:**
+*  **true:** `Enable root login if ROOT_PASSWORD is set`
+*  **false:** `Disable root login`
 *  **default:** false
-Set root user password so root login will be enabled
+* **description:** Set root user password so root login will be enabled
 
 ##### `ROOT_PASSWORD`="raspberry"
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Set system `root` password. It's **STRONGLY** recommended that you choose a custom password.
 
 ##### `ENABLE_USER`=true
 Create non-root user with password `USER_PASSWORD`=raspberry. Unless overridden with `USER_NAME`=user, the username will be `pi`.
 
 ##### `USER_NAME`=pi
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Non-root user to create.  Ignored if `ENABLE_USER`=false
 
 ##### `USER_PASSWORD`="raspberry"
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Set password for the created non-root user `USER_NAME`=pi. Ignored if `ENABLE_USER`=false. It's **STRONGLY** recommended that you choose a custom password.
 
 
 ---
 
 #### Keyboard settings:
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 These options are used to configure keyboard layout in `/etc/default/keyboard` for console and Xorg. These settings can also be changed inside the running OS using the `dpkg-reconfigure keyboard-configuration` command.
 
 ##### `XKB_MODEL`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Set the name of the model of your keyboard type.
 
 ##### `XKB_LAYOUT`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Set the supported keyboard layout(s).
 
 ##### `XKB_VARIANT`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Set the supported variant(s) of the keyboard layout(s).
 
 ##### `XKB_OPTIONS`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Set extra xkb configuration options.
 
 ---
@@ -191,24 +235,52 @@ Set the system to use DHCP. This requires an DHCP server. Requires ENABLE_WIRELE
 These parameters are used to set up a static networking configuration in `/etc/systemd/network/eth0.network`. The following static networking parameters are only supported if `ENABLE_ETH_DHCP` was set to `false`. The default location of network configuration files in the Debian `stretch` release was changed to `/lib/systemd/network`.
 
 ##### `NET_ETH_ADDRESS`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Set a static IPv4 or IPv6 address and its prefix, separated by "/", eg. "192.169.0.3/24".
 
 ##### `NET_ETH_GATEWAY`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Set the IP address for the default gateway.
 
 ##### `NET_ETH_DNS_1`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Set the IP address for the first DNS server.
 
 ##### `NET_ETH_DNS_2`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Set the IP address for the second DNS server.
 
 ##### `NET_ETH_DNS_DOMAINS`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Set the default DNS search domains to use for non fully qualified hostnames.
 
 ##### `NET_ETH_NTP_1`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Set the IP address for the first NTP server.
 
 ##### `NET_ETH_NTP_2`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Set the IP address for the second NTP server.
 
 ---
@@ -216,9 +288,17 @@ Set the IP address for the second NTP server.
 #### Networking settings (WIFI):
 
 ##### `NET_WIFI_SSID`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Set to your WIFI SSID
 
 ##### `NET_WIFI_PSK`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Set your WPA/WPA2 PSK
 
 ---
@@ -227,24 +307,52 @@ Set your WPA/WPA2 PSK
 These parameters are used to set up a static networking configuration in `/etc/systemd/network/wlan0.network`. The following static networking parameters are only supported if `ENABLE_WIFI_DHCP` was set to `false`. The default location of network configuration files in the Debian `stretch` release was changed to `/lib/systemd/network`.
 
 ##### `NET_WIFI_ADDRESS`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Set a static IPv4 or IPv6 address and its prefix, separated by "/", eg. "192.169.0.3/24".
 
 ##### `NET_WIFI_GATEWAY`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Set the IP address for the default gateway.
 
 ##### `NET_WIFI_DNS_1`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Set the IP address for the first DNS server.
 
 ##### `NET_WIFI_DNS_2`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Set the IP address for the second DNS server.
 
 ##### `NET_WIFI_DNS_DOMAINS`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Set the default DNS search domains to use for non fully qualified hostnames.
 
 ##### `NET_WIFI_NTP_1`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Set the IP address for the first NTP server.
 
 ##### `NET_WIFI_NTP_2`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Set the IP address for the second NTP server.
 
 ---
@@ -325,6 +433,10 @@ Enables [Systemd-swap service](https://github.com/Nefelim4ag/systemd-swap). Usef
 Generate kernel (`vexpress_defconfig`), file system image (`qcow2`) and DTB files that can be used for QEMU full system emulation (`vexpress-A15`). The output files are stored in the `$(pwd)/images/qemu` directory. You can find more information about running the generated image in the QEMU section of this readme file.
 
 ##### `QEMU_BINARY`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Sets the QEMU enviornment for the Debian archive. Set by RPI_MODEL
 
 ##### `ENABLE_KEYGEN`=false
@@ -338,30 +450,50 @@ Replace the default RPi 0/1/2/3 second stage bootloader (bootcode.bin) with [U-B
 RPI4 needs tbd
 
 ##### `UBOOTSRC_DIR`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Path to a directory (`u-boot`) of [U-Boot bootloader sources](https://git.denx.de/?p=u-boot.git;a=summary) that will be copied, configured, build and installed inside the chroot.
 
 ##### `ENABLE_FBTURBO`=false
 Install and enable the [hardware accelerated Xorg video driver](https://github.com/ssvb/xf86-video-fbturbo) `fbturbo`. Please note that this driver is currently limited to hardware accelerated window moving and scrolling.
 
 ##### `FBTURBOSRC_DIR`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Path to a directory (`xf86-video-fbturbo`) of [hardware accelerated Xorg video driver sources](https://github.com/ssvb/xf86-video-fbturbo) that will be copied, configured, build and installed inside the chroot.
 
 ##### `ENABLE_VIDEOCORE`=false
 Install and enable the [ARM side libraries for interfacing to Raspberry Pi GPU](https://github.com/raspberrypi/userland) `vcgencmd`. Please note that this driver is currently limited to hardware accelerated window moving and scrolling.
 
 ##### `VIDEOCORESRC_DIR`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Path to a directory (`userland`) of [ARM side libraries for interfacing to Raspberry Pi GPU](https://github.com/raspberrypi/userland) that will be copied, configured, build and installed inside the chroot.
 
 ##### `ENABLE_NEXMON`=false
 Install and enable the [Source code for a C-based firmware patching framework for Broadcom/Cypress WiFi chips that enables you to write your own firmware patches, for example, to enable monitor mode with radiotap headers and frame injection](https://github.com/seemoo-lab/nexmon.git).
 
 ##### `NEXMONSRC_DIR`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Path to a directory (`nexmon`) of [Source code for ARM side libraries for interfacing to Raspberry Pi GPU](https://github.com/raspberrypi/userland) that will be copied, configured, build and installed inside the chroot.
 
 ##### `ENABLE_SPLITFS`=false
 Enable having root partition on an USB drive by creating two image files: one for the `/boot/firmware` mount point, and another for `/`.
 
 ##### `CHROOT_SCRIPTS`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Path to a directory with scripts that should be run in the chroot before the image is finally built. Every executable file in this directory is run in lexicographical order.
 
 ##### `ENABLE_INITRAMFS`=false
@@ -383,9 +515,17 @@ Disable password-based SSH authentication. Only public key based SSH (v2) authen
 Limit the users that are allowed to login via SSH. Only allow user `USER_NAME`=pi and root if `SSH_ENABLE_ROOT`=true to login. This parameter will be ignored if `dropbear` SSH is used (`REDUCE_SSHD`=true).
 
 ##### `SSH_ROOT_PUB_KEY`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Use full path to file. Add SSH (v2) public key(s) from specified file to `authorized_keys` file to enable public key based SSH (v2) authentication of user `root`. The specified file can also contain multiple SSH (v2) public keys. SSH protocol version 1 is not supported. `ENABLE_ROOT` **and** `SSH_ENABLE_ROOT` must be set to `true`.
 
 ##### `SSH_USER_PUB_KEY`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Use full path to file. Add SSH (v2) public key(s) from specified file to `authorized_keys` file to enable public key based SSH (v2) authentication of user `USER_NAME`=pi. The specified file can also contain multiple SSH (v2) public keys. SSH protocol version 1 is not supported.
 
 ---
@@ -398,18 +538,38 @@ Precompiled 32bit kernel for RPI0/1/2/3 by [https://github.com/hypriot/](hypriot
 Precompiled 64bit kernel for RPI3/4 by [https://github.com/sakaki-/](sakaki)
 
 ##### `CROSS_COMPILE`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 This sets the cross-compile environment for the compiler. Set by RPI_MODEL
 
 ##### `KERNEL_ARCH`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 This sets the kernel architecture for the compiler. Set by RPI_MODEL
 
 ##### `KERNEL_IMAGE`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Name of the image file in the boot partition. Set by RPI_MODEL
 
 ##### `KERNEL_BRANCH`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Name of the requested branch from the GIT location for the RPi Kernel. Default is using the current default branch from the GIT site.
 
 ##### `KERNEL_DEFCONFIG`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Sets the default config for kernel compiling. Set by RPI_MODEL
 
 ##### `KERNEL_REDUCE`=false
@@ -434,6 +594,10 @@ Compile the kernel using ccache. This speeds up kernel recompilation by caching 
 Remove all kernel sources from the generated OS image after it was built and installed.
 
 ##### `KERNELSRC_DIR`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Path to a directory (`linux`) of [RaspberryPi Linux kernel sources](https://github.com/raspberrypi/linux) that will be copied, configured, build and installed inside the chroot.
 
 ##### `KERNELSRC_CLEAN`=false
@@ -443,15 +607,27 @@ Clean the existing kernel sources directory `KERNELSRC_DIR` (using `make mrprope
 Run `make bcm2709_defconfig` (and optional `make menuconfig`) to configure the kernel sources before building. This parameter is automatically set to `true` if no existing kernel sources directory was specified using `KERNELSRC_DIR`. This parameter is ignored if `KERNELSRC_PREBUILT`=true.
 
 ##### `KERNELSRC_USRCONFIG`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Copy own config file to kernel `.config`. If `KERNEL_MENUCONFIG`=true then running after copy.
 
 ##### `KERNELSRC_PREBUILT`=false
 With this parameter set to true the script expects the existing kernel sources directory to be already successfully cross-compiled. The parameters `KERNELSRC_CLEAN`, `KERNELSRC_CONFIG`, `KERNELSRC_USRCONFIG` and `KERNEL_MENUCONFIG` are ignored and no kernel compilation tasks are performed.
 
 ##### `RPI_FIRMWARE_DIR`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 The directory (`firmware`) containing a local copy of the firmware from the [RaspberryPi firmware project](https://github.com/raspberrypi/firmware). Default is to download the latest firmware directly from the project.
 
 ##### `KERNEL_DEFAULT_GOV`="ONDEMAND"
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Set the default cpu governor at kernel compilation. Supported values are: PERFORMANCE POWERSAVE USERSPACE ONDEMAND CONSERVATIVE SCHEDUTIL
 
 ##### `KERNEL_NF`=false
@@ -522,15 +698,31 @@ Remove all `locale` translation files.
 Enable full system encryption with dm-crypt. Setup a fully LUKS encrypted root partition (aes-xts-plain64:sha512) and generate required initramfs. The /boot directory will not be encrypted. This parameter will be ignored if `BUILD_KERNEL`=false. `ENABLE_CRYPTFS` is experimental. SSH-to-initramfs is currently not supported but will be soon - feel free to help.
 
 ##### `CRYPTFS_PASSWORD`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Set password of the encrypted root partition. This parameter is mandatory if `ENABLE_CRYPTFS`=true.
 
 ##### `CRYPTFS_MAPPING`="secure"
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Set name of dm-crypt managed device-mapper mapping.
 
 ##### `CRYPTFS_CIPHER`="aes-xts-plain64"
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Set cipher specification string. `aes-xts*` ciphers are strongly recommended.
 
 ##### `CRYPTFS_HASH`=sha256
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Hash function and size to be used
 
 ##### `CRYPTFS_XTSKEYSIZE`=256
@@ -540,6 +732,10 @@ Sets key size in bits. The argument has to be a multiple of 8.
 Enable Dropbear Initramfs support
 
 ##### `CRYPTFS_DROPBEAR_PUBKEY`=""
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Provide path to dropbear Public RSA-OpenSSH Key
 
 ---
@@ -547,9 +743,17 @@ Provide path to dropbear Public RSA-OpenSSH Key
 #### Build settings:
 
 ##### `BASEDIR`="$(pwd)/images/${RELEASE}"
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Set a path to a working directory used by the script to generate an image.
 
 ##### `IMAGE_NAME`="${BASEDIR}/${DATE}-${KERNEL_ARCH}-${KERNEL_BRANCH}-rpi${RPI_MODEL}-${RELEASE}-${RELEASE_ARCH}"
+* **value:** `string`
+* **default:** ""
+* **format:** `
+* **description:** 
 Set a filename for the output file(s). Note: the script will create $IMAGE_NAME.img if `ENABLE_SPLITFS`=false or $IMAGE_NAME-frmw.img and $IMAGE_NAME-root.img if `ENABLE_SPLITFS`=true. Note 2: If the KERNEL_BRANCH is not set, the word "CURRENT" is used.
 
 ## Understanding the script
