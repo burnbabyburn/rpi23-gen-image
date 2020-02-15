@@ -1,5 +1,5 @@
 #
-# Build and Setup RPi2/3 Kernel
+# Build and Setup RPi2/3/4 Kernel 4.XX 5.XX
 #
 
 # Load utility functions
