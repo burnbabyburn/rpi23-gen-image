@@ -213,9 +213,9 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 
 |Option|Value|default value|value format|desciption|
 |---|---|---|---|---|
-|SSH_ENABLE_ROOT||false||Enable password-based root login via SSH. This may be a security risk with the default password set, use only in trusted environments. `ENABLE_ROOT` must be set to `true`|
-|SSH_DISABLE_PASSWORD_AUTH||false||Disable password-based SSH authentication. Only public key based SSH (v2) authentication will be supported|
-|SSH_LIMIT_USERS||false||Limit the users that are allowed to login via SSH. Only allow user `USER_NAME`=pi and root if `SSH_ENABLE_ROOT`=true to login. This parameter will be ignored if `dropbear` SSH is used (`REDUCE_SSHD`=true)|
+|SSH_ENABLE_ROOT|boolean|false||Enable password-based root login via SSH. This may be a security risk with the default password set, use only in trusted environments. `ENABLE_ROOT` must be set to `true`|
+|SSH_DISABLE_PASSWORD_AUTH|boolean|false||Disable password-based SSH authentication. Only public key based SSH (v2) authentication will be supported|
+|SSH_LIMIT_USERS|boolean|false||Limit the users that are allowed to login via SSH. Only allow user `USER_NAME`=pi and root if `SSH_ENABLE_ROOT`=true to login. This parameter will be ignored if `dropbear` SSH is used (`REDUCE_SSHD`=true)|
 |SSH_ROOT_PUB_KEY|string|||Use full path to file. Add SSH (v2) public key(s) from specified file to `authorized_keys` file to enable public key based SSH (v2) authentication of user `root`. The specified file can also contain multiple SSH (v2) public keys. SSH protocol version 1 is not supported. `ENABLE_ROOT` **and** `SSH_ENABLE_ROOT` must be set to `true`|
 |SSH_USER_PUB_KEY|string|||Use full path to file. Add SSH (v2) public key(s) from specified file to `authorized_keys` file to enable public key based SSH (v2) authentication of user `USER_NAME`=pi. The specified file can also contain multiple SSH (v2) public keys. SSH protocol version 1 is not supported|
 
@@ -233,27 +233,27 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 |KERNEL_DEFCONFIG|string|||Sets the default config for kernel compiling. Set by RPI_MODEL|
 |KERNEL_REDUCE|boolean|false||Reduce the size of the generated kernel by removing unwanted devices, network and filesystem drivers (experimental)|
 |KERNEL_THREADS|integer|||Number of threads to build the kernel. If not set, the script will automatically determine the maximum number of CPU cores to speed up kernel compilation|
-|KERNEL_HEADERS||true||Install kernel headers with the built kernel|
-|KERNEL_MENUCONFIG||false||Start `make menuconfig` interactive menu-driven kernel configuration. The script will continue after `make menuconfig` was terminated|
-|KERNEL_OLDDEFCONFIG||false||Run `make olddefconfig` to automatically set all new kernel configuration options to their recommended default values|
-|KERNEL_CCACHE||false||Compile the kernel using ccache. This speeds up kernel recompilation by caching previous compilations and detecting when the same compilation is being done again|
-|KERNEL_REMOVESRC|true|||Remove all kernel sources from the generated OS image after it was built and installed|
+|KERNEL_HEADERS|boolean|true||Install kernel headers with the built kernel|
+|KERNEL_MENUCONFIG|boolean|false||Start `make menuconfig` interactive menu-driven kernel configuration. The script will continue after `make menuconfig` was terminated|
+|KERNEL_OLDDEFCONFIG|boolean|false||Run `make olddefconfig` to automatically set all new kernel configuration options to their recommended default values|
+|KERNEL_CCACHE|boolean|false||Compile the kernel using ccache. This speeds up kernel recompilation by caching previous compilations and detecting when the same compilation is being done again|
+|KERNEL_REMOVESRC|boolean|true||Remove all kernel sources from the generated OS image after it was built and installed|
 |KERNELSRC_DIR|string|||Full path to a directory named `linux` of [RaspberryPi Linux kernel sources](https://github.com/raspberrypi/linux) that will be copied, configured, build and installed inside the chroot|
-|KERNELSRC_CLEAN||false||Clean the existing kernel sources directory `KERNELSRC_DIR` (using `make mrproper`) after it was copied to the chroot and before the compilation of the kernel has started. This parameter will be ignored if no `KERNELSRC_DIR` was specified or if `KERNELSRC_PREBUILT`=true|
-|KERNELSRC_CONFIG||true||Run `make bcm2709_defconfig` (and optional `make menuconfig`) to configure the kernel sources before building. This parameter is automatically set to `true` if no existing kernel sources directory was specified using `KERNELSRC_DIR`. This parameter is ignored if `KERNELSRC_PREBUILT`=true|
+|KERNELSRC_CLEAN|boolean|false||Clean the existing kernel sources directory `KERNELSRC_DIR` (using `make mrproper`) after it was copied to the chroot and before the compilation of the kernel has started. This parameter will be ignored if no `KERNELSRC_DIR` was specified or if `KERNELSRC_PREBUILT`=true|
+|KERNELSRC_CONFIG|boolean|true||Run `make bcm2709_defconfig` (and optional `make menuconfig`) to configure the kernel sources before building. This parameter is automatically set to `true` if no existing kernel sources directory was specified using `KERNELSRC_DIR`. This parameter is ignored if `KERNELSRC_PREBUILT`=true|
 |KERNELSRC_USRCONFIG|string|||Copy own config file to kernel `.config`. If `KERNEL_MENUCONFIG`=true then running after copy|
-|KERNELSRC_PREBUILT||false||With this parameter set to true the script expects the existing kernel sources directory to be already successfully cross-compiled. The parameters `KERNELSRC_CLEAN`, `KERNELSRC_CONFIG`, `KERNELSRC_USRCONFIG` and `KERNEL_MENUCONFIG` are ignored and no kernel compilation tasks are performed|
+|KERNELSRC_PREBUILT|boolean|false||With this parameter set to true the script expects the existing kernel sources directory to be already successfully cross-compiled. The parameters `KERNELSRC_CLEAN`, `KERNELSRC_CONFIG`, `KERNELSRC_USRCONFIG` and `KERNEL_MENUCONFIG` are ignored and no kernel compilation tasks are performed|
 |RPI_FIRMWARE_DIR|string|||full path to a directory named `firmware`, containing a local copy of the firmware from the [RaspberryPi firmware project](https://github.com/raspberrypi/firmware). Default is to download the latest firmware directly from the project|
 |KERNEL_DEFAULT_GOV|string|||Set the default cpu governor at kernel compilation. Possivle values: PERFORMANCE\|POWERSAVE\|USERSPACE\|ONDEMAND\|CONSERVATIVE\|SCHEDUTIL|
-|KERNEL_NF||false||Enable Netfilter modules as kernel modules. You want that for iptables|
-|KERNEL_VIRT||false||Enable Kernel KVM support (/dev/kvm)|
-|KERNEL_ZSWAP||false||Enable Kernel Zswap support. Best use on high RAM load and mediocre CPU load usecases|
-|KERNEL_BPF||true||Allow attaching eBPF programs to a cgroup using the bpf syscall (CONFIG_BPF_SYSCALL CONFIG_CGROUP_BPF) [systemd wants it - File /lib/systemd/system/systemd-journald.server:36 configures an IP firewall (IPAddressDeny=all), but the local system does not support BPF/cgroup based firewalls]|
-|KERNEL_SECURITY||false||Enables Apparmor, integrity subsystem, auditing|
-|KERNEL_BTRFS||false||enable btrfs kernel support|
-|KERNEL_POEHAT||false||enable Enable RPI POE HAT fan kernel support|
-|KERNEL_NSPAWN||false||Enable per-interface network priority control - for systemd-nspawn|
-|KERNEL_DHKEY||true||Diffie-Hellman operations on retained keys - required for >keyutils-1.6|
+|KERNEL_NF|boolean|false||Enable Netfilter modules as kernel modules. You want that for iptables|
+|KERNEL_VIRT|boolean|false||Enable Kernel KVM support (/dev/kvm)|
+|KERNEL_ZSWAP|boolean|false||Enable Kernel Zswap support. Best use on high RAM load and mediocre CPU load usecases|
+|KERNEL_BPF|boolean|true||Allow attaching eBPF programs to a cgroup using the bpf syscall (CONFIG_BPF_SYSCALL CONFIG_CGROUP_BPF) [systemd wants it - File /lib/systemd/system/systemd-journald.server:36 configures an IP firewall (IPAddressDeny=all), but the local system does not support BPF/cgroup based firewalls]|
+|KERNEL_SECURITY|boolean|false||Enables Apparmor, integrity subsystem, auditing|
+|KERNEL_BTRFS|boolean|false||enable btrfs kernel support|
+|KERNEL_POEHAT|boolean|false||enable Enable RPI POE HAT fan kernel support|
+|KERNEL_NSPAWN|boolean|false||Enable per-interface network priority control - for systemd-nspawn|
+|KERNEL_DHKEY|boolean|true||Diffie-Hellman operations on retained keys - required for >keyutils-1.6|
 
 ---
 
@@ -262,15 +262,15 @@ The following list of parameters is ignored if `ENABLE_REDUCE`=false.
 
 |Option|Value|default value|value format|desciption|
 |---|---|---|---|---|
-|ENABLE_REDUCE||false||Reduce the disk space usage by deleting packages and files. See `REDUCE_*` parameters for detailed information|
-|REDUCE_APT||true||Configure APT to use compressed package repository lists and no package caching files|
-|REDUCE_DOC||true||Remove all doc files (harsh). Configure APT to not include doc files on future `apt-get` package installations|
-|REDUCE_MAN||true||Remove all man pages and info files (harsh).  Configure APT to not include man pages on future `apt-get` package installations|
-|REDUCE_VIM||false||Replace `vim-tiny` package by `levee` a tiny vim clone|
-|REDUCE_BASH||false||Remove `bash` package and switch to `dash` shell (experimental)|
-|REDUCE_HWDB||true||Remove PCI related hwdb files (experimental)|
-|REDUCE_SSHD||true||Replace `openssh-server` with `dropbear`|
-|REDUCE_LOCALE||true||Remove all `locale` translation files|
+|ENABLE_REDUCE|boolean|false||Reduce the disk space usage by deleting packages and files. See `REDUCE_*` parameters for detailed information|
+|REDUCE_APT|boolean|true||Configure APT to use compressed package repository lists and no package caching files|
+|REDUCE_DOC|boolean|true||Remove all doc files (harsh). Configure APT to not include doc files on future `apt-get` package installations|
+|REDUCE_MAN|boolean|true||Remove all man pages and info files (harsh).  Configure APT to not include man pages on future `apt-get` package installations|
+|REDUCE_VIM|boolean|false||Replace `vim-tiny` package by `levee` a tiny vim clone|
+|REDUCE_BASH|boolean|false||Remove `bash` package and switch to `dash` shell (experimental)|
+|REDUCE_HWDB|boolean|true||Remove PCI related hwdb files (experimental)|
+|REDUCE_SSHD|boolean|true||Replace `openssh-server` with `dropbear`|
+|REDUCE_LOCALE|boolean|true||Remove all `locale` translation files|
 
 ---
 
@@ -279,22 +279,22 @@ The following list of parameters is ignored if `ENABLE_REDUCE`=false.
 
 |Option|Value|default value|value format|desciption|
 |---|---|---|---|---|
-|ENABLE_CRYPTFS||false||Enable full system encryption with dm-crypt. Setup a fully LUKS encrypted root partition (aes-xts-plain64:sha512) and generate required initramfs. The /boot directory will not be encrypted. This parameter will be ignored if `BUILD_KERNEL`=false. `ENABLE_CRYPTFS` is experimental. SSH-to-initramfs is currently not supported but will be soon - feel free to help|
-|CRYPTFS_PASSWORD|string|||Set password of the encrypted root partition. This parameter is mandatory if `ENABLE_CRYPTFS`=true|
-|CRYPTFS_MAPPING||secure||Set name of dm-crypt managed device-mapper mapping|
-|CRYPTFS_CIPHER|string|aes-xts-plain64||Set cipher specification string. `aes-xts*` ciphers are strongly recommended|
-|CRYPTFS_HASH|string|sha256||Hash function and size to be used|
-|CRYPTFS_XTSKEYSIZE|integer|256||Sets key size in bits. The argument has to be a multiple of 8|
-|CRYPTFS_DROPBEAR||false||true=Enable Dropbear Initramfs support\|false=disable dropbear|
-|CRYPTFS_DROPBEAR_PUBKEY|string|||Full path to dropbear Public RSA-OpenSSH Key|
+|ENABLE_CRYPTFS|boolean|false||Enable full system encryption with dm-crypt. Setup a fully LUKS encrypted root partition (aes-xts-plain64:sha512) and generate required initramfs. The /boot directory will not be encrypted. This parameter will be ignored if `BUILD_KERNEL`=false. `ENABLE_CRYPTFS` is experimental. SSH-to-initramfs is currently not supported but will be soon - feel free to help|
+|CRYPTFS_PASSWORD|string||YourPasswordToUnlockCrypto|Set password of the encrypted root partition. This parameter is mandatory if `ENABLE_CRYPTFS`=true|
+|CRYPTFS_MAPPING|string|secure|YourDmName|crypsetup device-mapper name|
+|CRYPTFS_CIPHER|string|aes-xts-plain64|aes-cbc-essiv:sha256|cryptsetup cipher `aes-xts*` ciphers are strongly recommended|
+|CRYPTFS_HASH|string|sha256|sha256\|sha512|cryptsetup hash algorithm(https://wiki.archlinux.org/index.php/Dm-crypt/Device_encryption)|
+|CRYPTFS_XTSKEYSIZE|integer|256\|512||Sets key size in bits. The argument has to be a multiple of 8|
+|CRYPTFS_DROPBEAR|boolean|false||true=Enable Dropbear Initramfs support\|false=disable dropbear|
+|CRYPTFS_DROPBEAR_PUBKEY|string||PathToYourPublicDropbearKeyFile|Full path to dropbear Public RSA-OpenSSH Key|
 
 ---
 
 #### Build settings:
 |Option|Value|default value|value format|desciption|
 |---|---|---|---|---|
-|BASEDIR|string|$(pwd)/images/${RELEASE}|yourimagename|Full path to a working directory used by the script to generate an image|
-|IMAGE_NAME|string||BASEDIR/DATE-KERNEL_ARCH-KERNEL_BRANCH-rpiRPI_MODEL-RELEASE-RELEASE_ARCH|Set a filename for the output file(s). Note: the script will create $IMAGE_NAME.img if `ENABLE_SPLITFS`=false or $IMAGE_NAME-frmw.img and $IMAGE_NAME-root.img if `ENABLE_SPLITFS`=true. Note 2: If the KERNEL_BRANCH is not set, the word "CURRENT" is used|
+|BASEDIR|string|$(pwd)/images/${RELEASE}|FullPathToScriptRootDir|Full path to a working directory used by the script to generate an image|
+|IMAGE_NAME|string|rpi`RPI_MODEL`-`RELEASE`-`RELEASE_ARCH`|YourImageName|Set a filename for the output file(s). Note: the script will create $IMAGE_NAME.img if `ENABLE_SPLITFS`=false or $IMAGE_NAME-frmw.img and $IMAGE_NAME-root.img if `ENABLE_SPLITFS`=true. Note 2: If the KERNEL_BRANCH is not set, the word "CURRENT" is used|
 
 ---
 
