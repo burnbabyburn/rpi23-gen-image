@@ -53,6 +53,12 @@ if [ "$BUILD_KERNEL" = true ] ; then
     KERNEL_THREADS=$(grep -c processor /proc/cpuinfo)
   fi
   
+# TODO: Check if defined Threadcount is higher than actual cores  
+#  if [ "$KERNEL_THREADS" > grep -c processor /proc/cpuinfo] ; then
+#	  echo "Defined more Threads than core assigned to this system"
+#	  exit 1
+#  fi
+  
   #Copy 32bit config to 64bit
   if [ "$ENABLE_QEMU" = true ] && [ "$KERNEL_ARCH" = arm64 ]; then
   cp "${KERNEL_DIR}"/arch/arm/configs/vexpress_defconfig "${KERNEL_DIR}"/arch/arm64/configs/
@@ -604,8 +610,7 @@ if [ "$BUILD_KERNEL" = true ] ; then
 	  fi
 
 	  # KERNEL_DEFAULT_GOV was set by user 
-	  if [ "$KERNEL_DEFAULT_GOV" != powersave ] && [ -n "$KERNEL_DEFAULT_GOV" ] ; then
-
+	  if [ "$KERNEL_DEFAULT_GOV" != ondemand ] && [ -n "$KERNEL_DEFAULT_GOV" ] ; then
 	    case "$KERNEL_DEFAULT_GOV" in
           performance)
 	            set_kernel_config CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE y
@@ -627,8 +632,7 @@ if [ "$BUILD_KERNEL" = true ] ; then
             exit 1
             ;;
         esac
-
-            # unset previous default governor
+        # unset previous default governor
 	    unset_kernel_config CONFIG_CPU_FREQ_DEFAULT_GOV_POWERSAVE
 	  fi
 
