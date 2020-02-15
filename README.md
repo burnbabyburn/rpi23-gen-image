@@ -54,22 +54,22 @@ CONFIG_TEMPLATE=rpi2stretch ./rpi23-gen-image.sh
 |---|---|---|---|---|
 |APT_SERVER|string|ftp.debian.org|URL|Set Debian packages server address. Choose a server from the list of Debian worldwide [mirror sites](https://www.debian.org/mirror/list). Using a nearby server will probably speed-up all required downloads within the bootstrapping process.|
 |APT_PROXY|string||URL|Set Proxy server address. Using a local Proxy-Cache like `apt-cacher-ng` will speed-up the bootstrapping process because all required Debian packages will only be downloaded from the Debian mirror site once. If `apt-cacher-ng` is running on default `http://127.0.0.1:3142` it is autodetected and you don't need to set this.|
-|KEEP_APT_PROXY|boolean|false|true\|false|true=Keep the APT_PROXY settings used in the bootsrapping process in the generated image|
-|APT_INCLUDES|string list||package0,package1,...|A comma-separated list of additional packages to be installed by debootstrap during bootstrapping.|
-|APT_INCLUDES_LATE|string list||package0,package1,...|A comma-separated list of additional packages to be installed by apt after bootstrapping and after APT sources are set up.  This is useful for packages with pre-depends, which debootstrap do not handle well.|
+|KEEP_APT_PROXY|boolean|false|`true`\|`false`|true=Keep the APT_PROXY settings used in the bootsrapping process in the generated image|
+|APT_INCLUDES|string list||`packageA`,`packageB`,...|A comma-separated list of additional packages to be installed by debootstrap during bootstrapping.|
+|APT_INCLUDES_LATE|string list||`packageA`,`packageB`,...|A comma-separated list of additional packages to be installed by apt after bootstrapping and after APT sources are set up.  This is useful for packages with pre-depends, which debootstrap do not handle well.|
 
 ---
 
 #### General system settings:
 |Option|Value|default value|value format|desciption|
 |---|---|---|---|---|
-|SET_ARCH|integer|32|32\|64|Set Architecture to default 32bit. If you want to compile 64-bit (RPI3/RPI3+/RPI4) set it to `64`. This option will set every needed cross-compiler or board specific option for a successful build.|
-|RPI_MODEL|string|2|0\|1\|1P\|2\|3\|3P\|4|Set Architecture. This option will set most build options accordingly. Specify the target Raspberry Pi hardware model.|
+|SET_ARCH|integer|32|`32`\|`64`|Set Architecture to default 32bit. If you want to compile 64-bit (RPI3/RPI3+/RPI4) set it to `64`. This option will set every needed cross-compiler or board specific option for a successful build.|
+|RPI_MODEL|string|2|`0`\|`1`\|`1P`\|`2`\|`3`\|`3P`\|`4`|Set Architecture. This option will set most build options accordingly. Specify the target Raspberry Pi hardware model.|
 |RELEASE|string|buster|`jessie`\|`buster`\|`stretch`<br>\|`bullseye`\|`testing`\|`stable`<br>\|`oldstable`|Set the desired Debian release name. The script at this time supports the bootstrapping of the Debian releases `stretch` and `buster`.|
 |HOSTNAME|string|RPI_MODEL-RELEASE(e.g. RPI3-buster)|SomeImageName|Set system hostname. It's recommended that the hostname is unique in the corresponding subnet.|
 |DEFLOCAL|string|en_US.UTF-8|Locale|Set default system locale. This setting can also be changed inside the running OS using the `dpkg-reconfigure locales` command. Please note that on using this parameter the script will automatically install the required packages `locales`, `keyboard-configuration` and `console-setup`.|
 |TIMEZONE|string|Europe/Berlin|Timezone|Set default system timezone. All available timezones can be found in the `/usr/share/zoneinfo/` directory. This setting can also be changed inside the running OS using the `dpkg-reconfigure tzdata` command.|
-|EXPANDROOT|boolean|true|true\|false|true=Expand the root partition and filesystem automatically on first boot|
+|EXPANDROOT|boolean|true|`true`\|`false`|true=Expand the root partition and filesystem automatically on first boot|
 
 ---
 
@@ -90,10 +90,10 @@ These options are used to configure keyboard layout in `/etc/default/keyboard` f
 
 |Option|Value|default value|value format|desciption|
 |---|---|---|---|---|
-|XKB_MODEL|string||pc104|Set the name of the model of your keyboard type|
-|XKB_LAYOUT|string||us|Set the supported keyboard layout(s)|
-|XKB_VARIANT|string||basic|Set the supported variant(s) of the keyboard layout(s)|
-|XKB_OPTIONS|string||grp:alt_shift_toggle|Set extra xkb configuration options|
+|XKB_MODEL|string||`pc104`|Set the name of the model of your keyboard type|
+|XKB_LAYOUT|string||`us`|Set the supported keyboard layout(s)|
+|XKB_VARIANT|string||`basic`|Set the supported variant(s) of the keyboard layout(s)|
+|XKB_OPTIONS|string||`grp:alt_shift_toggle`|Set extra xkb configuration options|
 
 ---
 
@@ -166,26 +166,26 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 
 |Option|Value|default value|value format|desciption|
 |---|---|---|---|---|
-|ENABLE_CONSOLE|boolean|true|true\|false|true=Enable serial console interface.Recommended if no monitor or keyboard is connected to the RPi2/3. In case of problems fe. if the network (auto) configuration failed - the serial console can be used to access the system. On RPI `0` `3` `3P` the CPU speed is locked at lowest speed.|
-|ENABLE_PRINTK|boolean|false|true\|false|true=Enables printing kernel messages to konsole. printk is `3 4 1 3` as in raspbian|
-|ENABLE_BLUETOOTH|boolean|false|true\|false|true=Enable onboard Bluetooth interface on the RPi0/3/3P. See: [Configuring the GPIO serial port on Raspbian jessie and stretch](https://spellfoundry.com/2016/05/29/configuring-gpio-serial-port-raspbian-jessie-including-pi-3/)|
-|ENABLE_MINIUART_OVERLAY|boolean|false|true\|false|true=Enable Bluetooth to use this. Adds overlay to swap UART0 with UART1. Enabling (slower) Bluetooth and full speed serial console. - RPI `0` `3` `3P` have a fast `hardware UART0` (ttyAMA0) and a `mini UART1` (ttyS0)! RPI `1` `1P` `2` only have a `hardware UART0`. `UART0` is considered better, because is faster and more stable than `mini UART1`. By default the Bluetooth modem is mapped to the `hardware UART0` and `mini UART` is used for console. The `mini UART` is a problem for the serial console, because its baudrate depends on the CPU frequency, which is changing on runtime. Resulting in a volatile baudrate and thus in an unusable serial console.|
-|ENABLE_TURBO|boolean|false|true\|false|true=Enable Turbo mode. This setting locks cpu at the highest frequency. As setting ENABLE_CONSOLE=true locks RPI to lowest CPU speed, this is can be used additionally to lock cpu hat max speed. Need a good power supply and probably cooling for the Raspberry PI|
-|ENABLE_I2C|boolean|false|true\|false|true=Enable I2C interface on the RPi 0/1/2/3. Please check the [RPi 0/1/2/3 pinout diagrams](https://elinux.org/RPi_Low-level_peripherals) to connect the right GPIO pins|
-|ENABLE_SPI|boolean|false|true\|false|true=Enable SPI interface on the RPi 0/1/2/3. Please check the [RPi 0/1/2/3 pinout diagrams](https://elinux.org/RPi_Low-level_peripherals) to connect the right GPIO pins|
-|ENABLE_SSHD|boolean|true|true\|false|Install and enable OpenSSH service. The default configuration of the service doesn't allow `root` to login. Please use the user `pi` instead and `su -` or `sudo` to execute commands as root|
-|ENABLE_NONFREE|boolean|false|true\|false|true=enable non-free\|false=disable non free. Edits /etc/apt/sources.list in your resulting image|
-|ENABLE_RSYSLOG|boolean|true|true\|false|true=keep rsyslog\|false=remove rsyslog. If rsyslog is removed (false), logs will be available only in journal files)|
-|ENABLE_SOUND|boolean|true|true\|false|true=Enable sound\|false=Disable sound|
-|ENABLE_HWRANDOM|boolean|true|true\|false|true=Enable Hardware Random Number Generator(RNG)\|false=Disable Hardware RNG\|Strong random numbers are important for most network-based communications that use encryption. It's recommended to be enabled|
-|ENABLE_MINGPU|boolean|false|true\|false|true=GPU 16MB RAM\|false=64MB RAM\|Minimize the amount of shared memory reserved for the GPU. It doesn't seem to be possible to fully disable the GPU. Also removes start.elf,fixup.dat,start_x.elf,fixup_x.dat form /boot|
-|ENABLE_XORG|boolean|false|true\|false|true=Install Xorg X Window System|\false=install no Xorg|
+|ENABLE_CONSOLE|boolean|true|`true`\|`false`|true=Enable serial console interface.Recommended if no monitor or keyboard is connected to the RPi2/3. In case of problems fe. if the network (auto) configuration failed - the serial console can be used to access the system. On RPI `0` `3` `3P` the CPU speed is locked at lowest speed.|
+|ENABLE_PRINTK|boolean|false|`true`\|`false`|true=Enables printing kernel messages to konsole. printk is `3 4 1 3` as in raspbian|
+|ENABLE_BLUETOOTH|boolean|false|`true`\|`false`|true=Enable onboard Bluetooth interface on the RPi0/3/3P. See: [Configuring the GPIO serial port on Raspbian jessie and stretch](https://spellfoundry.com/2016/05/29/configuring-gpio-serial-port-raspbian-jessie-including-pi-3/)|
+|ENABLE_MINIUART_OVERLAY|boolean|false|`true`\|`false`|true=Enable Bluetooth to use this. Adds overlay to swap UART0 with UART1. Enabling (slower) Bluetooth and full speed serial console. - RPI `0` `3` `3P` have a fast `hardware UART0` (ttyAMA0) and a `mini UART1` (ttyS0)! RPI `1` `1P` `2` only have a `hardware UART0`. `UART0` is considered better, because is faster and more stable than `mini UART1`. By default the Bluetooth modem is mapped to the `hardware UART0` and `mini UART` is used for console. The `mini UART` is a problem for the serial console, because its baudrate depends on the CPU frequency, which is changing on runtime. Resulting in a volatile baudrate and thus in an unusable serial console.|
+|ENABLE_TURBO|boolean|false|`true`\|`false`|true=Enable Turbo mode. This setting locks cpu at the highest frequency. As setting ENABLE_CONSOLE=true locks RPI to lowest CPU speed, this is can be used additionally to lock cpu hat max speed. Need a good power supply and probably cooling for the Raspberry PI|
+|ENABLE_I2C|boolean|false|`true`\|`false`|true=Enable I2C interface on the RPi 0/1/2/3. Please check the [RPi 0/1/2/3 pinout diagrams](https://elinux.org/RPi_Low-level_peripherals) to connect the right GPIO pins|
+|ENABLE_SPI|boolean|false|`true`\|`false`|true=Enable SPI interface on the RPi 0/1/2/3. Please check the [RPi 0/1/2/3 pinout diagrams](https://elinux.org/RPi_Low-level_peripherals) to connect the right GPIO pins|
+|ENABLE_SSHD|boolean|true|`true`\|`false`|Install and enable OpenSSH service. The default configuration of the service doesn't allow `root` to login. Please use the user `pi` instead and `su -` or `sudo` to execute commands as root|
+|ENABLE_NONFREE|boolean|false|`true`\|`false`|true=enable non-free\|false=disable non free. Edits /etc/apt/sources.list in your resulting image|
+|ENABLE_RSYSLOG|boolean|true|`true`\|`false`|true=keep rsyslog\|false=remove rsyslog. If rsyslog is removed (false), logs will be available only in journal files)|
+|ENABLE_SOUND|boolean|true|`true`\|`false`|true=Enable sound\|false=Disable sound|
+|ENABLE_HWRANDOM|boolean|true|`true`\|`false`|true=Enable Hardware Random Number Generator(RNG)\|false=Disable Hardware RNG\|Strong random numbers are important for most network-based communications that use encryption. It's recommended to be enabled|
+|ENABLE_MINGPU|boolean|false|`true`\|`false`|true=GPU 16MB RAM\|false=64MB RAM\|Minimize the amount of shared memory reserved for the GPU. It doesn't seem to be possible to fully disable the GPU. Also removes start.elf,fixup.dat,start_x.elf,fixup_x.dat form /boot|
+|ENABLE_XORG|boolean|false|`true`\|`false`|true=Install Xorg X Window System|\false=install no Xorg|
 |ENABLE_WM|string||`blackbox`, `openbox`, `fluxbox`,<br> `jwm`, `dwm`, `xfce4`, `awesome`|Install a user-defined window manager for the X Window System. To make sure all X related package dependencies are getting installed `ENABLE_XORG` will automatically set true if `ENABLE_WM` is used|
-|ENABLE_SYSVINIT|boolean|false|true\|false|true=Support for halt,init,poweroff,reboot,runlevel,shutdown,init commands\|false=use systemd commands|
-|ENABLE_SPLASH|boolean|true|true\|false|true=Enable default Raspberry Pi boot up rainbow splash screen|
-|ENABLE_LOGO|boolean|true|true\|false|Enable default Raspberry Pi console logo (image of four raspberries in the top left corner)|
-|ENABLE_SILENT_BOOT|boolean|false|true\|false|Set the verbosity of console messages shown during boot up to a strict minimum|
-|DISABLE_UNDERVOLT_WARNINGS|integer||1\|2|Disable RPi2/3 under-voltage warnings and overlays. Setting the parameter to `1` will disable the warning overlay. Setting it to `2` will additionally allow RPi2/3 turbo mode when low-voltage is present|
+|ENABLE_SYSVINIT|boolean|false|`true`\|`false`|true=Support for halt,init,poweroff,reboot,runlevel,shutdown,init commands\|false=use systemd commands|
+|ENABLE_SPLASH|boolean|true|`true`\|`false`|true=Enable default Raspberry Pi boot up rainbow splash screen|
+|ENABLE_LOGO|boolean|true|`true`\|`false`|Enable default Raspberry Pi console logo (image of four raspberries in the top left corner)|
+|ENABLE_SILENT_BOOT|boolean|false|`true`\|`false`|Set the verbosity of console messages shown during boot up to a strict minimum|
+|DISABLE_UNDERVOLT_WARNINGS|integer||`1`\|`2`|Unset to keep default behaviour. Setting the parameter to `1` will disable the warning overlay. Setting it to `2` will additionally allow RPi2/3 turbo mode when low-voltage is present|
 
 ---
 
@@ -193,25 +193,25 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 
 |Option|Value|default value|value format|desciption|
 |---|---|---|---|---|
-|ENABLE_DPHYSSWAP|boolean|true|true\|false|Enable swap. The size of the swapfile is chosen relative to the size of the root partition. It'll use the `dphys-swapfile` package for that|
-|ENABLE_SYSTEMDSWAP|boolean|false|true\|false|Enables [Systemd-swap service](https://github.com/Nefelim4ag/systemd-swap). Usefull if `KERNEL_ZSWAP` is enabled|
-|ENABLE_QEMU|boolean|false|true\|false|Generate kernel (`vexpress_defconfig`), file system image (`qcow2`) and DTB files that can be used for QEMU full system emulation (`vexpress-A15`). The output files are stored in the `$(pwd)/images/qemu` directory. You can find more information about running the generated image in the QEMU section of this readme file|
-|QEMU_BINARY|string||FullPathToFile|Sets the QEMU enviornment for the Debian archive. **Set by RPI_MODEL**|
-|ENABLE_KEYGEN|boolean|false|true\|false|Recover your lost codec license|
-|ENABLE_MINBASE|boolean|false|true\|false|Use debootstrap script variant `minbase` which only includes essential packages and apt. This will reduce the disk usage by about 65 MB|
-|ENABLE_UBOOT|boolean|false|true\|false|Replace the default RPi 0/1/2/3 second stage bootloader (bootcode.bin) with [U-Boot bootloader](https://git.denx.de/?p=u-boot.git;a=summary). U-Boot can boot images via the network using the BOOTP/TFTP protocol. RPI4 needs tbd|
-|UBOOTSRC_DIR|string||FullPathToFolder|Full path to a directory named `u-boot` of [U-Boot bootloader sources](https://git.denx.de/?p=u-boot.git;a=summary) that will be copied, configured, build and installed inside the chroot|
-|ENABLE_FBTURBO|boolean|false|true\|false|Install and enable the [hardware accelerated Xorg video driver](https://github.com/ssvb/xf86-video-fbturbo) `fbturbo`. Please note that this driver is currently limited to hardware accelerated window moving and scrolling|
-|FBTURBOSRC_DIR|string||FullPathToFolder|Full path to a directory named `xf86-video-fbturbo` of [hardware accelerated Xorg video driver sources](https://github.com/ssvb/xf86-video-fbturbo) that will be copied, configured, build and installed inside the chroot|
-|ENABLE_VIDEOCORE|boolean|false|true\|false|Install and enable the [ARM side libraries for interfacing to Raspberry Pi GPU](https://github.com/raspberrypi/userland) `vcgencmd`. Please note that this driver is currently limited to hardware accelerated window moving and scrolling|
-|VIDEOCORESRC_DIR|string||FullPathToFolder|Full path to a directory named `userland` of [ARM side libraries for interfacing to Raspberry Pi GPU](https://github.com/raspberrypi/userland) that will be copied, configured, build and installed inside the chroot|
-|ENABLE_NEXMON|boolean|false|true\|false|Install and enable the source code for a C-based firmware patching framework for Broadcom/Cypress WiFi chips that enables you to write your own firmware patches, for example, to enable monitor mode with radiotap headers and frame injection](https://github.com/seemoo-lab/nexmon.git)|
-|NEXMONSRC_DIR|string||FullPathToFolder|Full path to a directory named `nexmon` of [Source code for ARM side libraries for interfacing to Raspberry Pi GPU](https://github.com/raspberrypi/userland) that will be copied, configured, build and installed inside the chroot|
-|ENABLE_USBBOOT|boolean|false|true\|false|true=prepare image for usbboot. use with `ENABLE_SPLTFS`=true|
-|ENABLE_SPLITFS|boolean|false|true\|false|Enable having root partition on an USB drive by creating two image files: one for the `/boot/firmware` mount point, and another for `/`|
-|CHROOT_SCRIPTS|string||FullPathToFolder|Full path to a directory with scripts that should be run in the chroot before the image is finally built. Every executable file in this directory is run in lexicographical order|
-|ENABLE_INITRAMFS|boolean|false|true\|false|Create an initramfs that that will be loaded during the Linux startup process. `ENABLE_INITRAMFS` will automatically get enabled if `ENABLE_CRYPTFS`=true. This parameter will be ignored if `BUILD_KERNEL`=false|
-|ENABLE_DBUS|boolean|true|true\|false|Install and enable D-Bus message bus. Please note that systemd should work without D-bus but it's recommended to be enabled|
+|ENABLE_DPHYSSWAP|boolean|true|`true`\|`false`|Enable swap. The size of the swapfile is chosen relative to the size of the root partition. It'll use the `dphys-swapfile` package for that|
+|ENABLE_SYSTEMDSWAP|boolean|false|`true`\|`false`|Enables [Systemd-swap service](https://github.com/Nefelim4ag/systemd-swap). Usefull if `KERNEL_ZSWAP` is enabled|
+|ENABLE_QEMU|boolean|false|`true`\|`false`|Generate kernel (`vexpress_defconfig`), file system image (`qcow2`) and DTB files that can be used for QEMU full system emulation (`vexpress-A15`). The output files are stored in the `$(pwd)/images/qemu` directory. You can find more information about running the generated image in the QEMU section of this readme file|
+|QEMU_BINARY|string||`FullPathToQemuBinaryFile`|Sets the QEMU enviornment for the Debian archive. **Set by RPI_MODEL**|
+|ENABLE_KEYGEN|boolean|false|`true`\|`false`|Recover your lost codec license|
+|ENABLE_MINBASE|boolean|false|`true`\|`false`|Use debootstrap script variant `minbase` which only includes essential packages and apt. This will reduce the disk usage by about 65 MB|
+|ENABLE_UBOOT|boolean|false|`true`\|`false`|Replace the default RPi 0/1/2/3 second stage bootloader (bootcode.bin) with [U-Boot bootloader](https://git.denx.de/?p=u-boot.git;a=summary). U-Boot can boot images via the network using the BOOTP/TFTP protocol. RPI4 needs tbd|
+|UBOOTSRC_DIR|string||`FullPathToUBootFolder`|Full path to a directory named `u-boot` of [U-Boot bootloader sources](https://git.denx.de/?p=u-boot.git;a=summary) that will be copied, configured, build and installed inside the chroot|
+|ENABLE_FBTURBO|boolean|false|`true`\|`false`|Install and enable the [hardware accelerated Xorg video driver](https://github.com/ssvb/xf86-video-fbturbo) `fbturbo`. Please note that this driver is currently limited to hardware accelerated window moving and scrolling|
+|FBTURBOSRC_DIR|string||`FullPathToFbTurboFolder`|Full path to a directory named `xf86-video-fbturbo` of [hardware accelerated Xorg video driver sources](https://github.com/ssvb/xf86-video-fbturbo) that will be copied, configured, build and installed inside the chroot|
+|ENABLE_VIDEOCORE|boolean|false|`true`\|`false`|Install and enable the [ARM side libraries for interfacing to Raspberry Pi GPU](https://github.com/raspberrypi/userland) `vcgencmd`. Please note that this driver is currently limited to hardware accelerated window moving and scrolling|
+|VIDEOCORESRC_DIR|string||`FullPathToVideoSrcFolder`|Full path to a directory named `userland` of [ARM side libraries for interfacing to Raspberry Pi GPU](https://github.com/raspberrypi/userland) that will be copied, configured, build and installed inside the chroot|
+|ENABLE_NEXMON|boolean|false|`true`\|`false`|Install and enable the source code for a C-based firmware patching framework for Broadcom/Cypress WiFi chips that enables you to write your own firmware patches, for example, to enable monitor mode with radiotap headers and frame injection](https://github.com/seemoo-lab/nexmon.git)|
+|NEXMONSRC_DIR|string||`FullPathToNexmonFolder`|Full path to a directory named `nexmon` of [Source code for ARM side libraries for interfacing to Raspberry Pi GPU](https://github.com/raspberrypi/userland) that will be copied, configured, build and installed inside the chroot|
+|ENABLE_USBBOOT|boolean|false|`true`\|`false`|true=prepare image for usbboot. use with `ENABLE_SPLTFS`=true|
+|ENABLE_SPLITFS|boolean|false|`true`\|`false`|Enable having root partition on an USB drive by creating two image files: one for the `/boot/firmware` mount point, and another for `/`|
+|CHROOT_SCRIPTS|string||`FullPathToScriptFolder`|Full path to a directory with scripts that should be run in the chroot before the image is finally built. Every executable file in this directory is run in lexicographical order|
+|ENABLE_INITRAMFS|boolean|false|`true`\|`false`|Create an initramfs that that will be loaded during the Linux startup process. `ENABLE_INITRAMFS` will automatically get enabled if `ENABLE_CRYPTFS`=true. This parameter will be ignored if `BUILD_KERNEL`=false|
+|ENABLE_DBUS|boolean|true|`true`\|`false`|Install and enable D-Bus message bus. Please note that systemd should work without D-bus but it's recommended to be enabled|
 
 ---
 
@@ -219,11 +219,11 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 
 |Option|Value|default value|value format|desciption|
 |---|---|---|---|---|
-|SSH_ENABLE_ROOT|boolean|false|true\|false|Enable password-based root login via SSH. This may be a security risk with the default password set, use only in trusted environments. `ENABLE_ROOT` must be set to `true`|
-|SSH_DISABLE_PASSWORD_AUTH|boolean|false|true\|false|Disable password-based SSH authentication. Only public key based SSH (v2) authentication will be supported|
-|SSH_LIMIT_USERS|boolean|false|true\|false|Limit the users that are allowed to login via SSH. Only allow user `USER_NAME`=pi and root if `SSH_ENABLE_ROOT`=true to login. This parameter will be ignored if `dropbear` SSH is used (`REDUCE_SSHD`=true)|
-|SSH_ROOT_PUB_KEY|string||PathToYourROOT<br>RSAPublicKeyFile|Full path to file. Add SSH (v2) public key(s) from specified file to `authorized_keys` file to enable public key based SSH (v2) authentication of user `root`. The specified file can also contain multiple SSH (v2) public keys. SSH protocol version 1 is not supported. `ENABLE_ROOT` **and** `SSH_ENABLE_ROOT` must be set to `true`|
-|SSH_USER_PUB_KEY|string||PathToYourUSER<br>RSAPublicKeyFile|Full path to file. Add SSH (v2) public key(s) from specified file to `authorized_keys` file to enable public key based SSH (v2) authentication of user `USER_NAME`=pi. The specified file can also contain multiple SSH (v2) public keys. SSH protocol version 1 is not supported|
+|SSH_ENABLE_ROOT|boolean|false|`true`\|`false`|Enable password-based root login via SSH. This may be a security risk with the default password set, use only in trusted environments. `ENABLE_ROOT` must be set to `true`|
+|SSH_DISABLE_PASSWORD_AUTH|boolean|false|`true`\|`false`|Disable password-based SSH authentication. Only public key based SSH (v2) authentication will be supported|
+|SSH_LIMIT_USERS|boolean|false|`true`\|`false`|Limit the users that are allowed to login via SSH. Only allow user `USER_NAME`=pi and root if `SSH_ENABLE_ROOT`=true to login. This parameter will be ignored if `dropbear` SSH is used (`REDUCE_SSHD`=true)|
+|SSH_ROOT_PUB_KEY|string||`PathToYourROOT`<br>`RSAPublicKeyFile`|Full path to file. Add SSH (v2) public key(s) from specified file to `authorized_keys` file to enable public key based SSH (v2) authentication of user `root`. The specified file can also contain multiple SSH (v2) public keys. SSH protocol version 1 is not supported. `ENABLE_ROOT` **and** `SSH_ENABLE_ROOT` must be set to `true`|
+|SSH_USER_PUB_KEY|string||`PathToYourUSER`<br>`RSAPublicKeyFile`|Full path to file. Add SSH (v2) public key(s) from specified file to `authorized_keys` file to enable public key based SSH (v2) authentication of user `USER_NAME`=pi. The specified file can also contain multiple SSH (v2) public keys. SSH protocol version 1 is not supported|
 
 ---
 
@@ -231,35 +231,35 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 
 |Option|Value|default value|value format|desciption|
 |---|---|---|---|---|
-|BUILD_KERNEL||true|true\|false|Build and install the latest RPi 0/1/2/3/4 Linux kernel. The default RPi 0/1/2/3/ kernel configuration is used most of the time. ENABLE_NEXMON - Changes Kernel Source to [https://github.com/Re4son/](Kali Linux Kernel) Precompiled 32bit kernel for RPI0/1/2/3 by [https://github.com/hypriot/](hypriot) Precompiled 64bit kernel for RPI3/4 by [https://github.com/sakaki-/](sakaki)|
+|BUILD_KERNEL||true|`true`\|`false`|Build and install the latest RPi 0/1/2/3/4 Linux kernel. The default RPi 0/1/2/3/ kernel configuration is used most of the time. ENABLE_NEXMON - Changes Kernel Source to [https://github.com/Re4son/](Kali Linux Kernel) Precompiled 32bit kernel for RPI0/1/2/3 by [https://github.com/hypriot/](hypriot) Precompiled 64bit kernel for RPI3/4 by [https://github.com/sakaki-/](sakaki)|
 |CROSS_COMPILE|string|||This sets the cross-compile environment for the compiler. Set by RPI_MODEL|
 |KERNEL_ARCH|string|||This sets the kernel architecture for the compiler. Set by RPI_MODEL|
 |KERNEL_IMAGE|string|||Name of the image file in the boot partition. Set by RPI_MODEL|
 |KERNEL_BRANCH|string|||Name of the requested branch from the GIT location for the RPi Kernel. Default is using the current default branch from the GIT site|
 |KERNEL_DEFCONFIG|string|||Sets the default config for kernel compiling. Set by RPI_MODEL|
-|KERNEL_REDUCE|boolean|false|true\|false|Reduce the size of the generated kernel by removing unwanted devices, network and filesystem drivers (experimental)|
-|KERNEL_THREADS|integer||1\|2\|3\|...|Number of threads to build the kernel. If not set, the script will automatically determine the maximum number of CPU cores to speed up kernel compilation|
-|KERNEL_HEADERS|boolean|true|true\|false|Install kernel headers with the built kernel|
-|KERNEL_MENUCONFIG|boolean|false|true\|false|Start `make menuconfig` interactive menu-driven kernel configuration. The script will continue after `make menuconfig` was terminated|
-|KERNEL_OLDDEFCONFIG|boolean|false|true\|false|Run `make olddefconfig` to automatically set all new kernel configuration options to their recommended default values|
-|KERNEL_CCACHE|boolean|false|true\|false|Compile the kernel using ccache. This speeds up kernel recompilation by caching previous compilations and detecting when the same compilation is being done again|
-|KERNEL_REMOVESRC|boolean|true|true\|false|Remove all kernel sources from the generated OS image after it was built and installed|
-|KERNELSRC_DIR|string||FullPathToKernelSrcDir|Full path to a directory named `linux` of [RaspberryPi Linux kernel sources](https://github.com/raspberrypi/linux) that will be copied, configured, build and installed inside the chroot|
-|KERNELSRC_CLEAN|boolean|false|true\|false|Clean the existing kernel sources directory `KERNELSRC_DIR` (using `make mrproper`) after it was copied to the chroot and before the compilation of the kernel has started. This parameter will be ignored if no `KERNELSRC_DIR` was specified or if `KERNELSRC_PREBUILT`=true|
-|KERNELSRC_CONFIG|boolean|true|true\|false|Run `make bcm2709_defconfig` (and optional `make menuconfig`) to configure the kernel sources before building. This parameter is automatically set to `true` if no existing kernel sources directory was specified using `KERNELSRC_DIR`. This parameter is ignored if `KERNELSRC_PREBUILT`=true|
-|KERNELSRC_USRCONFIG|string||FullPathToUserKernel.config|Copy own config file to kernel `.config`. If `KERNEL_MENUCONFIG`=true then running after copy|
-|KERNELSRC_PREBUILT|boolean|false|true\|false|With this parameter set to true the script expects the existing kernel sources directory to be already successfully cross-compiled. The parameters `KERNELSRC_CLEAN`, `KERNELSRC_CONFIG`, `KERNELSRC_USRCONFIG` and `KERNEL_MENUCONFIG` are ignored and no kernel compilation tasks are performed|
-|RPI_FIRMWARE_DIR|string||FullPathToFolder|Full path to a directory named `firmware`, containing a local copy of the firmware from the [RaspberryPi firmware project](https://github.com/raspberrypi/firmware). Default is to download the latest firmware directly from the project|
+|KERNEL_REDUCE|boolean|false|`true`\|`false`|Reduce the size of the generated kernel by removing unwanted devices, network and filesystem drivers (experimental)|
+|KERNEL_THREADS|integer||`1`\|`2`\|`3`\|...|Number of threads to build the kernel. If not set, the script will automatically determine the maximum number of CPU cores to speed up kernel compilation|
+|KERNEL_HEADERS|boolean|true|`true`\|`false`|Install kernel headers with the built kernel|
+|KERNEL_MENUCONFIG|boolean|false|`true`\|`false`|Start `make menuconfig` interactive menu-driven kernel configuration. The script will continue after `make menuconfig` was terminated|
+|KERNEL_OLDDEFCONFIG|boolean|false|`true`\|`false`|Run `make olddefconfig` to automatically set all new kernel configuration options to their recommended default values|
+|KERNEL_CCACHE|boolean|false|`true`\|`false`|Compile the kernel using ccache. This speeds up kernel recompilation by caching previous compilations and detecting when the same compilation is being done again|
+|KERNEL_REMOVESRC|boolean|true|`true`\|`false`|Remove all kernel sources from the generated OS image after it was built and installed|
+|KERNELSRC_DIR|string||`FullPathToKernelSrcDir`|Full path to a directory named `linux` of [RaspberryPi Linux kernel sources](https://github.com/raspberrypi/linux) that will be copied, configured, build and installed inside the chroot|
+|KERNELSRC_CLEAN|boolean|false|`true`\|`false`|Clean the existing kernel sources directory `KERNELSRC_DIR` (using `make mrproper`) after it was copied to the chroot and before the compilation of the kernel has started. This parameter will be ignored if no `KERNELSRC_DIR` was specified or if `KERNELSRC_PREBUILT`=true|
+|KERNELSRC_CONFIG|boolean|true|`true`\|`false`|Run `make bcm2709_defconfig` (and optional `make menuconfig`) to configure the kernel sources before building. This parameter is automatically set to `true` if no existing kernel sources directory was specified using `KERNELSRC_DIR`. This parameter is ignored if `KERNELSRC_PREBUILT`=true|
+|KERNELSRC_USRCONFIG|string||`FullPathToUserKernel.config`|Copy own config file to kernel `.config`. If `KERNEL_MENUCONFIG`=true then running after copy|
+|KERNELSRC_PREBUILT|boolean|false|`true`\|`false`|With this parameter set to true the script expects the existing kernel sources directory to be already successfully cross-compiled. The parameters `KERNELSRC_CLEAN`, `KERNELSRC_CONFIG`, `KERNELSRC_USRCONFIG` and `KERNEL_MENUCONFIG` are ignored and no kernel compilation tasks are performed|
+|RPI_FIRMWARE_DIR|string||`FullPathToFolder`|Full path to a directory named `firmware`, containing a local copy of the firmware from the [RaspberryPi firmware project](https://github.com/raspberrypi/firmware). Default is to download the latest firmware directly from the project|
 |KERNEL_DEFAULT_GOV|string||`performance`\|`powersave`<br>\|`userspace`\|`ondemand`<br>\|`conservative`\|`schedutil`|Set the default cpu governor at kernel compilation. Possivle values: |
-|KERNEL_NF|boolean|false|true\|false|Enable Netfilter modules as kernel modules. You want that for iptables|
-|KERNEL_VIRT|boolean|false|true\|false|Enable Kernel KVM support (/dev/kvm)|
-|KERNEL_ZSWAP|boolean|false|true\|false|Enable Kernel Zswap support. Best use on high RAM load and mediocre CPU load usecases|
-|KERNEL_BPF|boolean|true|true\|false|Allow attaching eBPF programs to a cgroup using the bpf syscall (CONFIG_BPF_SYSCALL CONFIG_CGROUP_BPF) [systemd wants it - File /lib/systemd/system/systemd-journald.server:36 configures an IP firewall (IPAddressDeny=all), but the local system does not support BPF/cgroup based firewalls]|
-|KERNEL_SECURITY|boolean|false|true\|false|Enables Apparmor, integrity subsystem, auditing|
-|KERNEL_BTRFS|boolean|false|true\|false|enable btrfs kernel support|
-|KERNEL_POEHAT|boolean|false|true\|false|enable Enable RPI POE HAT fan kernel support|
-|KERNEL_NSPAWN|boolean|false|true\|false|Enable per-interface network priority control - for systemd-nspawn|
-|KERNEL_DHKEY|boolean|true|true\|false|Diffie-Hellman operations on retained keys - required for >keyutils-1.6|
+|KERNEL_NF|boolean|false|`true`\|`false`|Enable Netfilter modules as kernel modules. You want that for iptables|
+|KERNEL_VIRT|boolean|false|`true`\|`false`|Enable Kernel KVM support (/dev/kvm)|
+|KERNEL_ZSWAP|boolean|false|`true`\|`false`|Enable Kernel Zswap support. Best use on high RAM load and mediocre CPU load usecases|
+|KERNEL_BPF|boolean|true|`true`\|`false`|Allow attaching eBPF programs to a cgroup using the bpf syscall (CONFIG_BPF_SYSCALL CONFIG_CGROUP_BPF) [systemd wants it - File /lib/systemd/system/systemd-journald.server:36 configures an IP firewall (IPAddressDeny=all), but the local system does not support BPF/cgroup based firewalls]|
+|KERNEL_SECURITY|boolean|false|`true`\|`false`|Enables Apparmor, integrity subsystem, auditing|
+|KERNEL_BTRFS|boolean|false|`true`\|`false`|enable btrfs kernel support|
+|KERNEL_POEHAT|boolean|false|`true`\|`false`|enable Enable RPI POE HAT fan kernel support|
+|KERNEL_NSPAWN|boolean|false|`true`\|`false`|Enable per-interface network priority control - for systemd-nspawn|
+|KERNEL_DHKEY|boolean|true|`true`\|`false`|Diffie-Hellman operations on retained keys - required for >keyutils-1.6|
 
 ---
 
@@ -268,15 +268,15 @@ The following list of parameters is ignored if `ENABLE_REDUCE`=false.
 
 |Option|Value|default value|value format|desciption|
 |---|---|---|---|---|
-|ENABLE_REDUCE|boolean|false|true\|false|Reduce the disk space usage by deleting packages and files. See `REDUCE_*` parameters for detailed information|
-|REDUCE_APT|boolean|true|true\|false|Configure APT to use compressed package repository lists and no package caching files|
-|REDUCE_DOC|boolean|true|true\|false|Remove all doc files (harsh). Configure APT to not include doc files on future `apt-get` package installations|
-|REDUCE_MAN|boolean|true|true\|false|Remove all man pages and info files (harsh).  Configure APT to not include man pages on future `apt-get` package installations|
-|REDUCE_VIM|boolean|false|true\|false|Replace `vim-tiny` package by `levee` a tiny vim clone|
-|REDUCE_BASH|boolean|false|true\|false|Remove `bash` package and switch to `dash` shell (experimental)|
-|REDUCE_HWDB|boolean|true|true\|false|Remove PCI related hwdb files (experimental)|
-|REDUCE_SSHD|boolean|true|true\|false|Replace `openssh-server` with `dropbear`|
-|REDUCE_LOCALE|boolean|true|true\|false|Remove all `locale` translation files|
+|ENABLE_REDUCE|boolean|false|`true`\|`false`|Reduce the disk space usage by deleting packages and files. See `REDUCE_*` parameters for detailed information|
+|REDUCE_APT|boolean|true|`true`\|`false`|Configure APT to use compressed package repository lists and no package caching files|
+|REDUCE_DOC|boolean|true|`true`\|`false`|Remove all doc files (harsh). Configure APT to not include doc files on future `apt-get` package installations|
+|REDUCE_MAN|boolean|true|`true`\|`false`|Remove all man pages and info files (harsh).  Configure APT to not include man pages on future `apt-get` package installations|
+|REDUCE_VIM|boolean|false|`true`\|`false`|Replace `vim-tiny` package by `levee` a tiny vim clone|
+|REDUCE_BASH|boolean|false|`true`\|`false`|Remove `bash` package and switch to `dash` shell (experimental)|
+|REDUCE_HWDB|boolean|true|`true`\|`false`|Remove PCI related hwdb files (experimental)|
+|REDUCE_SSHD|boolean|true|`true`\|`false`|Replace `openssh-server` with `dropbear`|
+|REDUCE_LOCALE|boolean|true|`true`\|`false`|Remove all `locale` translation files|
 
 ---
 
@@ -286,22 +286,22 @@ The following list of parameters is ignored if `ENABLE_REDUCE`=false.
 
 |Option|Value|default value|value format|desciption|
 |---|---|---|---|---|
-|ENABLE_CRYPTFS|boolean|false|true\|false|Enable full system encryption with dm-crypt. Setup a fully LUKS encrypted root partition (aes-xts-plain64:sha512) and generate required initramfs. The /boot directory will not be encrypted. This parameter will be ignored if `BUILD_KERNEL`=false. `ENABLE_CRYPTFS` is experimental|
-|CRYPTFS_PASSWORD|string||YourPasswordToUnlockCrypto|Set password of the encrypted root partition. This parameter is mandatory if `ENABLE_CRYPTFS`=true|
-|CRYPTFS_MAPPING|string|secure|YourDmName|crypsetup device-mapper name|
-|CRYPTFS_CIPHER|string|aes-xts-plain64|aes-cbc-essiv:sha256|cryptsetup cipher `aes-xts*` ciphers are strongly recommended|
-|CRYPTFS_HASH|string|sha256|sha256\|sha512|cryptsetup hash algorithm|
-|CRYPTFS_XTSKEYSIZE|integer|256\|512||Sets key size in bits. The argument has to be a multiple of 8|
-|CRYPTFS_DROPBEAR|boolean|false|true\|false|true=Enable Dropbear Initramfs support\|false=disable dropbear|
-|CRYPTFS_DROPBEAR_PUBKEY|string||PathToYourPublicDropbearKeyFile|Full path to dropbear Public RSA-OpenSSH Key|
+|ENABLE_CRYPTFS|boolean|false|`true`\|`false`|Enable full system encryption with dm-crypt. Setup a fully LUKS encrypted root partition (aes-xts-plain64:sha512) and generate required initramfs. The /boot directory will not be encrypted. This parameter will be ignored if `BUILD_KERNEL`=false. `ENABLE_CRYPTFS` is experimental|
+|CRYPTFS_PASSWORD|string||`YourPasswordToUnlockCrypto`|Set password of the encrypted root partition. This parameter is mandatory if `ENABLE_CRYPTFS`=true|
+|CRYPTFS_MAPPING|string|`secure`|YourDmName|crypsetup device-mapper name|
+|CRYPTFS_CIPHER|string|`aes-xts-plain64`|aes-cbc-essiv:sha256|cryptsetup cipher `aes-xts*` ciphers are strongly recommended|
+|CRYPTFS_HASH|string|sha256|`sha256`\|`sha512`|cryptsetup hash algorithm|
+|CRYPTFS_XTSKEYSIZE|integer|`256`\|`512`||Sets key size in bits. The argument has to be a multiple of 8|
+|CRYPTFS_DROPBEAR|boolean|false|`true`\|`false`|true=Enable Dropbear Initramfs support\|false=disable dropbear|
+|CRYPTFS_DROPBEAR_PUBKEY|string||`PathToYourPublicDropbearKeyFile`|Full path to dropbear Public RSA-OpenSSH Key|
 
 ---
 
 #### Build settings:
 |Option|Value|default value|value format|desciption|
 |---|---|---|---|---|
-|BASEDIR|string||FullPathToScriptRootDir|If unset start from scriptroot or set to Full path to rpi123-gen-image directory|
-|IMAGE_NAME|string||YourImageName|if unset creates a name after this template: rpi`RPI_MODEL`-`RELEASE`-`RELEASE_ARCH`|
+|BASEDIR|string||`FullPathToScriptRootDir`|If unset start from scriptroot or set to Full path to rpi123-gen-image directory|
+|IMAGE_NAME|string||`YourImageName`|if unset creates a name after this template: rpi`RPI_MODEL`-`RELEASE`-`RELEASE_ARCH`|
 
 ---
 
