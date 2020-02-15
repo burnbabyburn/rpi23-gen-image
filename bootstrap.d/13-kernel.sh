@@ -471,6 +471,38 @@ if [ "$BUILD_KERNEL" = true ] ; then
 		set_kernel_config CONFIG_SYSTEM_TRUSTED_KEYS m
 		set_kernel_config CONFIG_SYSTEM_EXTRA_CERTIFICATE_SIZE 4096
       fi
+	  
+	  if [ "$ENABLE_CRYPTFS" = true ] ; then
+		set_kernel_config CONFIG_EMBEDDED y
+		set_kernel_config CONFIG_EXPERT y
+		set_kernel_config CONFIG_DAX y
+		set_kernel_config CONFIG_MD y
+		set_kernel_config CONFIG_BLK_DEV_MD y
+		set_kernel_config CONFIG_MD_AUTODETECT y
+		set_kernel_config CONFIG_BLK_DEV_DM y
+		set_kernel_config CONFIG_BLK_DEV_DM_BUILTIN y
+		set_kernel_config CONFIG_DM_CRYPT y
+		set_kernel_config CONFIG_CRYPTO_BLKCIPHER y
+		set_kernel_config CONFIG_CRYPTO_CBC y
+		set_kernel_config CONFIG_CRYPTO_XTS y
+		set_kernel_config CONFIG_CRYPTO_SHA512 y
+		set_kernel_config CONFIG_CRYPTO_MANAGER y
+		set_kernel_config CONFIG_ARM64_CRYPTO y
+        set_kernel_config CONFIG_CRYPTO_SHA256_ARM64 m
+        set_kernel_config CONFIG_CRYPTO_SHA512_ARM64 m
+        set_kernel_config CONFIG_CRYPTO_SHA1_ARM64_CE m
+        set_kernel_config CRYPTO_GHASH_ARM64_CE m
+        set_kernel_config CRYPTO_SHA2_ARM64_CE m
+        set_kernel_config CONFIG_CRYPTO_CRCT10DIF_ARM64_CE m
+        set_kernel_config CONFIG_CRYPTO_CRC32_ARM64_CE m
+        set_kernel_config CONFIG_CRYPTO_AES_ARM64 m
+        set_kernel_config CONFIG_CRYPTO_AES_ARM64_CE m
+        set_kernel_config CONFIG_CRYPTO_AES_ARM64_CE_CCM y
+        set_kernel_config CONFIG_CRYPTO_AES_ARM64_CE_BLK y
+        set_kernel_config CONFIG_CRYPTO_AES_ARM64_NEON_BLK m
+        set_kernel_config CONFIG_CRYPTO_CHACHA20_NEON m
+        set_kernel_config CONFIG_CRYPTO_AES_ARM64_BS m
+      fi
 
       # Netfilter kernel support See https://github.com/raspberrypi/linux/issues/2177#issuecomment-354647406
       if [ "$KERNEL_NF" = true ] ; then
@@ -643,38 +675,6 @@ if [ "$BUILD_KERNEL" = true ] ; then
       if [ "$ENABLE_QEMU" = true ] ; then
         echo "CONFIG_FHANDLE=y" >> "${KERNEL_DIR}"/.config
         echo "CONFIG_LBDAF=y" >> "${KERNEL_DIR}"/.config
-      fi
-	  
-	  if [ "$ENABLE_CRYPTFS" = true ] ; then
-		set_kernel_config CONFIG_EMBEDDED y
-		set_kernel_config CONFIG_EXPERT y
-		set_kernel_config CONFIG_DAX y
-		set_kernel_config CONFIG_MD y
-		set_kernel_config CONFIG_BLK_DEV_MD y
-		set_kernel_config CONFIG_MD_AUTODETECT y
-		set_kernel_config CONFIG_BLK_DEV_DM y
-		set_kernel_config CONFIG_BLK_DEV_DM_BUILTIN y
-		set_kernel_config CONFIG_DM_CRYPT y
-		set_kernel_config CONFIG_CRYPTO_BLKCIPHER y
-		set_kernel_config CONFIG_CRYPTO_CBC y
-		set_kernel_config CONFIG_CRYPTO_XTS y
-		set_kernel_config CONFIG_CRYPTO_SHA512 y
-		set_kernel_config CONFIG_CRYPTO_MANAGER y
-		set_kernel_config CONFIG_ARM64_CRYPTO y
-        set_kernel_config CONFIG_CRYPTO_SHA256_ARM64 m
-        set_kernel_config CONFIG_CRYPTO_SHA512_ARM64 m
-        set_kernel_config CONFIG_CRYPTO_SHA1_ARM64_CE m
-        set_kernel_config CRYPTO_GHASH_ARM64_CE m
-        set_kernel_config CRYPTO_SHA2_ARM64_CE m
-        set_kernel_config CONFIG_CRYPTO_CRCT10DIF_ARM64_CE m
-        set_kernel_config CONFIG_CRYPTO_CRC32_ARM64_CE m
-        set_kernel_config CONFIG_CRYPTO_AES_ARM64 m
-        set_kernel_config CONFIG_CRYPTO_AES_ARM64_CE m
-        set_kernel_config CONFIG_CRYPTO_AES_ARM64_CE_CCM y
-        set_kernel_config CONFIG_CRYPTO_AES_ARM64_CE_BLK y
-        set_kernel_config CONFIG_CRYPTO_AES_ARM64_NEON_BLK m
-        set_kernel_config CONFIG_CRYPTO_CHACHA20_NEON m
-        set_kernel_config CONFIG_CRYPTO_AES_ARM64_BS m
       fi
 
       # Copy custom kernel configuration file
