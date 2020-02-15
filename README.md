@@ -245,7 +245,7 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 |KERNELSRC_USRCONFIG|string|||Copy own config file to kernel `.config`. If `KERNEL_MENUCONFIG`=true then running after copy|
 |KERNELSRC_PREBUILT|boolean|false|true\|false|With this parameter set to true the script expects the existing kernel sources directory to be already successfully cross-compiled. The parameters `KERNELSRC_CLEAN`, `KERNELSRC_CONFIG`, `KERNELSRC_USRCONFIG` and `KERNEL_MENUCONFIG` are ignored and no kernel compilation tasks are performed|
 |RPI_FIRMWARE_DIR|string|||full path to a directory named `firmware`, containing a local copy of the firmware from the [RaspberryPi firmware project](https://github.com/raspberrypi/firmware). Default is to download the latest firmware directly from the project|
-|KERNEL_DEFAULT_GOV|string||`performance`\|`powersave`\|`userspace`<br>`ondemand`\|`conservative`\|`schedutil`|Set the default cpu governor at kernel compilation. Possivle values: |
+|KERNEL_DEFAULT_GOV|string||`performance`\|`powersave`<br>\|`userspace`\|`ondemand`<br>\|`conservative`\|`schedutil`|Set the default cpu governor at kernel compilation. Possivle values: |
 |KERNEL_NF|boolean|false|true\|false|Enable Netfilter modules as kernel modules. You want that for iptables|
 |KERNEL_VIRT|boolean|false|true\|false|Enable Kernel KVM support (/dev/kvm)|
 |KERNEL_ZSWAP|boolean|false|true\|false|Enable Kernel Zswap support. Best use on high RAM load and mediocre CPU load usecases|
