@@ -49,7 +49,7 @@ CONFIG_TEMPLATE=rpi2stretch ./rpi23-gen-image.sh
 |---|---|---|---|---|
 |APT_SERVER|string|ftp.debian.org|URL|Set Debian packages server address. Choose a server from the list of Debian worldwide [mirror sites](https://www.debian.org/mirror/list). Using a nearby server will probably speed-up all required downloads within the bootstrapping process.|
 |APT_PROXY|string||URL|Set Proxy server address. Using a local Proxy-Cache like `apt-cacher-ng` will speed-up the bootstrapping process because all required Debian packages will only be downloaded from the Debian mirror site once. If `apt-cacher-ng` is running on default `http://127.0.0.1:3142` it is autodetected and you don't need to set this.|
-|KEEP_APT_PROXY|boolean|false|true\|false|Keep the APT_PROXY settings used in the bootsrapping process in the generated image|
+|KEEP_APT_PROXY|boolean|false||true=Keep the APT_PROXY settings used in the bootsrapping process in the generated image|
 |APT_INCLUDES|string list||package0,package1,...|A comma-separated list of additional packages to be installed by debootstrap during bootstrapping.|
 |APT_INCLUDES_LATE|string list||package0,package1,...|A comma-separated list of additional packages to be installed by apt after bootstrapping and after APT sources are set up.  This is useful for packages with pre-depends, which debootstrap do not handle well.|
 
@@ -71,38 +71,11 @@ CONFIG_TEMPLATE=rpi2stretch ./rpi23-gen-image.sh
 #### User settings:
 |Option|Value|default value|value format|desciption|
 |---|---|---|---|---|
-|ENABLE_ROOT|boolean|false||Enable=root login if ROOT_PASSWORD is set|
+|ENABLE_ROOT|boolean|false||true=root login if ROOT_PASSWORD is set|
 |ROOT_PASSWORD|string|raspberry||Set system `root` password. It's **STRONGLY** recommended that you choose a custom password.|
-|ENABLE_USER|boolean|true||Create non-root user with password `USER_PASSWORD` and username `USER_NAME`|
-|USER_NAME|string|pi||Set username|
-|USER_PASSWORD|string|raspberry||Set password for non-root user. It's **STRONGLY** recommended that you choose a custom password.|
-
-##### ``
-||
-|default:** "raspberry"
-|format:** ``
-|description:** 
-
-##### ``
-*  **value:** `[ true | false ]`
-*  **true|Create user`
-*  **false|Create no user`
-*  **default|true`
-|description:** 
-
-##### ``
-|string|
-|default:** "pi"
-|format:** 
-|description:** Non-root user to create.  Ignored if `ENABLE_USER`=false
-
-##### ``
-|string|
-|default:** "raspberry"
-|format:** 
-|description:** 
-Set password for the created non-root user `USER_NAME`=pi. Ignored if `ENABLE_USER`=false. 
-
+|ENABLE_USER|boolean|true||true=Create non-root user with password `USER_PASSWORD` and username `USER_NAME`|
+|USER_NAME|string|pi||Set username for non-root user, if ENABLE_USER is true|
+|USER_PASSWORD|string|raspberry||Set password for non-root user, if ENABLE_USER is true. It's **STRONGLY** recommended that you choose a custom password.|
 
 ---
 
