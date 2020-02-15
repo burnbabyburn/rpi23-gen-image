@@ -180,7 +180,7 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 |ENABLE_SPLASH|boolean|true||true=Enable default Raspberry Pi boot up rainbow splash screen|
 |ENABLE_LOGO|boolean|true||Enable default Raspberry Pi console logo (image of four raspberries in the top left corner)|
 |ENABLE_SILENT_BOOT|boolean|false||Set the verbosity of console messages shown during boot up to a strict minimum|
-|DISABLE_UNDERVOLT_WARNINGS|integer||1\/2|Disable RPi2/3 under-voltage warnings and overlays. Setting the parameter to `1` will disable the warning overlay. Setting it to `2` will additionally allow RPi2/3 turbo mode when low-voltage is present|
+|DISABLE_UNDERVOLT_WARNINGS|integer||1\|2|Disable RPi2/3 under-voltage warnings and overlays. Setting the parameter to `1` will disable the warning overlay. Setting it to `2` will additionally allow RPi2/3 turbo mode when low-voltage is present|
 
 ---
 
@@ -188,24 +188,24 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 
 |Option|Value|default value|value format|desciption|
 |---|---|---|---|---|
-|ENABLE_DPHYSSWAP||true||Enable swap. The size of the swapfile is chosen relative to the size of the root partition. It'll use the `dphys-swapfile` package for that|
-|ENABLE_SYSTEMDSWAP||false||Enables [Systemd-swap service](https://github.com/Nefelim4ag/systemd-swap). Usefull if `KERNEL_ZSWAP` is enabled|
-|ENABLE_QEMU||false||Generate kernel (`vexpress_defconfig`), file system image (`qcow2`) and DTB files that can be used for QEMU full system emulation (`vexpress-A15`). The output files are stored in the `$(pwd)/images/qemu` directory. You can find more information about running the generated image in the QEMU section of this readme file|
-|QEMU_BINARY||||Sets the QEMU enviornment for the Debian archive. **Set by RPI_MODEL**|
-|ENABLE_KEYGEN||false||Recover your lost codec license|
-|ENABLE_MINBASE||false||Use debootstrap script variant `minbase` which only includes essential packages and apt. This will reduce the disk usage by about 65 MB|
-|ENABLE_UBOOT||false||Replace the default RPi 0/1/2/3 second stage bootloader (bootcode.bin) with [U-Boot bootloader](https://git.denx.de/?p=u-boot.git;a=summary). U-Boot can boot images via the network using the BOOTP/TFTP protocol. RPI4 needs tbd|
-|UBOOTSRC_DIR||||Full path to a directory named `u-boot` of [U-Boot bootloader sources](https://git.denx.de/?p=u-boot.git;a=summary) that will be copied, configured, build and installed inside the chroot|
-|ENABLE_FBTURBO||false||Install and enable the [hardware accelerated Xorg video driver](https://github.com/ssvb/xf86-video-fbturbo) `fbturbo`. Please note that this driver is currently limited to hardware accelerated window moving and scrolling|
-|FBTURBOSRC_DIR||||Full path to a directory named `xf86-video-fbturbo` of [hardware accelerated Xorg video driver sources](https://github.com/ssvb/xf86-video-fbturbo) that will be copied, configured, build and installed inside the chroot|
-|ENABLE_VIDEOCORE||false||Install and enable the [ARM side libraries for interfacing to Raspberry Pi GPU](https://github.com/raspberrypi/userland) `vcgencmd`. Please note that this driver is currently limited to hardware accelerated window moving and scrolling|
-|VIDEOCORESRC_DIR||||Full path to a directory named `userland` of [ARM side libraries for interfacing to Raspberry Pi GPU](https://github.com/raspberrypi/userland) that will be copied, configured, build and installed inside the chroot|
-|ENABLE_NEXMON||false||Install and enable the source code for a C-based firmware patching framework for Broadcom/Cypress WiFi chips that enables you to write your own firmware patches, for example, to enable monitor mode with radiotap headers and frame injection](https://github.com/seemoo-lab/nexmon.git)|
-|NEXMONSRC_DIR||||Full path to a directory named `nexmon` of [Source code for ARM side libraries for interfacing to Raspberry Pi GPU](https://github.com/raspberrypi/userland) that will be copied, configured, build and installed inside the chroot|
-|ENABLE_SPLITFS||false||Enable having root partition on an USB drive by creating two image files: one for the `/boot/firmware` mount point, and another for `/`|
-|CHROOT_SCRIPTS||||Full path to a directory with scripts that should be run in the chroot before the image is finally built. Every executable file in this directory is run in lexicographical order|
-|ENABLE_INITRAMFS||false||Create an initramfs that that will be loaded during the Linux startup process. `ENABLE_INITRAMFS` will automatically get enabled if `ENABLE_CRYPTFS`=true. This parameter will be ignored if `BUILD_KERNEL`=false|
-|ENABLE_DBUS||true||Install and enable D-Bus message bus. Please note that systemd should work without D-bus but it's recommended to be enabled|
+|ENABLE_DPHYSSWAP|boolean|true||Enable swap. The size of the swapfile is chosen relative to the size of the root partition. It'll use the `dphys-swapfile` package for that|
+|ENABLE_SYSTEMDSWAP|boolean|false||Enables [Systemd-swap service](https://github.com/Nefelim4ag/systemd-swap). Usefull if `KERNEL_ZSWAP` is enabled|
+|ENABLE_QEMU|boolean|false||Generate kernel (`vexpress_defconfig`), file system image (`qcow2`) and DTB files that can be used for QEMU full system emulation (`vexpress-A15`). The output files are stored in the `$(pwd)/images/qemu` directory. You can find more information about running the generated image in the QEMU section of this readme file|
+|QEMU_BINARY|string||FullPathToFile|Sets the QEMU enviornment for the Debian archive. **Set by RPI_MODEL**|
+|ENABLE_KEYGEN|boolean|false||Recover your lost codec license|
+|ENABLE_MINBASE|boolean|false||Use debootstrap script variant `minbase` which only includes essential packages and apt. This will reduce the disk usage by about 65 MB|
+|ENABLE_UBOOT|boolean|false||Replace the default RPi 0/1/2/3 second stage bootloader (bootcode.bin) with [U-Boot bootloader](https://git.denx.de/?p=u-boot.git;a=summary). U-Boot can boot images via the network using the BOOTP/TFTP protocol. RPI4 needs tbd|
+|UBOOTSRC_DIR|string||FullPathToFolder|Full path to a directory named `u-boot` of [U-Boot bootloader sources](https://git.denx.de/?p=u-boot.git;a=summary) that will be copied, configured, build and installed inside the chroot|
+|ENABLE_FBTURBO|boolean|false||Install and enable the [hardware accelerated Xorg video driver](https://github.com/ssvb/xf86-video-fbturbo) `fbturbo`. Please note that this driver is currently limited to hardware accelerated window moving and scrolling|
+|FBTURBOSRC_DIR|string||FullPathToFolder|Full path to a directory named `xf86-video-fbturbo` of [hardware accelerated Xorg video driver sources](https://github.com/ssvb/xf86-video-fbturbo) that will be copied, configured, build and installed inside the chroot|
+|ENABLE_VIDEOCORE|boolean|false||Install and enable the [ARM side libraries for interfacing to Raspberry Pi GPU](https://github.com/raspberrypi/userland) `vcgencmd`. Please note that this driver is currently limited to hardware accelerated window moving and scrolling|
+|VIDEOCORESRC_DIR|string||FullPathToFolder|Full path to a directory named `userland` of [ARM side libraries for interfacing to Raspberry Pi GPU](https://github.com/raspberrypi/userland) that will be copied, configured, build and installed inside the chroot|
+|ENABLE_NEXMON|boolean|false||Install and enable the source code for a C-based firmware patching framework for Broadcom/Cypress WiFi chips that enables you to write your own firmware patches, for example, to enable monitor mode with radiotap headers and frame injection](https://github.com/seemoo-lab/nexmon.git)|
+|NEXMONSRC_DIR|string||FullPathToFolder|Full path to a directory named `nexmon` of [Source code for ARM side libraries for interfacing to Raspberry Pi GPU](https://github.com/raspberrypi/userland) that will be copied, configured, build and installed inside the chroot|
+|ENABLE_SPLITFS|boolean|false||Enable having root partition on an USB drive by creating two image files: one for the `/boot/firmware` mount point, and another for `/`|
+|CHROOT_SCRIPTS|string||FullPathToFolder|Full path to a directory with scripts that should be run in the chroot before the image is finally built. Every executable file in this directory is run in lexicographical order|
+|ENABLE_INITRAMFS|boolean|false||Create an initramfs that that will be loaded during the Linux startup process. `ENABLE_INITRAMFS` will automatically get enabled if `ENABLE_CRYPTFS`=true. This parameter will be ignored if `BUILD_KERNEL`=false|
+|ENABLE_DBUS|boolean|true||Install and enable D-Bus message bus. Please note that systemd should work without D-bus but it's recommended to be enabled|
 
 ---
 
