@@ -195,93 +195,17 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 |ENABLE_KEYGEN||false||Recover your lost codec license|
 |ENABLE_MINBASE||false||Use debootstrap script variant `minbase` which only includes essential packages and apt. This will reduce the disk usage by about 65 MB|
 |ENABLE_UBOOT||false||Replace the default RPi 0/1/2/3 second stage bootloader (bootcode.bin) with [U-Boot bootloader](https://git.denx.de/?p=u-boot.git;a=summary). U-Boot can boot images via the network using the BOOTP/TFTP protocol. RPI4 needs tbd|
-|UBOOTSRC_DIR||||Path to a directory (`u-boot`) of [U-Boot bootloader sources](https://git.denx.de/?p=u-boot.git;a=summary) that will be copied, configured, build and installed inside the chroot|
-||||||
-||||||
-||||||
-||||||
-||||||
-||||||
-||||||
-||||||
-||||||
-||||||
-
-##### `ENABLE_FBTURBO`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Install and enable the [hardware accelerated Xorg video driver](https://github.com/ssvb/xf86-video-fbturbo) `fbturbo`. Please note that this driver is currently limited to hardware accelerated window moving and scrolling.
-
-##### `FBTURBOSRC_DIR`
-|string|
-|default|
-|format|
-|description:** 
-Path to a directory (`xf86-video-fbturbo`) of [hardware accelerated Xorg video driver sources](https://github.com/ssvb/xf86-video-fbturbo) that will be copied, configured, build and installed inside the chroot.
-
-##### `ENABLE_VIDEOCORE`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Install and enable the [ARM side libraries for interfacing to Raspberry Pi GPU](https://github.com/raspberrypi/userland) `vcgencmd`. Please note that this driver is currently limited to hardware accelerated window moving and scrolling.
-
-##### `VIDEOCORESRC_DIR`
-|string|
-|default|
-|format|
-|description:** 
-Path to a directory (`userland`) of [ARM side libraries for interfacing to Raspberry Pi GPU](https://github.com/raspberrypi/userland) that will be copied, configured, build and installed inside the chroot.
-
-##### `ENABLE_NEXMON`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Install and enable the [Source code for a C-based firmware patching framework for Broadcom/Cypress WiFi chips that enables you to write your own firmware patches, for example, to enable monitor mode with radiotap headers and frame injection](https://github.com/seemoo-lab/nexmon.git).
-
-##### `NEXMONSRC_DIR`
-|string|
-|default|
-|format|
-|description:** 
-Path to a directory (`nexmon`) of [Source code for ARM side libraries for interfacing to Raspberry Pi GPU](https://github.com/raspberrypi/userland) that will be copied, configured, build and installed inside the chroot.
-
-##### `ENABLE_SPLITFS`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Enable having root partition on an USB drive by creating two image files: one for the `/boot/firmware` mount point, and another for `/`.
-
-##### `CHROOT_SCRIPTS`
-|string|
-|default|
-|format|
-|description:** 
-Path to a directory with scripts that should be run in the chroot before the image is finally built. Every executable file in this directory is run in lexicographical order.
-
-##### `ENABLE_INITRAMFS`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Create an initramfs that that will be loaded during the Linux startup process. `ENABLE_INITRAMFS` will automatically get enabled if `ENABLE_CRYPTFS`=true. This parameter will be ignored if `BUILD_KERNEL`=false.
-
-##### `ENABLE_DBUS`=true
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Install and enable D-Bus message bus. Please note that systemd should work without D-bus but it's recommended to be enabled.
+|UBOOTSRC_DIR||||Full path to a directory named `u-boot` of [U-Boot bootloader sources](https://git.denx.de/?p=u-boot.git;a=summary) that will be copied, configured, build and installed inside the chroot|
+|ENABLE_FBTURBO||false||Install and enable the [hardware accelerated Xorg video driver](https://github.com/ssvb/xf86-video-fbturbo) `fbturbo`. Please note that this driver is currently limited to hardware accelerated window moving and scrolling|
+|FBTURBOSRC_DIR||||Full path to a directory named `xf86-video-fbturbo` of [hardware accelerated Xorg video driver sources](https://github.com/ssvb/xf86-video-fbturbo) that will be copied, configured, build and installed inside the chroot|
+|ENABLE_VIDEOCORE||false||Install and enable the [ARM side libraries for interfacing to Raspberry Pi GPU](https://github.com/raspberrypi/userland) `vcgencmd`. Please note that this driver is currently limited to hardware accelerated window moving and scrolling|
+|VIDEOCORESRC_DIR||||Full path to a directory named `userland` of [ARM side libraries for interfacing to Raspberry Pi GPU](https://github.com/raspberrypi/userland) that will be copied, configured, build and installed inside the chroot|
+|ENABLE_NEXMON||false||Install and enable the source code for a C-based firmware patching framework for Broadcom/Cypress WiFi chips that enables you to write your own firmware patches, for example, to enable monitor mode with radiotap headers and frame injection](https://github.com/seemoo-lab/nexmon.git)|
+|NEXMONSRC_DIR||||Full path to a directory named `nexmon` of [Source code for ARM side libraries for interfacing to Raspberry Pi GPU](https://github.com/raspberrypi/userland) that will be copied, configured, build and installed inside the chroot|
+|ENABLE_SPLITFS||false||Enable having root partition on an USB drive by creating two image files: one for the `/boot/firmware` mount point, and another for `/`|
+|CHROOT_SCRIPTS||||Full path to a directory with scripts that should be run in the chroot before the image is finally built. Every executable file in this directory is run in lexicographical order|
+|ENABLE_INITRAMFS||false||Create an initramfs that that will be loaded during the Linux startup process. `ENABLE_INITRAMFS` will automatically get enabled if `ENABLE_CRYPTFS`=true. This parameter will be ignored if `BUILD_KERNEL`=false|
+|ENABLE_DBUS||true||Install and enable D-Bus message bus. Please note that systemd should work without D-bus but it's recommended to be enabled|
 
 ---
 
