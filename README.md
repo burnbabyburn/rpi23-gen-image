@@ -276,14 +276,15 @@ The following list of parameters is ignored if `ENABLE_REDUCE`=false.
 
 #### Encrypted root partition:
 #### On first boot, you will be asked to enter you password several time
+#### See cryptsetup options for a more information about opttion values(https://wiki.archlinux.org/index.php/Dm-crypt/Device_encryption)
 
 |Option|Value|default value|value format|desciption|
 |---|---|---|---|---|
-|ENABLE_CRYPTFS|boolean|false||Enable full system encryption with dm-crypt. Setup a fully LUKS encrypted root partition (aes-xts-plain64:sha512) and generate required initramfs. The /boot directory will not be encrypted. This parameter will be ignored if `BUILD_KERNEL`=false. `ENABLE_CRYPTFS` is experimental. SSH-to-initramfs is currently not supported but will be soon - feel free to help|
+|ENABLE_CRYPTFS|boolean|false||Enable full system encryption with dm-crypt. Setup a fully LUKS encrypted root partition (aes-xts-plain64:sha512) and generate required initramfs. The /boot directory will not be encrypted. This parameter will be ignored if `BUILD_KERNEL`=false. `ENABLE_CRYPTFS` is experimental|
 |CRYPTFS_PASSWORD|string||YourPasswordToUnlockCrypto|Set password of the encrypted root partition. This parameter is mandatory if `ENABLE_CRYPTFS`=true|
 |CRYPTFS_MAPPING|string|secure|YourDmName|crypsetup device-mapper name|
 |CRYPTFS_CIPHER|string|aes-xts-plain64|aes-cbc-essiv:sha256|cryptsetup cipher `aes-xts*` ciphers are strongly recommended|
-|CRYPTFS_HASH|string|sha256|sha256\|sha512|cryptsetup hash algorithm(https://wiki.archlinux.org/index.php/Dm-crypt/Device_encryption)|
+|CRYPTFS_HASH|string|sha256|sha256\|sha512|cryptsetup hash algorithm|
 |CRYPTFS_XTSKEYSIZE|integer|256\|512||Sets key size in bits. The argument has to be a multiple of 8|
 |CRYPTFS_DROPBEAR|boolean|false||true=Enable Dropbear Initramfs support\|false=disable dropbear|
 |CRYPTFS_DROPBEAR_PUBKEY|string||PathToYourPublicDropbearKeyFile|Full path to dropbear Public RSA-OpenSSH Key|
