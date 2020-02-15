@@ -83,12 +83,12 @@ CONFIG_TEMPLATE=rpi2stretch ./rpi23-gen-image.sh
 
 These options are used to configure keyboard layout in `/etc/default/keyboard` for console and Xorg. These settings can also be changed inside the running OS using the `dpkg-reconfigure keyboard-configuration` command.
 
-|Option|Value|default value|value format|desciption|
+|Option|Value|value format|desciption|
 |---|---|---|---|---|
-|XKB_MODEL|string||pc104|Set the name of the model of your keyboard type|
-|XKB_LAYOUT|string||us|Set the supported keyboard layout(s)|
-|XKB_VARIANT|string||basic|Set the supported variant(s) of the keyboard layout(s)|
-|XKB_OPTIONS|string||grp:alt_shift_toggle|Set extra xkb configuration options|
+|XKB_MODEL|string|pc104|Set the name of the model of your keyboard type|
+|XKB_LAYOUT|string|us|Set the supported keyboard layout(s)|
+|XKB_VARIANT|string|basic|Set the supported variant(s) of the keyboard layout(s)|
+|XKB_OPTIONS|string|grp:alt_shift_toggle|Set extra xkb configuration options|
 
 ---
 
