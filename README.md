@@ -52,9 +52,11 @@ Set Debian packages server address. Choose a server from the list of Debian worl
 Set Proxy server address. Using a local Proxy-Cache like `apt-cacher-ng` will speed-up the bootstrapping process because all required Debian packages will only be downloaded from the Debian mirror site once. If `apt-cacher-ng` is running on default `http://127.0.0.1:3142` it is autodetected and you don't need to set this.
 
 ##### `KEEP_APT_PROXY`
-**value:** `[ true | false ]`
+* **value:** `[ true | false ]`
+* **true:**
+* **false:**
+* **default:** false
 
-**default:** false
 Keep the APT_PROXY settings used in the bootsrapping process in the generated image.
 
 ##### `APT_INCLUDES`=""
@@ -99,6 +101,10 @@ Expand the root partition and filesystem automatically on first boot.
 #### User settings:
 
 ##### `ENABLE_ROOT`=false
+*  **value:** `[ true | false ]`
+*  **true:**
+*  **false:**
+*  **default:** false
 Set root user password so root login will be enabled
 
 ##### `ROOT_PASSWORD`="raspberry"
