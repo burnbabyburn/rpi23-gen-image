@@ -223,397 +223,80 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 
 #### Kernel settings:
 
-#### SSH settings:
 |Option|Value|default value|value format|desciption|
 |---|---|---|---|---|
-||||||
-||||||
-||||||
-||||||
-||||||
-
-##### `BUILD_KERNEL`=true
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Build and install the latest RPi 0/1/2/3/4 Linux kernel. The default RPi 0/1/2/3/ kernel configuration is used most of the time. 
-ENABLE_NEXMON - Changes Kernel Source to [https://github.com/Re4son/](Kali Linux Kernel)
-Precompiled 32bit kernel for RPI0/1/2/3 by [https://github.com/hypriot/](hypriot)
-Precompiled 64bit kernel for RPI3/4 by [https://github.com/sakaki-/](sakaki)
-
-##### `CROSS_COMPILE`
-|string|
-|default|
-|format|
-|description:** 
-This sets the cross-compile environment for the compiler. Set by RPI_MODEL
-
-##### `KERNEL_ARCH`
-|string|
-|default|
-|format|
-|description:** 
-This sets the kernel architecture for the compiler. Set by RPI_MODEL
-
-##### `KERNEL_IMAGE`
-|string|
-|default|
-|format|
-|description:** 
-Name of the image file in the boot partition. Set by RPI_MODEL
-
-##### `KERNEL_BRANCH`
-|string|
-|default|
-|format|
-|description:** 
-Name of the requested branch from the GIT location for the RPi Kernel. Default is using the current default branch from the GIT site.
-
-##### `KERNEL_DEFCONFIG`
-|string|
-|default|
-|format|
-|description:** 
-Sets the default config for kernel compiling. Set by RPI_MODEL
-
-##### `KERNEL_REDUCE`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Reduce the size of the generated kernel by removing unwanted devices, network and filesystem drivers (experimental).
-
-##### `KERNEL_THREADS`=
-*  **value|integer`
-*  **default:** 
-*  **format:** [ nothing | DesiredCoreCount ]
-|description:** Number of threads to build the kernel. If not set, the script will automatically determine the maximum number of CPU cores to speed up kernel compilation.
-
-##### `KERNEL_HEADERS`=true
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Install kernel headers with the built kernel.
-
-##### `KERNEL_MENUCONFIG`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Start `make menuconfig` interactive menu-driven kernel configuration. The script will continue after `make menuconfig` was terminated.
-
-##### `KERNEL_OLDDEFCONFIG`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Run `make olddefconfig` to automatically set all new kernel configuration options to their recommended default values.
-
-##### `KERNEL_CCACHE`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Compile the kernel using ccache. This speeds up kernel recompilation by caching previous compilations and detecting when the same compilation is being done again.
-
-##### `KERNEL_REMOVESRC`=true
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Remove all kernel sources from the generated OS image after it was built and installed.
-
-##### `KERNELSRC_DIR`
-|string|
-|default|
-|format|
-|description:** 
-Path to a directory (`linux`) of [RaspberryPi Linux kernel sources](https://github.com/raspberrypi/linux) that will be copied, configured, build and installed inside the chroot.
-
-##### `KERNELSRC_CLEAN`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Clean the existing kernel sources directory `KERNELSRC_DIR` (using `make mrproper`) after it was copied to the chroot and before the compilation of the kernel has started. This parameter will be ignored if no `KERNELSRC_DIR` was specified or if `KERNELSRC_PREBUILT`=true.
-
-##### `KERNELSRC_CONFIG`=true
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Run `make bcm2709_defconfig` (and optional `make menuconfig`) to configure the kernel sources before building. This parameter is automatically set to `true` if no existing kernel sources directory was specified using `KERNELSRC_DIR`. This parameter is ignored if `KERNELSRC_PREBUILT`=true.
-
-##### `KERNELSRC_USRCONFIG`
-|string|
-|default|
-|format|
-|description:** 
-Copy own config file to kernel `.config`. If `KERNEL_MENUCONFIG`=true then running after copy.
-
-##### `KERNELSRC_PREBUILT`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-With this parameter set to true the script expects the existing kernel sources directory to be already successfully cross-compiled. The parameters `KERNELSRC_CLEAN`, `KERNELSRC_CONFIG`, `KERNELSRC_USRCONFIG` and `KERNEL_MENUCONFIG` are ignored and no kernel compilation tasks are performed.
-
-##### `RPI_FIRMWARE_DIR`
-|string|
-|default|
-|format|
-|description:** 
-The directory (`firmware`) containing a local copy of the firmware from the [RaspberryPi firmware project](https://github.com/raspberrypi/firmware). Default is to download the latest firmware directly from the project.
-
-##### `KERNEL_DEFAULT_GOV`="ONDEMAND"
-|string|
-|default|
-|format|
-|description:** 
-Set the default cpu governor at kernel compilation. Supported values are: PERFORMANCE POWERSAVE USERSPACE ONDEMAND CONSERVATIVE SCHEDUTIL
-
-##### `KERNEL_NF`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Enable Netfilter modules as kernel modules. You want that for iptables.
-
-##### `KERNEL_VIRT`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Enable Kernel KVM support (/dev/kvm)
-
-##### `KERNEL_ZSWAP`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Enable Kernel Zswap support. Best use on high RAM load and mediocre CPU load usecases
-
-##### `KERNEL_BPF`=true
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Allow attaching eBPF programs to a cgroup using the bpf syscall (CONFIG_BPF_SYSCALL CONFIG_CGROUP_BPF) [systemd wants it - File /lib/systemd/system/systemd-journald.server:36 configures an IP firewall (IPAddressDeny=all), but the local system does not support BPF/cgroup based firewalls]
-
-##### `KERNEL_SECURITY`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Enables Apparmor, integrity subsystem, auditing.
-
-##### `KERNEL_BTRFS`="false"
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-enable btrfs kernel support
-
-##### `KERNEL_POEHAT`="false"
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-enable Enable RPI POE HAT fan kernel support
-
-##### `KERNEL_NSPAWN`="false"
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Enable per-interface network priority control - for systemd-nspawn
-
-##### `KERNEL_DHKEY`="true"
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Diffie-Hellman operations on retained keys - required for >keyutils-1.6
+|BUILD_KERNEL||true||Build and install the latest RPi 0/1/2/3/4 Linux kernel. The default RPi 0/1/2/3/ kernel configuration is used most of the time. ENABLE_NEXMON - Changes Kernel Source to [https://github.com/Re4son/](Kali Linux Kernel) Precompiled 32bit kernel for RPI0/1/2/3 by [https://github.com/hypriot/](hypriot) Precompiled 64bit kernel for RPI3/4 by [https://github.com/sakaki-/](sakaki)|
+|CROSS_COMPILE|string|||This sets the cross-compile environment for the compiler. Set by RPI_MODEL|
+|KERNEL_ARCH|string|||This sets the kernel architecture for the compiler. Set by RPI_MODEL|
+|KERNEL_IMAGE|string|||Name of the image file in the boot partition. Set by RPI_MODEL|
+|KERNEL_BRANCH|string|||Name of the requested branch from the GIT location for the RPi Kernel. Default is using the current default branch from the GIT site|
+|KERNEL_DEFCONFIG|string|||Sets the default config for kernel compiling. Set by RPI_MODEL|
+|KERNEL_REDUCE|boolean|false||Reduce the size of the generated kernel by removing unwanted devices, network and filesystem drivers (experimental)|
+|KERNEL_THREADS|integer|||Number of threads to build the kernel. If not set, the script will automatically determine the maximum number of CPU cores to speed up kernel compilation|
+|KERNEL_HEADERS||true||Install kernel headers with the built kernel|
+|KERNEL_MENUCONFIG||false||Start `make menuconfig` interactive menu-driven kernel configuration. The script will continue after `make menuconfig` was terminated|
+|KERNEL_OLDDEFCONFIG||false||Run `make olddefconfig` to automatically set all new kernel configuration options to their recommended default values|
+|KERNEL_CCACHE||false||Compile the kernel using ccache. This speeds up kernel recompilation by caching previous compilations and detecting when the same compilation is being done again|
+|KERNEL_REMOVESRC|true|||Remove all kernel sources from the generated OS image after it was built and installed|
+|KERNELSRC_DIR|string|||Full path to a directory named `linux` of [RaspberryPi Linux kernel sources](https://github.com/raspberrypi/linux) that will be copied, configured, build and installed inside the chroot|
+|KERNELSRC_CLEAN||false||Clean the existing kernel sources directory `KERNELSRC_DIR` (using `make mrproper`) after it was copied to the chroot and before the compilation of the kernel has started. This parameter will be ignored if no `KERNELSRC_DIR` was specified or if `KERNELSRC_PREBUILT`=true|
+|KERNELSRC_CONFIG||true||Run `make bcm2709_defconfig` (and optional `make menuconfig`) to configure the kernel sources before building. This parameter is automatically set to `true` if no existing kernel sources directory was specified using `KERNELSRC_DIR`. This parameter is ignored if `KERNELSRC_PREBUILT`=true|
+|KERNELSRC_USRCONFIG|string|||Copy own config file to kernel `.config`. If `KERNEL_MENUCONFIG`=true then running after copy|
+|KERNELSRC_PREBUILT||false||With this parameter set to true the script expects the existing kernel sources directory to be already successfully cross-compiled. The parameters `KERNELSRC_CLEAN`, `KERNELSRC_CONFIG`, `KERNELSRC_USRCONFIG` and `KERNEL_MENUCONFIG` are ignored and no kernel compilation tasks are performed|
+|RPI_FIRMWARE_DIR|string|||full path to a directory named `firmware`, containing a local copy of the firmware from the [RaspberryPi firmware project](https://github.com/raspberrypi/firmware). Default is to download the latest firmware directly from the project|
+|KERNEL_DEFAULT_GOV||PERFORMANCE\|POWERSAVE\|USERSPACE\|ONDEMAND\|CONSERVATIVE\|SCHEDUTIL|ONDEMAND|Set the default cpu governor at kernel compilation|
+|KERNEL_NF||false||Enable Netfilter modules as kernel modules. You want that for iptables|
+|KERNEL_VIRT||false||Enable Kernel KVM support (/dev/kvm)|
+|KERNEL_ZSWAP||false||Enable Kernel Zswap support. Best use on high RAM load and mediocre CPU load usecases|
+|KERNEL_BPF||true||Allow attaching eBPF programs to a cgroup using the bpf syscall (CONFIG_BPF_SYSCALL CONFIG_CGROUP_BPF) [systemd wants it - File /lib/systemd/system/systemd-journald.server:36 configures an IP firewall (IPAddressDeny=all), but the local system does not support BPF/cgroup based firewalls]|
+|KERNEL_SECURITY||false||Enables Apparmor, integrity subsystem, auditing|
+|KERNEL_BTRFS||false||enable btrfs kernel support|
+|KERNEL_POEHAT||false||enable Enable RPI POE HAT fan kernel support|
+|KERNEL_NSPAWN||false||Enable per-interface network priority control - for systemd-nspawn|
+|KERNEL_DHKEY||true||Diffie-Hellman operations on retained keys - required for >keyutils-1.6|
 
 ---
 
 #### Reduce disk usage:
 The following list of parameters is ignored if `ENABLE_REDUCE`=false.
 
-##### `ENABLE_REDUCE`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Reduce the disk space usage by deleting packages and files. See `REDUCE_*` parameters for detailed information.
-
-##### `REDUCE_APT`=true
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Configure APT to use compressed package repository lists and no package caching files.
-
-##### `REDUCE_DOC`=true
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Remove all doc files (harsh). Configure APT to not include doc files on future `apt-get` package installations.
-
-##### `REDUCE_MAN`=true
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Remove all man pages and info files (harsh).  Configure APT to not include man pages on future `apt-get` package installations.
-
-##### `REDUCE_VIM`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Replace `vim-tiny` package by `levee` a tiny vim clone.
-
-##### `REDUCE_BASH`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Remove `bash` package and switch to `dash` shell (experimental).
-
-##### `REDUCE_HWDB`=true
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Remove PCI related hwdb files (experimental).
-
-##### `REDUCE_SSHD`=true
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Replace `openssh-server` with `dropbear`.
-
-##### `REDUCE_LOCALE`=true
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Remove all `locale` translation files.
+|Option|Value|default value|value format|desciption|
+|---|---|---|---|---|
+|ENABLE_REDUCE||false||Reduce the disk space usage by deleting packages and files. See `REDUCE_*` parameters for detailed information|
+|REDUCE_APT||true||Configure APT to use compressed package repository lists and no package caching files|
+|REDUCE_DOC||true||Remove all doc files (harsh). Configure APT to not include doc files on future `apt-get` package installations|
+|REDUCE_MAN||true||Remove all man pages and info files (harsh).  Configure APT to not include man pages on future `apt-get` package installations|
+|REDUCE_VIM||false||Replace `vim-tiny` package by `levee` a tiny vim clone|
+|REDUCE_BASH||false||Remove `bash` package and switch to `dash` shell (experimental)|
+|REDUCE_HWDB||true||Remove PCI related hwdb files (experimental)|
+|REDUCE_SSHD||true||Replace `openssh-server` with `dropbear`|
+|REDUCE_LOCALE||true||Remove all `locale` translation files|
 
 ---
 
 #### Encrypted root partition:
-# On first boot, you will be asked to enter you password several time
+#### On first boot, you will be asked to enter you password several time
 
-##### `ENABLE_CRYPTFS`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Enable full system encryption with dm-crypt. Setup a fully LUKS encrypted root partition (aes-xts-plain64:sha512) and generate required initramfs. The /boot directory will not be encrypted. This parameter will be ignored if `BUILD_KERNEL`=false. `ENABLE_CRYPTFS` is experimental. SSH-to-initramfs is currently not supported but will be soon - feel free to help.
-
-##### `CRYPTFS_PASSWORD`=""
-|string|
-|default|
-|format|
-|description:** 
-Set password of the encrypted root partition. This parameter is mandatory if `ENABLE_CRYPTFS`=true.
-
-##### `CRYPTFS_MAPPING`="secure"
-|string|
-|default|
-|format|
-|description:** 
-Set name of dm-crypt managed device-mapper mapping.
-
-##### `CRYPTFS_CIPHER`="aes-xts-plain64"
-|string|
-|default|
-|format|
-|description:** 
-Set cipher specification string. `aes-xts*` ciphers are strongly recommended.
-
-##### `CRYPTFS_HASH`=sha256
-|string|
-|default|
-|format|
-|description:** 
-Hash function and size to be used
-
-##### `CRYPTFS_XTSKEYSIZE`=256
-*  **value|integer`
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Sets key size in bits. The argument has to be a multiple of 8.
-
-##### `CRYPTFS_DROPBEAR`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Enable Dropbear Initramfs support
-
-##### `CRYPTFS_DROPBEAR_PUBKEY`=""
-|string|
-|default|
-|format|
-|description:** 
-Provide path to dropbear Public RSA-OpenSSH Key
+|Option|Value|default value|value format|desciption|
+|---|---|---|---|---|
+|ENABLE_CRYPTFS||false||Enable full system encryption with dm-crypt. Setup a fully LUKS encrypted root partition (aes-xts-plain64:sha512) and generate required initramfs. The /boot directory will not be encrypted. This parameter will be ignored if `BUILD_KERNEL`=false. `ENABLE_CRYPTFS` is experimental. SSH-to-initramfs is currently not supported but will be soon - feel free to help|
+|CRYPTFS_PASSWORD|string|||Set password of the encrypted root partition. This parameter is mandatory if `ENABLE_CRYPTFS`=true|
+|CRYPTFS_MAPPING||secure||Set name of dm-crypt managed device-mapper mapping|
+|CRYPTFS_CIPHER|string|aes-xts-plain64||Set cipher specification string. `aes-xts*` ciphers are strongly recommended|
+|CRYPTFS_HASH|string|sha256||Hash function and size to be used|
+|CRYPTFS_XTSKEYSIZE|integer|256||Sets key size in bits. The argument has to be a multiple of 8|
+|CRYPTFS_DROPBEAR||false||true=Enable Dropbear Initramfs support\|false=disable dropbear|
+|CRYPTFS_DROPBEAR_PUBKEY|string|||Full path to dropbear Public RSA-OpenSSH Key|
 
 ---
 
 #### Build settings:
+|Option|Value|default value|value format|desciption|
+|---|---|---|---|---|
+|BASEDIR|string|$(pwd)/images/${RELEASE}|yourimagename|Full path to a working directory used by the script to generate an image|
+|IMAGE_NAME|string||BASEDIR/DATE-KERNEL_ARCH-KERNEL_BRANCH-rpiRPI_MODEL-RELEASE-RELEASE_ARCH|Set a filename for the output file(s). Note: the script will create $IMAGE_NAME.img if `ENABLE_SPLITFS`=false or $IMAGE_NAME-frmw.img and $IMAGE_NAME-root.img if `ENABLE_SPLITFS`=true. Note 2: If the KERNEL_BRANCH is not set, the word "CURRENT" is used|
 
-##### `BASEDIR`="$(pwd)/images/${RELEASE}"
-|string|
-|default|
-|format|
-|description:** 
-Set a path to a working directory used by the script to generate an image.
-
-##### `IMAGE_NAME`="${BASEDIR}/${DATE}-${KERNEL_ARCH}-${KERNEL_BRANCH}-rpi${RPI_MODEL}-${RELEASE}-${RELEASE_ARCH}"
-|string|
-|default|
-|format|
-|description:** 
-Set a filename for the output file(s). Note: the script will create $IMAGE_NAME.img if `ENABLE_SPLITFS`=false or $IMAGE_NAME-frmw.img and $IMAGE_NAME-root.img if `ENABLE_SPLITFS`=true. Note 2: If the KERNEL_BRANCH is not set, the word "CURRENT" is used.
+---
 
 ## Understanding the script
 The functions of this script that are required for the different stages of the bootstrapping are split up into single files located inside the `bootstrap.d` directory. During the bootstrapping every script in this directory gets executed in lexicographical order:
