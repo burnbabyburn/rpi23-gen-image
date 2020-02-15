@@ -309,16 +309,16 @@ if [ -n "$SET_ARCH" ] ; then
       KERNEL_IMAGE=${KERNEL_IMAGE:=kernel.img}
       CROSS_COMPILE=${CROSS_COMPILE:=arm-linux-gnueabi-}
 	  
-	  if [ $ENABLE_XORG = true ] ; then
-	    if [$RELEASE = "stretch" ] || [$RELEASE = "oldstable" ] ; then
-	      printf "\nBest support for armel architecture is provided under Debian stretch/oldstable. Choose yes to change release to Debian stretch[y/n] "
-	      read -r confirm
+      if [ $ENABLE_XORG = true ] ; then
+        if [ $RELEASE = "stretch" ] || [ $RELEASE = "oldstable" ] ; then
+          printf "\nBest support for armel architecture (RPI 0|1|1P) is provided under Debian stretch/oldstable. Choose yes to change release to Debian stretch[y/n] "
+          read -r confirm
           if [ "$confirm" = "y" ] ; then
-		    $RELEASE = "stretch"
-		  fi
-	    fi
-	  fi
-
+            RELEASE="stretch"
+          fi
+        fi
+      fi
+    fi
     # Raspberry Pi model specific settings
     if [ "$RPI_MODEL" = 2 ] || [ "$RPI_MODEL" = 3 ] || [ "$RPI_MODEL" = 3P ] || [ "$RPI_MODEL" = 4 ] ; then
       if [ "$RPI_MODEL" != 4 ] ; then
@@ -506,7 +506,7 @@ if [ -n "$MISSING_PACKAGES" ] ; then
   [ "$confirm" != "y" ] && exit 1
 
   # Make sure all missing required packages are installed
-  apt-get update && apt-get -qq -y install `echo "${MISSING_PACKAGES}" | sed "s/ //"`
+  apt-get update && apt-get -qq -y install "$(echo "${MISSING_PACKAGES}" | sed "s/ //")"
 fi
 
 # Check if ./bootstrap.d directory exists
@@ -801,14 +801,14 @@ fi
 CHROOT_SIZE=$(expr "$(du -s "${R}" | awk '{ print $1 }')")
 
 # Calculate the amount of needed 512 Byte sectors
-TABLE_SECTORS=$(expr 1 \* 1024 \* 1024 \/ 512)
-FRMW_SECTORS=$(expr 64 \* 1024 \* 1024 \/ 512)
+TABLE_SECTORS=$(expr 1 \* 1024 \* 1024 / 512)
+FRMW_SECTORS=$(expr 64 \* 1024 \* 1024 / 512)
 ROOT_OFFSET=$(expr "${TABLE_SECTORS}" + "${FRMW_SECTORS}")
 
 # The root partition is EXT4
 # This means more space than the actual used space of the chroot is used.
 # As overhead for journaling and reserved blocks 35% are added.
-ROOT_SECTORS=$(expr "$(expr "${CHROOT_SIZE}" + "${CHROOT_SIZE}" \/ 100 \* 35)" \* 1024 \/ 512)
+ROOT_SECTORS=$(expr "$(expr "${CHROOT_SIZE}" + "${CHROOT_SIZE}" / 100 \* 35)" \* 1024 / 512)
 
 # Calculate required image size in 512 Byte sectors
 IMAGE_SECTORS=$(expr "${TABLE_SECTORS}" + "${FRMW_SECTORS}" + "${ROOT_SECTORS}")
@@ -897,14 +897,14 @@ if [ "$ENABLE_SPLITFS" = true ] ; then
   bmaptool create -o "$IMAGE_NAME-root.bmap" "$IMAGE_NAME-root.img"
 
   # Image was successfully created
-  echo "$IMAGE_NAME-frmw.img ($(expr \( "${TABLE_SECTORS}" + "${FRMW_SECTORS}" \) \* 512 \/ 1024 \/ 1024)M)" ": successfully created"
-  echo "$IMAGE_NAME-root.img ($(expr \( "${TABLE_SECTORS}" + "${ROOT_SECTORS}" \) \* 512 \/ 1024 \/ 1024)M)" ": successfully created"
+  echo "$IMAGE_NAME-frmw.img ($(expr \( "${TABLE_SECTORS}" + "${FRMW_SECTORS}" \) \* 512 / 1024 / 1024)M)" ": successfully created"
+  echo "$IMAGE_NAME-root.img ($(expr \( "${TABLE_SECTORS}" + "${ROOT_SECTORS}" \) \* 512 / 1024 / 1024)M)" ": successfully created"
 else
   # Create block map file for "bmaptool"
   bmaptool create -o "$IMAGE_NAME.bmap" "$IMAGE_NAME.img"
 
   # Image was successfully created
-  echo "$IMAGE_NAME.img ($(expr \( "${TABLE_SECTORS}" + "${FRMW_SECTORS}" + "${ROOT_SECTORS}" \) \* 512 \/ 1024 \/ 1024)M)" ": successfully created"
+  echo "$IMAGE_NAME.img ($(expr \( "${TABLE_SECTORS}" + "${FRMW_SECTORS}" + "${ROOT_SECTORS}" \) \* 512 / 1024 / 1024)M)" ": successfully created"
 
   # Create qemu qcow2 image
   if [ "$ENABLE_QEMU" = true ] ; then
