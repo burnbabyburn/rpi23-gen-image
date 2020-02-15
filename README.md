@@ -237,7 +237,7 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 |KERNEL_IMAGE|string|||Name of the image file in the boot partition. Set by RPI_MODEL|
 |KERNEL_BRANCH|string|||Name of the requested branch from the GIT location for the RPi Kernel. Default is using the current default branch from the GIT site|
 |KERNEL_DEFCONFIG|string|||Sets the default config for kernel compiling. Set by RPI_MODEL|
-|KERNEL_THREADS|integer||`1`\|`2`\|`3`\|...|Number of threads to build the kernel. If not set, the script will automatically determine the maximum number of CPU cores to speed up kernel compilation|
+|KERNEL_THREADS|integer|1|`1`\|`2`\|`3`\|...|Number of threads to build the kernel. If not set, the script will automatically determine the maximum number of CPU cores to speed up kernel compilation|
 |KERNEL_HEADERS|boolean|true|`true`\|`false`|Install kernel headers with the built kernel|
 |KERNEL_MENUCONFIG|boolean|false|`true`\|`false`|Start `make menuconfig` interactive menu-driven kernel configuration. The script will continue after `make menuconfig` was terminated|
 |KERNEL_OLDDEFCONFIG|boolean|false|`true`\|`false`|Run `make olddefconfig` to automatically set all new kernel configuration options to their recommended default values|
