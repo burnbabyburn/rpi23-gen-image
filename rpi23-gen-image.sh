@@ -66,13 +66,13 @@ SYSTEMDSWAP_URL=${SYSTEMDSWAP_URL:=https://github.com/Nefelim4ag/systemd-swap.gi
 RPI_32_KERNEL_URL=${RPI_32_KERNEL_URL:=https://github.com/hypriot/rpi-kernel/releases/download/v4.14.34/raspberrypi-kernel_20180422-141901_armhf.deb}
 RPI_32_KERNELHEADER_URL=${RPI_32_KERNELHEADER_URL:=https://github.com/hypriot/rpi-kernel/releases/download/v4.14.34/raspberrypi-kernel-headers_20180422-141901_armhf.deb}
 # Kernel has KVM and zswap enabled - use if KERNEL_* parameters and precompiled kernel are used 
-RPI3_64_BIS_KERNEL_URL=${RPI3_64_BIS_KERNEL_URL:=https://github.com/sakaki-/bcmrpi3-kernel-bis/releases/download/4.19.80.20191022/bcmrpi3-kernel-bis-4.19.80.20191022.tar.xz}
+RPI3_64_BIS_KERNEL_URL=${RPI3_64_BIS_KERNEL_URL:=https://github.com/sakaki-/bcmrpi3-kernel-bis/releases/download/4.19.102.20200211/bcmrpi3-kernel-bis-4.19.102.20200211.tar.xz}
 # Default precompiled 64bit kernel
-RPI3_64_DEF_KERNEL_URL=${RPI3_64_DEF_KERNEL_URL:=https://github.com/sakaki-/bcmrpi3-kernel/releases/download/4.19.80.20191022/bcmrpi3-kernel-4.19.80.20191022.tar.xz}
+RPI3_64_DEF_KERNEL_URL=${RPI3_64_DEF_KERNEL_URL:=https://github.com/sakaki-/bcmrpi3-kernel/releases/download/4.19.102.20200211/bcmrpi3-kernel-4.19.102.20200211.tar.xz}
 # Sakaki BIS Kernel RPI4 - https://github.com/sakaki-/bcm2711-kernel-bis
-RPI4_64_BIS_KERNEL_URL=${RPI4_64_BIS_KERNEL_URL:=https://github.com/sakaki-/bcm2711-kernel-bis/releases/download/4.19.59.20190724/bcm2711-kernel-bis-4.19.59.20190724.tar.xz}
+RPI4_64_BIS_KERNEL_URL=${RPI4_64_BIS_KERNEL_URL:=https://github.com/sakaki-/bcm2711-kernel-bis/releases/download/4.19.102.20200211/bcm2711-kernel-bis-4.19.102.20200211.tar.xz}
 # Default precompiled 64bit kernel - https://github.com/sakaki-/bcm2711-kernel
-RPI4_64_DEF_KERNEL_URL=${RPI4_64_DEF_KERNEL_URL:=https://github.com/sakaki-/bcm2711-kernel-bis/releases/download/4.19.59.20190724/bcm2711-kernel-bis-4.19.59.20190724.tar.xz}
+RPI4_64_DEF_KERNEL_URL=${RPI4_64_DEF_KERNEL_URL:=https://github.com/sakaki-/bcm2711-kernel-bis/releases/download/4.19.102.20200211/bcm2711-kernel-bis-4.19.102.20200211.tar.xz}
 # Generic 
 RPI3_64_KERNEL_URL=${RPI3_64_KERNEL_URL:=$RPI3_64_DEF_KERNEL_URL}
 RPI4_64_KERNEL_URL=${RPI4_64_KERNEL_URL:=$RPI4_64_DEF_KERNEL_URL}
