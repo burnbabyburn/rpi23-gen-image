@@ -49,7 +49,7 @@ if [ "$BUILD_KERNEL" = true ] ; then
   fi
 
   # Calculate optimal number of kernel building threads
-  if [ "$KERNEL_THREADS" = "1" ] && [ -r /proc/cpuinfo ] ; then
+  if [ -n "$KERNEL_THREADS" ] && [ -r /proc/cpuinfo ] ; then
     KERNEL_THREADS=$(grep -c processor /proc/cpuinfo)
   fi
   
