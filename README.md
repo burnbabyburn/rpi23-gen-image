@@ -161,7 +161,7 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 
 |Option|Value|default value|value format|desciption|
 |---|---|---|---|---|
-|ENABLE_CONSOLE|boolean|true|| * true=Enable serial console interface.; * Recommended if no monitor or keyboard is connected to the RPi2/3.; In case of problems fe. if the network (auto) configuration failed - the serial console can be used to access the system. On RPI `0` `3` `3P` the CPU speed is locked at lowest speed.|
+|ENABLE_CONSOLE|boolean|true||true=Enable serial console interface.Recommended if no monitor or keyboard is connected to the RPi2/3. In case of problems fe. if the network (auto) configuration failed - the serial console can be used to access the system. On RPI `0` `3` `3P` the CPU speed is locked at lowest speed.|
 |ENABLE_PRINTK|boolean|false||true=Enables printing kernel messages to konsole. printk is `3 4 1 3` as in raspbian|
 |ENABLE_BLUETOOTH|boolean|false||true=Enable onboard Bluetooth interface on the RPi0/3/3P. See: [Configuring the GPIO serial port on Raspbian jessie and stretch](https://spellfoundry.com/2016/05/29/configuring-gpio-serial-port-raspbian-jessie-including-pi-3/)|
 |ENABLE_MINIUART_OVERLAY|boolean|false||true=Enable Bluetooth to use this. Adds overlay to swap UART0 with UART1. Enabling (slower) Bluetooth and full speed serial console. - RPI `0` `3` `3P` have a fast `hardware UART0` (ttyAMA0) and a `mini UART1` (ttyS0)! RPI `1` `1P` `2` only have a `hardware UART0`. `UART0` is considered better, because is faster and more stable than `mini UART1`. By default the Bluetooth modem is mapped to the `hardware UART0` and `mini UART` is used for console. The `mini UART` is a problem for the serial console, because its baudrate depends on the CPU frequency, which is changing on runtime. Resulting in a volatile baudrate and thus in an unusable serial console.|
@@ -211,47 +211,26 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 
 #### SSH settings:
 
-##### `SSH_ENABLE_ROOT`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Enable password-based root login via SSH. This may be a security risk with the default password set, use only in trusted environments. `ENABLE_ROOT` must be set to `true`.
-
-##### `SSH_DISABLE_PASSWORD_AUTH`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Disable password-based SSH authentication. Only public key based SSH (v2) authentication will be supported.
-
-##### `SSH_LIMIT_USERS`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Limit the users that are allowed to login via SSH. Only allow user `USER_NAME`=pi and root if `SSH_ENABLE_ROOT`=true to login. This parameter will be ignored if `dropbear` SSH is used (`REDUCE_SSHD`=true).
-
-##### `SSH_ROOT_PUB_KEY`
-|string|
-|default|
-|format|
-|description:** 
-Use full path to file. Add SSH (v2) public key(s) from specified file to `authorized_keys` file to enable public key based SSH (v2) authentication of user `root`. The specified file can also contain multiple SSH (v2) public keys. SSH protocol version 1 is not supported. `ENABLE_ROOT` **and** `SSH_ENABLE_ROOT` must be set to `true`.
-
-##### `SSH_USER_PUB_KEY`
-|string|
-|default|
-|format|
-|description:** 
-Use full path to file. Add SSH (v2) public key(s) from specified file to `authorized_keys` file to enable public key based SSH (v2) authentication of user `USER_NAME`=pi. The specified file can also contain multiple SSH (v2) public keys. SSH protocol version 1 is not supported.
+|Option|Value|default value|value format|desciption|
+|---|---|---|---|---|
+|SSH_ENABLE_ROOT||false||Enable password-based root login via SSH. This may be a security risk with the default password set, use only in trusted environments. `ENABLE_ROOT` must be set to `true`|
+|SSH_DISABLE_PASSWORD_AUTH||false||Disable password-based SSH authentication. Only public key based SSH (v2) authentication will be supported|
+|SSH_LIMIT_USERS||false||Limit the users that are allowed to login via SSH. Only allow user `USER_NAME`=pi and root if `SSH_ENABLE_ROOT`=true to login. This parameter will be ignored if `dropbear` SSH is used (`REDUCE_SSHD`=true)|
+|SSH_ROOT_PUB_KEY|string|||Use full path to file. Add SSH (v2) public key(s) from specified file to `authorized_keys` file to enable public key based SSH (v2) authentication of user `root`. The specified file can also contain multiple SSH (v2) public keys. SSH protocol version 1 is not supported. `ENABLE_ROOT` **and** `SSH_ENABLE_ROOT` must be set to `true`|
+|SSH_USER_PUB_KEY|string|||Use full path to file. Add SSH (v2) public key(s) from specified file to `authorized_keys` file to enable public key based SSH (v2) authentication of user `USER_NAME`=pi. The specified file can also contain multiple SSH (v2) public keys. SSH protocol version 1 is not supported|
 
 ---
 
 #### Kernel settings:
+
+#### SSH settings:
+|Option|Value|default value|value format|desciption|
+|---|---|---|---|---|
+||||||
+||||||
+||||||
+||||||
+||||||
 
 ##### `BUILD_KERNEL`=true
 *  **value:** ``
