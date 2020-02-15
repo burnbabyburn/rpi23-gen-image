@@ -69,13 +69,13 @@ CONFIG_TEMPLATE=rpi2stretch ./rpi23-gen-image.sh
 ---
 
 #### User settings:
-|Option|Value|default value|value format|desciption|
-|---|---|---|---|---|
-|ENABLE_ROOT|boolean|false||true=root login if ROOT_PASSWORD is set|
-|ROOT_PASSWORD|string|raspberry||Set system `root` password. It's **STRONGLY** recommended that you choose a custom password.|
-|ENABLE_USER|boolean|true||true=Create non-root user with password `USER_PASSWORD` and username `USER_NAME`|
-|USER_NAME|string|pi||Set username for non-root user, if ENABLE_USER is true|
-|USER_PASSWORD|string|raspberry||Set password for non-root user, if ENABLE_USER is true. It's **STRONGLY** recommended that you choose a custom password.|
+|Option|Value|default value|desciption|
+|---|---|---|---|
+|ENABLE_ROOT|boolean|false|true=root login if ROOT_PASSWORD is set|
+|ROOT_PASSWORD|string|raspberry|Set system `root` password. It's **STRONGLY** recommended that you choose a custom password.|
+|ENABLE_USER|boolean|true|true=Create non-root user with password `USER_PASSWORD` and username `USER_NAME`|
+|USER_NAME|string|pi|Set username for non-root user, if ENABLE_USER is true|
+|USER_PASSWORD|string|raspberry|Set password for non-root user, if ENABLE_USER is true. It's **STRONGLY** recommended that you choose a custom password.|
 
 ---
 
