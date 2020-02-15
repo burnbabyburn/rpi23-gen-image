@@ -44,25 +44,38 @@ CONFIG_TEMPLATE=rpi2stretch ./rpi23-gen-image.sh
 
 #### APT settings:
 
-##### `APT_SERVER`= ftp.debian.org
+##### `APT_SERVER`= 
+* **value:** `string`
+* **default:** ftp.debian.org
+* **format:** URL
 
 Set Debian packages server address. Choose a server from the list of Debian worldwide [mirror sites](https://www.debian.org/mirror/list). Using a nearby server will probably speed-up all required downloads within the bootstrapping process.
 
 ##### `APT_PROXY`=""
+* **value:** `string`
+* **default:** 
+* **format:** URL - e.g. http(s)://user:password@host.domain:port
+
 Set Proxy server address. Using a local Proxy-Cache like `apt-cacher-ng` will speed-up the bootstrapping process because all required Debian packages will only be downloaded from the Debian mirror site once. If `apt-cacher-ng` is running on default `http://127.0.0.1:3142` it is autodetected and you don't need to set this.
 
 ##### `KEEP_APT_PROXY`
-* **value:** `[ true | false ]`
-* **true:**
-* **false:**
-* **default:** false
+*  **value:** `[ true | false ]`
+*  **true:**
+*  **false:**
+*  **default:** false
 
 Keep the APT_PROXY settings used in the bootsrapping process in the generated image.
 
 ##### `APT_INCLUDES`=""
+* **value:** `string list`
+* **default:**
+* **format:** package0,package1,package2...
 A comma-separated list of additional packages to be installed by debootstrap during bootstrapping.
 
 ##### `APT_INCLUDES_LATE`=""
+* **value:** `string list`
+* **default:**
+* **format:** package0,package1,package2...
 A comma-separated list of additional packages to be installed by apt after bootstrapping and after APT sources are set up.  This is useful for packages with pre-depends, which debootstrap do not handle well.
 
 ---
