@@ -633,7 +633,7 @@ if [ "$BUILD_KERNEL" = true ] ; then
             ;;
         esac
         # unset previous default governor
-	    unset_kernel_config CONFIG_CPU_FREQ_DEFAULT_GOV_POWERSAVE
+	    unset_kernel_config CONFIG_CPU_FREQ_DEFAULT_GOV_ONDEMAND
 	  fi
 
 	  #Revert to previous directory
@@ -643,8 +643,9 @@ if [ "$BUILD_KERNEL" = true ] ; then
       if [ "$ENABLE_QEMU" = true ] ; then
         echo "CONFIG_FHANDLE=y" >> "${KERNEL_DIR}"/.config
         echo "CONFIG_LBDAF=y" >> "${KERNEL_DIR}"/.config
-
-        if [ "$ENABLE_CRYPTFS" = true ] ; then
+      fi
+	  
+	  if [ "$ENABLE_CRYPTFS" = true ] ; then
 		set_kernel_configCONFIG_EMBEDDED y
 		set_kernel_config CONFIG_EXPERT y
 		set_kernel_config CONFIG_DAX y
@@ -674,7 +675,6 @@ if [ "$BUILD_KERNEL" = true ] ; then
         set_kernel_config CONFIG_CRYPTO_AES_ARM64_NEON_BLK m
         set_kernel_config CONFIG_CRYPTO_CHACHA20_NEON m
         set_kernel_config CONFIG_CRYPTO_AES_ARM64_BS m
-        fi
       fi
 
       # Copy custom kernel configuration file
