@@ -72,47 +72,23 @@ CONFIG_TEMPLATE=rpi2stretch ./rpi23-gen-image.sh
 |Option|Value|default value|desciption|
 |---|---|---|---|
 |ENABLE_ROOT|boolean|false|true=root login if ROOT_PASSWORD is set|
-|ROOT_PASSWORD|string|raspberry|Set system `root` password. It's **STRONGLY** recommended that you choose a custom password.|
+|ROOT_PASSWORD|string|raspberry|Set password for `root` user. It's **STRONGLY** recommended that you choose a custom password.|
 |ENABLE_USER|boolean|true|true=Create non-root user with password `USER_PASSWORD` and username `USER_NAME`|
-|USER_NAME|string|pi|Set username for non-root user, if ENABLE_USER is true|
-|USER_PASSWORD|string|raspberry|Set password for non-root user, if ENABLE_USER is true. It's **STRONGLY** recommended that you choose a custom password.|
+|USER_NAME|string|pi|Set username for non-root user, if `ENABLE_USER` is true|
+|USER_PASSWORD|string|raspberry|Set password for non-root user, if `ENABLE_USER` is true. It's **STRONGLY** recommended that you choose a custom password.|
 
 ---
 
 #### Keyboard settings:
-|string|
-|default|
-|format|
-|description:** 
+
 These options are used to configure keyboard layout in `/etc/default/keyboard` for console and Xorg. These settings can also be changed inside the running OS using the `dpkg-reconfigure keyboard-configuration` command.
 
-##### `XKB_MODEL`
-|string|
-|default|
-|format|
-|description:** 
-Set the name of the model of your keyboard type.
-
-##### `XKB_LAYOUT`
-|string|
-|default|
-|format|
-|description:** 
-Set the supported keyboard layout(s).
-
-##### `XKB_VARIANT`
-|string|
-|default|
-|format|
-|description:** 
-Set the supported variant(s) of the keyboard layout(s).
-
-##### `XKB_OPTIONS`
-|string|
-|default|
-|format|
-|description:** 
-Set extra xkb configuration options.
+|Option|Value|default value|value format|desciption|
+|---|---|---|---|
+|XKB_MODEL|string||pc104|Set the name of the model of your keyboard type|
+|XKB_LAYOUT|string||us|Set the supported keyboard layout(s)|
+|XKB_VARIANT|string||basic|Set the supported variant(s) of the keyboard layout(s)|
+|XKB_OPTIONS|string||grp:alt_shift_toggle|Set extra xkb configuration options|
 
 ---
 
