@@ -47,7 +47,7 @@ if [ "$ENABLE_INITRAMFS" = true ] ; then
         NET_MASK=$(cdr2mask "$cdir")
 	
         # Write static ip settings to "${ETC_DIR}"/initramfs-tools/initramfs.conf
-        # ip=<client-ip>:<server-ip>:<gw-ip>:<netmask>:<hostname>:<device>:<autoconf>
+        # ip=<client-ip>:<server-ip>:<gw-ip>:<netmask>:<HOSTNAME>:<device>:<autoconf>
         sed -i "\$a\nIP=${NET_ETH_ADDRESS}::${NET_ETH_GATEWAY}:${NET_MASK}:${HOSTNAME}:" "${ETC_DIR}"/initramfs-tools/initramfs.conf
       else
         sed -i "\$a\nIP=::::${HOSTNAME}::dhcp" "${ETC_DIR}"/initramfs-tools/initramfs.conf
