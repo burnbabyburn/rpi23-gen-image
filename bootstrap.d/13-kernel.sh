@@ -646,7 +646,7 @@ if [ "$BUILD_KERNEL" = true ] ; then
       fi
 	  
 	  if [ "$ENABLE_CRYPTFS" = true ] ; then
-		set_kernel_configCONFIG_EMBEDDED y
+		set_kernel_config CONFIG_EMBEDDED y
 		set_kernel_config CONFIG_EXPERT y
 		set_kernel_config CONFIG_DAX y
 		set_kernel_config CONFIG_MD y
