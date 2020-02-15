@@ -144,7 +144,7 @@ Enable iptables IPv4/IPv6 firewall. Simplified ruleset: Allow all outgoing conne
 Enable IPv4/IPv6 network stack hardening settings.
 
 ##### `ENABLE_IFNAMES`=true
-Enable automatic assignment of predictable, stable network interface names for all local Ethernet, WLAN interfaces. This might create complex and long interface names.
+Enable automatic assignment of predictable, stable network interface names for all NICs. TRUE=creates complex and long interface names like e.g. encx8945924.
 
 ---
 
@@ -488,6 +488,7 @@ Remove all `locale` translation files.
 ---
 
 #### Encrypted root partition:
+# On first boot, you will be asked to enter you password several time
 
 ##### `ENABLE_CRYPTFS`=false
 Enable full system encryption with dm-crypt. Setup a fully LUKS encrypted root partition (aes-xts-plain64:sha512) and generate required initramfs. The /boot directory will not be encrypted. This parameter will be ignored if `BUILD_KERNEL`=false. `ENABLE_CRYPTFS` is experimental. SSH-to-initramfs is currently not supported but will be soon - feel free to help.
