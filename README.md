@@ -145,7 +145,6 @@ The following static networking parameters are only supported if `ENABLE_ETH_DHC
 #### Networking settings (WIFI static):
 The following static networking parameters are only supported if `ENABLE_WIFI_DHCP` was set to `false`.
 
-
 |Option|Value|value format|desciption|
 |---|---|---|---|
 |NET_WIFI_ADDRESS|string|CIDR|static IPv4 or IPv6 address and its prefix, separated by "/", eg. "192.169.0.3/24"|
@@ -159,6 +158,7 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 ---
 
 #### Basic system features:
+
 |Option|Value|default value|value format|desciption|
 |---|---|---|---|---|
 |ENABLE_CONSOLE|boolean|true||true=Enable serial console interface. Recommended if no monitor or keyboard is connected to the RPi2/3. In case of problems fe. if the network (auto) configuration failed - the serial console can be used to access the system. On RPI `0` `3` `3P` the CPU speed is locked at lowest speed.|
@@ -186,68 +186,26 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 
 #### Advanced system features:
 
-##### `ENABLE_DPHYSSWAP`=true
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Enable swap. The size of the swapfile is chosen relative to the size of the root partition. It'll use the `dphys-swapfile` package for that.
-
-##### `ENABLE_SYSTEMDSWAP`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Enables [Systemd-swap service](https://github.com/Nefelim4ag/systemd-swap). Usefull if `KERNEL_ZSWAP` is enabled.
-
-##### `ENABLE_QEMU`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Generate kernel (`vexpress_defconfig`), file system image (`qcow2`) and DTB files that can be used for QEMU full system emulation (`vexpress-A15`). The output files are stored in the `$(pwd)/images/qemu` directory. You can find more information about running the generated image in the QEMU section of this readme file.
-
-##### `QEMU_BINARY`
-|string|
-|default|
-|format|
-|description:** 
-Sets the QEMU enviornment for the Debian archive. Set by RPI_MODEL
-
-##### `ENABLE_KEYGEN`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Recover your lost codec license
-
-##### `ENABLE_MINBASE`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Use debootstrap script variant `minbase` which only includes essential packages and apt. This will reduce the disk usage by about 65 MB.
-
-##### `ENABLE_UBOOT`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Replace the default RPi 0/1/2/3 second stage bootloader (bootcode.bin) with [U-Boot bootloader](https://git.denx.de/?p=u-boot.git;a=summary). U-Boot can boot images via the network using the BOOTP/TFTP protocol.
-RPI4 needs tbd
-
-##### `UBOOTSRC_DIR`
-|string|
-|default|
-|format|
-|description:** 
-Path to a directory (`u-boot`) of [U-Boot bootloader sources](https://git.denx.de/?p=u-boot.git;a=summary) that will be copied, configured, build and installed inside the chroot.
+|Option|Value|default value|value format|desciption|
+|---|---|---|---|---|
+|ENABLE_DPHYSSWAP||true||Enable swap. The size of the swapfile is chosen relative to the size of the root partition. It'll use the `dphys-swapfile` package for that|
+|ENABLE_SYSTEMDSWAP||false||Enables [Systemd-swap service](https://github.com/Nefelim4ag/systemd-swap). Usefull if `KERNEL_ZSWAP` is enabled|
+|ENABLE_QEMU||false||Generate kernel (`vexpress_defconfig`), file system image (`qcow2`) and DTB files that can be used for QEMU full system emulation (`vexpress-A15`). The output files are stored in the `$(pwd)/images/qemu` directory. You can find more information about running the generated image in the QEMU section of this readme file|
+|QEMU_BINARY||||Sets the QEMU enviornment for the Debian archive. **Set by RPI_MODEL**|
+|ENABLE_KEYGEN||false||Recover your lost codec license|
+|ENABLE_MINBASE||false||Use debootstrap script variant `minbase` which only includes essential packages and apt. This will reduce the disk usage by about 65 MB|
+|ENABLE_UBOOT||false||Replace the default RPi 0/1/2/3 second stage bootloader (bootcode.bin) with [U-Boot bootloader](https://git.denx.de/?p=u-boot.git;a=summary). U-Boot can boot images via the network using the BOOTP/TFTP protocol. RPI4 needs tbd|
+|UBOOTSRC_DIR||||Path to a directory (`u-boot`) of [U-Boot bootloader sources](https://git.denx.de/?p=u-boot.git;a=summary) that will be copied, configured, build and installed inside the chroot|
+||||||
+||||||
+||||||
+||||||
+||||||
+||||||
+||||||
+||||||
+||||||
+||||||
 
 ##### `ENABLE_FBTURBO`=false
 *  **value:** ``
