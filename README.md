@@ -175,7 +175,7 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 |ENABLE_HWRANDOM|boolean|true|true\|false|true=Enable Hardware Random Number Generator(RNG)\|false=Disable Hardware RNG\|Strong random numbers are important for most network-based communications that use encryption. It's recommended to be enabled|
 |ENABLE_MINGPU|boolean|false|true\|false|true=GPU 16MB RAM\|false=64MB RAM\|Minimize the amount of shared memory reserved for the GPU. It doesn't seem to be possible to fully disable the GPU. Also removes start.elf,fixup.dat,start_x.elf,fixup_x.dat form /boot|
 |ENABLE_XORG|boolean|false|true\|false|true=Install Xorg X Window System|\false=install no Xorg|
-|ENABLE_WM|string||`blackbox`, `openbox`, `fluxbox`, `jwm`, `dwm`, `xfce4`, `awesome`|Install a user-defined window manager for the X Window System. To make sure all X related package dependencies are getting installed `ENABLE_XORG` will automatically set true if `ENABLE_WM` is used|
+|ENABLE_WM|string||`blackbox`, `openbox`, `fluxbox`,<br> `jwm`, `dwm`, `xfce4`, `awesome`|Install a user-defined window manager for the X Window System. To make sure all X related package dependencies are getting installed `ENABLE_XORG` will automatically set true if `ENABLE_WM` is used|
 |ENABLE_SYSVINIT|boolean|false|true\|false|true=Support for halt,init,poweroff,reboot,runlevel,shutdown,init commands\|false=use systemd commands|
 |ENABLE_SPLASH|boolean|true||true=Enable default Raspberry Pi boot up rainbow splash screen|
 |ENABLE_LOGO|boolean|true||Enable default Raspberry Pi console logo (image of four raspberries in the top left corner)|
