@@ -83,56 +83,23 @@ CONFIG_TEMPLATE=rpi2stretch ./rpi23-gen-image.sh
 
 These options are used to configure keyboard layout in `/etc/default/keyboard` for console and Xorg. These settings can also be changed inside the running OS using the `dpkg-reconfigure keyboard-configuration` command.
 
-|Option|Value|value format|desciption|
-|---|---|---|---|
-|XKB_MODEL|string|pc104|Set the name of the model of your keyboard type|
-|XKB_LAYOUT|string|us|Set the supported keyboard layout(s)|
-|XKB_VARIANT|string|basic|Set the supported variant(s) of the keyboard layout(s)|
-|XKB_OPTIONS|string|grp:alt_shift_toggle|Set extra xkb configuration options|
+|Option|Value|default value|value format|desciption|
+|---|---|---|---|---|
+|XKB_MODEL|string||pc104|Set the name of the model of your keyboard type|
+|XKB_LAYOUT|string||us|Set the supported keyboard layout(s)|
+|XKB_VARIANT|string||basic|Set the supported variant(s) of the keyboard layout(s)|
+|XKB_OPTIONS|string||grp:alt_shift_toggle|Set extra xkb configuration options|
 
 ---
 
 #### Networking settings:
-
-##### `ENABLE_IPV6`=true
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Enable IPv6 support. The network interface configuration is managed via systemd-networkd.
-
-##### `ENABLE_WIRELESS`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Download and install the [closed-source firmware binary blob](https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm) that is required to run the internal wireless interface of the Raspberry Pi model `3`. This parameter is ignored if the specified `RPI_MODEL` is not `0`,`3`,`3P`,`4`.
-
-##### `ENABLE_IPTABLES`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Enable iptables IPv4/IPv6 firewall. Simplified ruleset: Allow all outgoing connections. Block all incoming connections except to OpenSSH service.
-
-##### `ENABLE_HARDNET`=false
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Enable IPv4/IPv6 network stack hardening settings.
-
-##### `ENABLE_IFNAMES`=true
-*  **value:** ``
-*  **true:** ``
-*  **false:** ``
-*  **default:** ``
-|description:** 
-Enable automatic assignment of predictable, stable network interface names for all NICs. TRUE=creates complex and long interface names like e.g. encx8945924.
+|Option|Value|default value|desciption|
+|---|---|---|---|
+|ENABLE_IPV6|boolean|true|true=Enable IPv6 support via systemd-networkd|
+|ENABLE_WIRELESS|boolean|false|true=Download and install the [closed-source firmware binary blob](https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm) that is required to run the internal wireless interface of the Raspberry Pi model `3`. This parameter is ignored if the specified `RPI_MODEL` is not `0`,`3`,`3P`,`4`|
+|ENABLE_IPTABLES|boolean|false|true=Enable iptables IPv4/IPv6 firewall. Simplified ruleset: Allow all outgoing connections. Block all incoming connections except to OpenSSH service.|
+|ENABLE_HARDNET|boolean|false|true=Enable IPv4/IPv6 network stack hardening settings|
+|ENABLE_IFNAMES|boolean|true|true=creates complex and long interface names like e.g. encx8945924. Enable automatic assignment of predictable, stable network interface names for all NICs|
 
 ---
 
