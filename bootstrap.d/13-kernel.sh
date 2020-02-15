@@ -777,7 +777,7 @@ if [ "$BUILD_KERNEL" = true ] ; then
 
   if [ "$ENABLE_UBOOT" = false ] ; then
     # Convert and copy kernel image to the boot directory
-    "${KERNEL_DIR}/scripts/mkknlimg" "${KERNEL_DIR}/arch/${KERNEL_ARCH}/boot/${KERNEL_BIN_IMAGE}" "${BOOT_DIR}/${KERNEL_IMAGE}"
+    cp "${KERNEL_DIR}/arch/${KERNEL_ARCH}/boot/${KERNEL_BIN_IMAGE}" "${BOOT_DIR}/${KERNEL_IMAGE}"
   else
     # Copy kernel image to the boot directory
     install_readonly "${KERNEL_DIR}/arch/${KERNEL_ARCH}/boot/${KERNEL_BIN_IMAGE}" "${BOOT_DIR}/${KERNEL_IMAGE}"
