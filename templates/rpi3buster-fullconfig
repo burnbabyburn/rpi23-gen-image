@@ -197,5 +197,5 @@ CRYPTFS_DROPBEAR_PUBKEY=""
 ############################
 #######Build settings#######
 ############################
-BASEDIR="$(pwd)/images/${RELEASE}"
-IMAGE_NAME="${BASEDIR}/${DATE}-${KERNEL_ARCH}-${KERNEL_BRANCH}-rpi${RPI_MODEL}-${RELEASE}-${RELEASE_ARCH}"
+BASEDIR=
+IMAGE_NAME=

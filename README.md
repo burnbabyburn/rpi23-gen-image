@@ -294,8 +294,8 @@ The following list of parameters is ignored if `ENABLE_REDUCE`=false.
 #### Build settings:
 |Option|Value|default value|value format|desciption|
 |---|---|---|---|---|
-|BASEDIR|string|$(pwd)/images/${RELEASE}|FullPathToScriptRootDir|Full path to a working directory used by the script to generate an image|
-|IMAGE_NAME|string|rpi`RPI_MODEL`-`RELEASE`-`RELEASE_ARCH`|YourImageName|Set a filename for the output file(s). Note: the script will create $IMAGE_NAME.img if `ENABLE_SPLITFS`=false or $IMAGE_NAME-frmw.img and $IMAGE_NAME-root.img if `ENABLE_SPLITFS`=true. Note 2: If the KERNEL_BRANCH is not set, the word "CURRENT" is used|
+|BASEDIR|string||FullPathToScriptRootDir|If unset start from scriptroot or set to Full path to rpi123-gen-image directory|
+|IMAGE_NAME|string||YourImageName|if unset creates a name after this template: rpi`RPI_MODEL`-`RELEASE`-`RELEASE_ARCH`|
 
 ---
 
