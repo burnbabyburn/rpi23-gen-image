@@ -1,7 +1,7 @@
 #TrvisCI is shit
 
 #sudo: required
-language: bash
+language: shell
 
 dist: bionic
 os: linux
@@ -9,6 +9,23 @@ os: linux
 branches:
   only:
   - TravisCI
+  
+jobs:
+  include:
+  - name: Job 1
+    script: 
+    - echo "Running job 1"
+    - sudo script -c 'CONFIG_TEMPLATE=rpi3stretch ./rpi23-gen-image.sh' ./build.log
+  deploy:
+  provider: releases
+  api_key: "3NgEviajFmAeWdHl9aVwPA"
+  on:
+    tags: true
+  file: 
+    - "./images/stretch/2020-03-23-arm-CURRENT-rpi3-stretch-armhf.img"
+    - "./build.log"
+  skip_cleanup: true
+  draft: true
 
 before_install:
 #  - sudo dpkg --add-architecture armhf
@@ -23,5 +40,6 @@ before_install:
   - sudo apt-get update
   - sudo apt-get install -y debootstrap debian-archive-keyring qemu-user-static binfmt-support dosfstools rsync bmap-tools whois git bc psmisc dbus sudo device-tree-compiler python-dev gcc-arm-linux-gnueabi gcc-arm-linux-gnueabihf lib32z1 lib32ncurses5 gdb-multiarch build-essential gawk texinfo bison flex libssl-dev
   - sudo apt-get install -y crossbuild-essential-armhf
-script:
- - sudo script -c 'CONFIG_TEMPLATE=rpi3stretch ./rpi23-gen-image.sh' ./build.log
+#script:
+# - sudo script -c 'CONFIG_TEMPLATE=rpi3stretch ./rpi23-gen-image.sh' ./build.log
+ 
