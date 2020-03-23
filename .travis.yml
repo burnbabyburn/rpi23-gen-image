@@ -1,0 +1,24 @@
+#TrvisCI is shit
+
+#sudo: required
+#language: bash
+
+branches:
+  only:
+  - TravisCI
+
+before_install:
+#  - sudo dpkg --add-architecture armhf
+#  - sudo rm /etc/apt/sources.list
+  #- sudo apt-get update
+  #- sudo apt-get -y upgrade
+  #- echo "deb-src http://01.archive.ubuntu.com/ubuntu/ trusty-security main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+#  - echo "deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports trusty main universe" | sudo tee -a /etc/apt/sources.list
+  #- echo "deb http://01.archive.ubuntu.com/ubuntu/ trusty-security main restricted universe multiverse " | sudo tee -a /etc/apt/sources.list
+#  - echo "deb http://01.archive.ubuntu.com/ubuntu/ trusty main restricted universe multiverse " | sudo tee -a /etc/apt/sources.list
+  #- echo "deb-src http://01.archive.ubuntu.com/ubuntu/ trusty main restricted universe multiverse " | sudo tee -a /etc/apt/sources.list
+  - sudo apt-get update
+  - sudo apt-get install -y debootstrap debian-archive-keyring qemu-user-static binfmt-support dosfstools rsync bmap-tools whois git bc psmisc dbus sudo device-tree-compiler python-dev gcc-arm-linux-gnueabi gcc-arm-linux-gnueabihf lib32z1 lib32ncurses5 gdb-multiarch build-essential gawk texinfo bison flex libssl-dev
+  - sudo apt-get install -y crossbuild-essential-armhf
+script:
+ - sudo script -c 'CONFIG_TEMPLATE=rpi3stretch ./rpi23-gen-image.sh' ./build.log
