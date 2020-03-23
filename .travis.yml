@@ -1,7 +1,10 @@
 #TrvisCI is shit
 
 #sudo: required
-#language: bash
+language: bash
+
+dist: bionic
+os: linux
 
 branches:
   only:
