@@ -502,11 +502,12 @@ if [ -n "$MISSING_PACKAGES" ] ; then
   echo "the following packages needed by this script are not installed:"
   echo "$MISSING_PACKAGES"
 
-  printf "\ndo you want to install the missing packages right now? [y/n] "
-  read -r confirm
-  [ "$confirm" != "y" ] && exit 1
+  #printf "\ndo you want to install the missing packages right now? [y/n] "
+  #read -r confirm
+  #[ "$confirm" != "y" ] && exit 1
 
   # Make sure all missing required packages are installed
+  echo "installing missing packages..."
   apt-get update && apt-get -qq -y install `echo "${MISSING_PACKAGES}" | sed "s/ //"`
 fi
 
