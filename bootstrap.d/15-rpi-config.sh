@@ -171,6 +171,7 @@ if [ "$RPI_MODEL" = 0 ] || [ "$RPI_MODEL" = 3 ] || [ "$RPI_MODEL" = 3P ] || [ "$
 	rm -fr "${R}"/tmp/pi-bluetooth
 
     # Switch Pi3 Bluetooth function to use the mini-UART (ttyS0) and restore UART0/ttyAMA0 over GPIOs 14 & 15. Slow Bluetooth and slow cpu. Use /dev/ttyS0 instead of /dev/ttyAMA0
+	# see : https://www.raspberrypi.org/documentation/configuration/uart.md
     if [ "$ENABLE_MINIUART_OVERLAY" = true ] ; then
 	  # set overlay to swap ttyAMA0 and ttyS0
       echo "dtoverlay=pi3-miniuart-bt" >> "${BOOT_DIR}/config.txt"
