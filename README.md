@@ -203,7 +203,7 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 |ENABLE_SPLITFS|boolean|false|`true`\|`false`|Enable having root partition on an USB drive by creating two image files: one for the `/boot/firmware` mount point, and another for `/`|
 |ENABLE_INITRAMFS|boolean|false|`true`\|`false`|Create an initramfs that that will be loaded during the Linux startup process. `ENABLE_INITRAMFS` will automatically get enabled if `ENABLE_CRYPTFS`=true. This parameter will be ignored if `BUILD_KERNEL`=false|
 |ENABLE_DBUS|boolean|true|`true`\|`false`|Install and enable D-Bus message bus. Please note that systemd should work without D-bus but it's recommended to be enabled|
-|ENABLE_USBBOOT|boolean|false|`true`\|`false`|true=prepare image for usbboot. use with `ENABLE_SPLTFS`=true|
+|ENABLE_USBBOOT|boolean|false|`true`\|`false`|true=prepare image for usbboot. use with `ENABLE_SPLITFS`=true|
 |CHROOT_SCRIPTS|string||`FullPathToScriptFolder`|Full path to a directory with scripts that should be run in the chroot before the image is finally built. Every executable file in this directory is run in lexicographical order|
 |ENABLE_UBOOT|boolean|false|`true`\|`false`|Replace the default RPi 0/1/2/3 second stage bootloader (bootcode.bin) with [U-Boot bootloader](https://git.denx.de/?p=u-boot.git;a=summary). U-Boot can boot images via the network using the BOOTP/TFTP protocol. RPI4 needs tbd|
 |UBOOTSRC_DIR|string||`FullPathToUBootFolder`|Full path to a directory named `u-boot` of [U-Boot bootloader sources](https://git.denx.de/?p=u-boot.git;a=summary) that will be copied, configured, build and installed inside the chroot|
