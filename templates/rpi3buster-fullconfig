@@ -1,3 +1,7 @@
+#Copy custom .sh scripts to /custom.d/*.sh. Executed after all other installation but before image is created
+#Copy custom .sh firstboot scripts to custom.d/firstboot/*.sh
+#Copy custom .deb packages to packages/*.deb
+#Create a log: script -c './rpi23-gen-image.sh' ./build.log
 ############################
 ########APT settings########
 ############################
