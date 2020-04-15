@@ -283,31 +283,32 @@ mkdir -p "${LIB_DIR}/modules-load.d/"
 install_readonly files/modules/rpi2.conf "${LIB_DIR}/modules-load.d/rpi2.conf"
 
 # Load hardware random module at boot
-if [ "$ENABLE_HWRANDOM" = true ] && [ "$BUILD_KERNEL" = false ] ; then
-  sed -i "s/^# bcm2708_rng/bcm2708_rng/" "${LIB_DIR}/modules-load.d/rpi2.conf"
+if [ "$ENABLE_HWRANDOM" = false ]
+echo "dtparam=audio=on" >> "${BOOT_DIR}/config.txt"
 fi
 
 # Load sound module at boot
 if [ "$ENABLE_SOUND" = true ] ; then
-  sed -i "s/^# snd_bcm2835/snd_bcm2835/" "${LIB_DIR}/modules-load.d/rpi2.conf"
-else
-  echo "dtparam=audio=off" >> "${BOOT_DIR}/config.txt"
+echo "dtparam=audio=on" >> "${BOOT_DIR}/config.txt"
+#  sed -i "s/^# snd_bcm2835/snd_bcm2835/" "${LIB_DIR}/modules-load.d/rpi2.conf"
+#else
+#  echo "dtparam=audio=off" >> "${BOOT_DIR}/config.txt"
 fi
 
 # Enable I2C interface
 if [ "$ENABLE_I2C" = true ] ; then
-  echo "dtparam=i2c_arm=on" >> "${BOOT_DIR}/config.txt"
-  sed -i "s/^# i2c-bcm2708/i2c-bcm2708/" "${LIB_DIR}/modules-load.d/rpi2.conf"
-  sed -i "s/^# i2c-dev/i2c-dev/" "${LIB_DIR}/modules-load.d/rpi2.conf"
+  echo "dtparam=i2c=on" >> "${BOOT_DIR}/config.txt"
+#  sed -i "s/^# i2c-bcm2708/i2c-bcm2708/" "${LIB_DIR}/modules-load.d/rpi2.conf"
+#  sed -i "s/^# i2c-dev/i2c-dev/" "${LIB_DIR}/modules-load.d/rpi2.conf"
 fi
 
 # Enable SPI interface
 if [ "$ENABLE_SPI" = true ] ; then
   echo "dtparam=spi=on" >> "${BOOT_DIR}/config.txt"
-  echo "spi-bcm2708" >> "${LIB_DIR}/modules-load.d/rpi2.conf"
-  if [ "$RPI_MODEL" = 3 ] || [ "$RPI_MODEL" = 3P ]; then
-    sed -i "s/spi-bcm2708/spi-bcm2835/" "${LIB_DIR}/modules-load.d/rpi2.conf"
-  fi
+#  echo "spi-bcm2708" >> "${LIB_DIR}/modules-load.d/rpi2.conf"
+#  if [ "$RPI_MODEL" = 3 ] || [ "$RPI_MODEL" = 3P ]; then
+#    sed -i "s/spi-bcm2708/spi-bcm2835/" "${LIB_DIR}/modules-load.d/rpi2.conf"
+#  fi
 fi
 
 # Disable RPi2/3 under-voltage warnings
