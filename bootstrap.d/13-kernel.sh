@@ -190,23 +190,23 @@ if [ "$BUILD_KERNEL" = true ] ; then
 	    set_kernel_config CONFIG_NFT_DUP_IPV6 m
 	    set_kernel_config CONFIG_NFT_FIB_IPV6 m
 	    set_kernel_config CONFIG_NF_FLOW_TABLE_IPV6 m
-	    set_kernel_config CONFIG_NF_TABLES_BRIDGE m
+	    set_kernel_config CONFIG_NF_TABLES_BRIDGE y
 	    set_kernel_config CONFIG_NFT_BRIDGE_REJECT m
 	    set_kernel_config CONFIG_NF_LOG_BRIDGE m
 	    set_kernel_config CONFIG_MT76_CORE m
-	    set_kernel_config CONFIG_MT76_LEDS m
+	    set_kernel_config CONFIG_MT76_LEDS y
 	    set_kernel_config CONFIG_MT76_USB m
 	    set_kernel_config CONFIG_MT76x2_COMMON m
 	    set_kernel_config CONFIG_MT76x0U m
 	    set_kernel_config CONFIG_MT76x2U m
 	    set_kernel_config CONFIG_TOUCHSCREEN_ILI210X m
-	    set_kernel_config CONFIG_BCM_VC_SM m
+	    #set_kernel_config CONFIG_BCM_VC_SM m
 	    set_kernel_config CONFIG_BCM2835_SMI_DEV m
 	    set_kernel_config CONFIG_RPIVID_MEM m
 	    set_kernel_config CONFIG_HW_RANDOM_BCM2835 y
 	    set_kernel_config CONFIG_TCG_TPM m
 	    set_kernel_config CONFIG_HW_RANDOM_TPM y
-	    set_kernel_config CONFIG_TCG_TIS m
+	    set_kernel_config CONFIG_TCG_TIS y
 	    set_kernel_config CONFIG_TCG_TIS_SPI m
 	    set_kernel_config CONFIG_I2C_MUX m
 	    set_kernel_config CONFIG_I2C_MUX_GPMUX m
@@ -281,7 +281,6 @@ if [ "$BUILD_KERNEL" = true ] ; then
 	    set_kernel_config CONFIG_DVB_USB_LME2510 m
 	    set_kernel_config CONFIG_DVB_USB_RTL28XXU m
 	    set_kernel_config CONFIG_VIDEO_EM28XX_RC m
-	    set_kernel_config CONFIG_SMS_SIANO_RC m
 	    set_kernel_config CONFIG_VIDEO_IR_I2C m
 	    set_kernel_config CONFIG_VIDEO_ADV7180 m
 	    set_kernel_config CONFIG_VIDEO_TC358743 m
@@ -308,7 +307,7 @@ if [ "$BUILD_KERNEL" = true ] ; then
 	    set_kernel_config CONFIG_SND_SOC_TLV320AIC32X4_I2C m
 	    set_kernel_config CONFIG_SND_SOC_I_SABRE_CODEC m
 	    set_kernel_config CONFIG_HID_BIGBEN_FF m
-	    #set_kernel_config CONFIG_USB_XHCI_PLATFORM y
+	    set_kernel_config CONFIG_USB_XHCI_PLATFORM y
 	    set_kernel_config CONFIG_USB_TMC m
 	    set_kernel_config CONFIG_USB_UAS y
 	    set_kernel_config CONFIG_USBIP_VUDC m
@@ -370,12 +369,43 @@ if [ "$BUILD_KERNEL" = true ] ; then
 
 	    # Ceph support for Block Device (RBD) and Filesystem (FS)
 	    # https://docs.ceph.com/docs/master/
-	    set_kernel_config CONFIG_CEPH_LIB m
+	    set_kernel_config CONFIG_CEPH_LIB M
 	    set_kernel_config CONFIG_CEPH_LIB_USE_DNS_RESOLVER y
 	    set_kernel_config CONFIG_CEPH_FS m
 	    set_kernel_config CONFIG_CEPH_FSCACHE y
 	    set_kernel_config CONFIG_CEPH_FS_POSIX_ACL y
 	    set_kernel_config CONFIG_BLK_DEV_RBD m
+		set_kernel_config CONFIG_LWTUNNEL n
+		set_kernel_config CONFIG_NET_DEVLINK n
+		set_kernel_config FAILOVER n
+		
+		#Multimedia
+		MEDIA_CAMERA_SUPPORT y
+		MEDIA_ANALOG_TV_SUPPORT y
+		MEDIA_DIGITAL_TV_SUPPORT y
+		MEDIA_RADIO_SUPPORT y
+		MEDIA_SDR_SUPPORT y
+		MEDIA_CEC_SUPPORT y
+		MEDIA_CEC_RC y
+		MEDIA_CONTROLLER y
+		MEDIA_CONTROLLER_DVB n
+		VIDEO_V4L2_SUBDEV_API y
+		VIDEO_ADV_DEBUG n
+		VIDEO_FIXED_MINOR_RANGES n
+		VIDEO_PCI_SKELETON n
+		DVB_MMAP n
+		DVB_NET y
+		DVB_MAX_ADAPTERS 16
+		DVB_DYNAMIC_MINORS n
+		DVB_DEMUX_SECTION_LOSS_LOG n
+		DVB_ULE_DEBUG n
+		
+		SMS_SDIO_DRV n
+		CYPRESS_FIRMWARE m
+		set_kernel_config CONFIG_SMS_SIANO_RC y
+		
+		MEDIA_SUBDRV_AUTOSELECT n
+		VIDEO_IR_I2C m
 	  fi
 
       # enable basic KVM support; see https://www.raspberrypi.org/forums/viewtopic.php?f=63&t=210546&start=25#p1300453
