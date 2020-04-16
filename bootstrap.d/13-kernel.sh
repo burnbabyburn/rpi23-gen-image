@@ -354,7 +354,7 @@ if [ "$BUILD_KERNEL" = true ] ; then
 	    set_kernel_config CONFIG_ARCH_BCM2835 y
 	    set_kernel_config CONFIG_DRM_V3D m
 	    set_kernel_config CONFIG_DRM_VC4 m
-	    set_kernel_config CONFIG_DRM_VC4_HDMI_CEC y
+	    #set_kernel_config CONFIG_DRM_VC4_HDMI_CEC y
 
 	    # PR#3144: add arm64 pcie bounce buffers; enables 4GiB on RPi4
 	    # required by PR#3144; should already be applied, but just to be safe
@@ -369,43 +369,11 @@ if [ "$BUILD_KERNEL" = true ] ; then
 
 	    # Ceph support for Block Device (RBD) and Filesystem (FS)
 	    # https://docs.ceph.com/docs/master/
-	    set_kernel_config CONFIG_CEPH_LIB M
+	    set_kernel_config CONFIG_CEPH_LIB y
 	    set_kernel_config CONFIG_CEPH_LIB_USE_DNS_RESOLVER y
 	    set_kernel_config CONFIG_CEPH_FS m
 	    set_kernel_config CONFIG_CEPH_FSCACHE y
 	    set_kernel_config CONFIG_CEPH_FS_POSIX_ACL y
-	    set_kernel_config CONFIG_BLK_DEV_RBD m
-		set_kernel_config CONFIG_LWTUNNEL n
-		set_kernel_config CONFIG_NET_DEVLINK n
-		set_kernel_config CONFIG_FAILOVER n
-		
-		#Multimedia
-		set_kernel_config CONFIG_MEDIA_CAMERA_SUPPORT y
-		set_kernel_config CONFIG_MEDIA_ANALOG_TV_SUPPORT y
-		set_kernel_config CONFIG_MEDIA_DIGITAL_TV_SUPPORT y
-		set_kernel_config CONFIG_MEDIA_RADIO_SUPPORT y
-		set_kernel_config CONFIG_MEDIA_SDR_SUPPORT y
-		set_kernel_config CONFIG_MEDIA_CEC_SUPPORT y
-		set_kernel_config CONFIG_MEDIA_CEC_RC y
-		set_kernel_config CONFIG_MEDIA_CONTROLLER y
-		set_kernel_config CONFIG_MEDIA_CONTROLLER_DVB n
-		set_kernel_config CONFIG_VIDEO_V4L2_SUBDEV_API y
-		set_kernel_config CONFIG_VIDEO_ADV_DEBUG n
-		set_kernel_config CONFIG_VIDEO_FIXED_MINOR_RANGES n
-		set_kernel_config CONFIG_VIDEO_PCI_SKELETON n
-		set_kernel_config CONFIG_DVB_MMAP n
-		set_kernel_config CONFIG_DVB_NET y
-		set_kernel_config CONFIG_DVB_MAX_ADAPTERS 16
-		set_kernel_config CONFIG_DVB_DYNAMIC_MINORS n
-		set_kernel_config CONFIG_DVB_DEMUX_SECTION_LOSS_LOG n
-		set_kernel_config CONFIG_DVB_ULE_DEBUG n
-		
-		set_kernel_config CONFIG_SMS_SDIO_DRV n
-		set_kernel_config CONFIG_CYPRESS_FIRMWARE m
-		set_kernel_config CONFIG_set_kernel_config CONFIG_SMS_SIANO_RC y
-		
-		set_kernel_config CONFIG_MEDIA_SUBDRV_AUTOSELECT n
-		set_kernel_config CONFIG_VIDEO_IR_I2C m
 	  fi
 
       # enable basic KVM support; see https://www.raspberrypi.org/forums/viewtopic.php?f=63&t=210546&start=25#p1300453
