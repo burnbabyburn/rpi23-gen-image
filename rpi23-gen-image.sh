@@ -44,7 +44,7 @@ RPI_MODEL=${RPI_MODEL:=3P}
 
 # Debian release
 RELEASE=${RELEASE:=buster}
-if [ $"RELEASE" = "bullseye" ] ; then
+if [ "$RELEASE" = "bullseye" ] ; then
  RELEASE=testing
 fi
 
@@ -311,11 +311,11 @@ if [ -n "$SET_ARCH" ] ; then
       CROSS_COMPILE=${CROSS_COMPILE:=arm-linux-gnueabi-}
 	  
 	  if [ $ENABLE_XORG = true ] ; then
-	    if [$RELEASE = "stretch" ] || [$RELEASE = "oldstable" ] ; then
+	    if [ $RELEASE = "stretch" ] || [ $RELEASE = "oldstable" ] ; then
 	      printf "\nBest support for armel architecture is provided under Debian stretch/oldstable. Choose yes to change release to Debian stretch[y/n] "
 	      read -r confirm
           if [ "$confirm" = "y" ] ; then
-		    $RELEASE = "stretch"
+		    RELEASE="stretch"
 		  fi
 	    fi
 	  fi
@@ -508,7 +508,7 @@ if [ -n "$MISSING_PACKAGES" ] ; then
 
   # Make sure all missing required packages are installed
   echo "installing missing packages..."
-  apt-get update && apt-get -qq -y install `echo "${MISSING_PACKAGES}" | sed "s/ //"`
+  apt-get update && apt-get -qq -y install $(echo "${MISSING_PACKAGES}" | sed "s/ //")
 fi
 
 # Check if ./bootstrap.d directory exists
