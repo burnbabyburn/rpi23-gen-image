@@ -6,10 +6,10 @@
 ########APT settings########
 ############################
 APT_SERVER=ftp.debian.org
-#APT_PROXY=
+APT_PROXY=
 KEEP_APT_PROXY=false
-#APT_INCLUDES_LATE=
-#APT_INCLUDES=
+APT_INCLUDES_LATE=
+APT_INCLUDES=
 ############################
 ##General system settings###
 ############################
@@ -17,9 +17,9 @@ SET_ARCH=64
 RPI_MODEL=4
 RELEASE=buster
 HOSTNAME=RPI
-#DEFLOCAL=en_US.UTF-8
-#TIMEZONE=Europe/Berlin
-#EXPANDROOT=true
+DEFLOCAL=en_US.UTF-8
+TIMEZONE=Europe/Berlin
+EXPANDROOT=true
 ############################
 #######User settings########
 ############################
@@ -31,10 +31,10 @@ USER_PASSWORD=raspberry
 ############################
 ####Keyboard settings#######
 ############################
-#XKB_MODEL=
-#XKB_LAYOUT=
-#XKB_VARIANT=
-#XKB_OPTIONS=
+XKB_MODEL=
+XKB_LAYOUT=
+XKB_VARIANT=
+XKB_OPTIONS=
 ############################
 ######Network settings######
 ############################
@@ -49,25 +49,25 @@ ENABLE_ETH_DHCP=true
 ENABLE_WIFI_DHCP=true
 ############################
 # Network settings (static)
-#NET_ETH_ADDRESS=
-#NET_ETH_GATEWAY=
-#NET_ETH_DNS_1=
-#NET_ETH_DNS_2=
-#NET_ETH_DNS_DOMAINS=
-#NET_ETH_NTP_1=
-#NET_ETH_NTP_2=
+NET_ETH_ADDRESS=
+NET_ETH_GATEWAY=
+NET_ETH_DNS_1=
+NET_ETH_DNS_2=
+NET_ETH_DNS_DOMAINS=
+NET_ETH_NTP_1=
+NET_ETH_NTP_2=
 ############################
-#NET_WIFI_SSID=
-#NET_WIFI_PSK=
+NET_WIFI_SSID=
+NET_WIFI_PSK=
 ############################
 # Network settings (static)
-#NET_WIFI_ADDRESS=
-#NET_WIFI_GATEWAY=
-#NET_WIFI_DNS_1=
-#NET_WIFI_DNS_2=
-#NET_WIFI_DNS_DOMAINS=
-#NET_WIFI_NTP_1=
-#NET_WIFI_NTP_2=
+NET_WIFI_ADDRESS=
+NET_WIFI_GATEWAY=
+NET_WIFI_DNS_1=
+NET_WIFI_DNS_2=
+NET_WIFI_DNS_DOMAINS=
+NET_WIFI_NTP_1=
+NET_WIFI_NTP_2=
 ############################
 ###Basic system settings####
 ############################
@@ -84,13 +84,13 @@ ENABLE_SOUND=false
 ENABLE_HWRANDOM=true
 ENABLE_MINGPU=false
 ENABLE_XORG=false
-#ENABLE_WM=
+ENABLE_WM=
 ENABLE_SYSVINIT=false
 ENABLE_SPLASH=true
 ENABLE_LOGO=true
 ENABLE_SILENT_BOOT=false
 ############################
-#1=disable overlay,2=turbo+overlay, otherwise leave unset
+# 1=disable overlay,2=turbo+overlay, otherwise leave unset
 DISABLE_UNDERVOLT_WARNINGS=
 ############################
 ##Advanced system settings##
@@ -99,7 +99,7 @@ ENABLE_DPHYSSWAP=true
 ENABLE_SYSTEMDSWAP=false
 ############################
 ENABLE_QEMU=false
-#QEMU_BINARY=
+QEMU_BINARY=
 ENABLE_KEYGEN=false
 ENABLE_MINBASE=false
 ENABLE_SPLITFS=false
@@ -187,5 +187,5 @@ ENABLE_CRYPTFS=false
 ############################
 #######Build settings#######
 ############################
-#BASEDIR=
-#IMAGE_NAME=
+BASEDIR=
+IMAGE_NAME=RPI
