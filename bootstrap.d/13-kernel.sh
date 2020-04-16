@@ -377,35 +377,35 @@ if [ "$BUILD_KERNEL" = true ] ; then
 	    set_kernel_config CONFIG_BLK_DEV_RBD m
 		set_kernel_config CONFIG_LWTUNNEL n
 		set_kernel_config CONFIG_NET_DEVLINK n
-		set_kernel_config FAILOVER n
+		set_kernel_config CONFIG_FAILOVER n
 		
 		#Multimedia
-		MEDIA_CAMERA_SUPPORT y
-		MEDIA_ANALOG_TV_SUPPORT y
-		MEDIA_DIGITAL_TV_SUPPORT y
-		MEDIA_RADIO_SUPPORT y
-		MEDIA_SDR_SUPPORT y
-		MEDIA_CEC_SUPPORT y
-		MEDIA_CEC_RC y
-		MEDIA_CONTROLLER y
-		MEDIA_CONTROLLER_DVB n
-		VIDEO_V4L2_SUBDEV_API y
-		VIDEO_ADV_DEBUG n
-		VIDEO_FIXED_MINOR_RANGES n
-		VIDEO_PCI_SKELETON n
-		DVB_MMAP n
-		DVB_NET y
-		DVB_MAX_ADAPTERS 16
-		DVB_DYNAMIC_MINORS n
-		DVB_DEMUX_SECTION_LOSS_LOG n
-		DVB_ULE_DEBUG n
+		set_kernel_config CONFIG_MEDIA_CAMERA_SUPPORT y
+		set_kernel_config CONFIG_MEDIA_ANALOG_TV_SUPPORT y
+		set_kernel_config CONFIG_MEDIA_DIGITAL_TV_SUPPORT y
+		set_kernel_config CONFIG_MEDIA_RADIO_SUPPORT y
+		set_kernel_config CONFIG_MEDIA_SDR_SUPPORT y
+		set_kernel_config CONFIG_MEDIA_CEC_SUPPORT y
+		set_kernel_config CONFIG_MEDIA_CEC_RC y
+		set_kernel_config CONFIG_MEDIA_CONTROLLER y
+		set_kernel_config CONFIG_MEDIA_CONTROLLER_DVB n
+		set_kernel_config CONFIG_VIDEO_V4L2_SUBDEV_API y
+		set_kernel_config CONFIG_VIDEO_ADV_DEBUG n
+		set_kernel_config CONFIG_VIDEO_FIXED_MINOR_RANGES n
+		set_kernel_config CONFIG_VIDEO_PCI_SKELETON n
+		set_kernel_config CONFIG_DVB_MMAP n
+		set_kernel_config CONFIG_DVB_NET y
+		set_kernel_config CONFIG_DVB_MAX_ADAPTERS 16
+		set_kernel_config CONFIG_DVB_DYNAMIC_MINORS n
+		set_kernel_config CONFIG_DVB_DEMUX_SECTION_LOSS_LOG n
+		set_kernel_config CONFIG_DVB_ULE_DEBUG n
 		
-		SMS_SDIO_DRV n
-		CYPRESS_FIRMWARE m
-		set_kernel_config CONFIG_SMS_SIANO_RC y
+		set_kernel_config CONFIG_SMS_SDIO_DRV n
+		set_kernel_config CONFIG_CYPRESS_FIRMWARE m
+		set_kernel_config CONFIG_set_kernel_config CONFIG_SMS_SIANO_RC y
 		
-		MEDIA_SUBDRV_AUTOSELECT n
-		VIDEO_IR_I2C m
+		set_kernel_config CONFIG_MEDIA_SUBDRV_AUTOSELECT n
+		set_kernel_config CONFIG_VIDEO_IR_I2C m
 	  fi
 
       # enable basic KVM support; see https://www.raspberrypi.org/forums/viewtopic.php?f=63&t=210546&start=25#p1300453
@@ -436,7 +436,7 @@ if [ "$BUILD_KERNEL" = true ] ; then
 		set_kernel_config CONFIG_MMU_NOTIFIER y
 		
 		# erratum
-		set_kernel_config ARM64_ERRATUM_834220 y
+		set_kernel_config CONFIG_ARM64_ERRATUM_834220 y
 		
 		# https://sourceforge.net/p/kvm/mailman/message/18440797/
 		set_kernel_config CONFIG_PREEMPT_NOTIFIERS y
@@ -671,10 +671,10 @@ if [ "$BUILD_KERNEL" = true ] ; then
 	  if [ "$KERNEL_DEFAULT_GOV" != ondemand ] && [ -n "$KERNEL_DEFAULT_GOV" ] ; then
 	    case "$KERNEL_DEFAULT_GOV" in
           performance)
-	            set_kernel_config CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE y
+	        set_kernel_config CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE y
             ;;
           userspace)
-            	    set_kernel_config CONFIG_CPU_FREQ_DEFAULT_GOV_USERSPACE y
+            set_kernel_config CONFIG_CPU_FREQ_DEFAULT_GOV_USERSPACE y
             ;;
           ondemand)
 		    set_kernel_config CONFIG_CPU_FREQ_DEFAULT_GOV_ONDEMAND y
