@@ -161,151 +161,136 @@ if [ "$BUILD_KERNEL" = true ] ; then
 	  # Following are set in current 32-bit LPAE kernel
 	    set_kernel_config CONFIG_CGROUP_PIDS y
 	    set_kernel_config CONFIG_NET_IPVTI m
-	    set_kernel_config CONFIG_NF_TABLES_SET m
-	    set_kernel_config CONFIG_NF_TABLES_INET y
-	    set_kernel_config CONFIG_NF_TABLES_NETDEV y
-	    set_kernel_config CONFIG_NF_FLOW_TABLE m
-	    set_kernel_config CONFIG_NFT_FLOW_OFFLOAD m
-	    set_kernel_config CONFIG_NFT_CONNLIMIT m
-	    set_kernel_config CONFIG_NFT_TUNNEL m
-	    set_kernel_config CONFIG_NFT_OBJREF m
-	    set_kernel_config CONFIG_NFT_FIB_IPV4 m
-	    set_kernel_config CONFIG_NFT_FIB_IPV6 m
-	    set_kernel_config CONFIG_NFT_FIB_INET m
-	    set_kernel_config CONFIG_NFT_SOCKET m
-	    set_kernel_config CONFIG_NFT_OSF m
-	    set_kernel_config CONFIG_NFT_TPROXY m
-	    set_kernel_config CONFIG_NF_DUP_NETDEV m
-	    set_kernel_config CONFIG_NFT_DUP_NETDEV m
-	    set_kernel_config CONFIG_NFT_FWD_NETDEV m
-	    set_kernel_config CONFIG_NFT_FIB_NETDEV m
-	    set_kernel_config CONFIG_NF_FLOW_TABLE_INET m
-	    set_kernel_config CONFIG_NF_FLOW_TABLE m
-	    set_kernel_config CONFIG_NETFILTER_XT_MATCH_SOCKET m
-	    set_kernel_config CONFIG_NFT_CHAIN_ROUTE_IPV6 m
-	    set_kernel_config CONFIG_NFT_CHAIN_NAT_IPV6 m
-	    set_kernel_config CONFIG_NFT_MASQ_IPV6 m
-	    set_kernel_config CONFIG_NFT_REDIR_IPV6 m
-	    set_kernel_config CONFIG_NFT_REJECT_IPV6 m
-	    set_kernel_config CONFIG_NFT_DUP_IPV6 m
-	    set_kernel_config CONFIG_NFT_FIB_IPV6 m
-	    set_kernel_config CONFIG_NF_FLOW_TABLE_IPV6 m
-	    set_kernel_config CONFIG_NF_TABLES_BRIDGE y
-	    set_kernel_config CONFIG_NFT_BRIDGE_REJECT m
-	    set_kernel_config CONFIG_NF_LOG_BRIDGE m
 	    set_kernel_config CONFIG_MT76_CORE m
 	    set_kernel_config CONFIG_MT76_LEDS y
 	    set_kernel_config CONFIG_MT76_USB m
 	    set_kernel_config CONFIG_MT76x2_COMMON m
 	    set_kernel_config CONFIG_MT76x0U m
 	    set_kernel_config CONFIG_MT76x2U m
-	    set_kernel_config CONFIG_TOUCHSCREEN_ILI210X m
-	    #set_kernel_config CONFIG_BCM_VC_SM m
+	    #set_kernel_config CONFIG_TOUCHSCREEN_ILI210X m
+	    set_kernel_config CONFIG_BCM_VC_SM m
 	    set_kernel_config CONFIG_BCM2835_SMI_DEV m
 	    set_kernel_config CONFIG_RPIVID_MEM m
-	    set_kernel_config CONFIG_HW_RANDOM_BCM2835 y
-	    set_kernel_config CONFIG_TCG_TPM m
-	    set_kernel_config CONFIG_HW_RANDOM_TPM y
-	    set_kernel_config CONFIG_TCG_TIS y
-	    set_kernel_config CONFIG_TCG_TIS_SPI m
-	    set_kernel_config CONFIG_I2C_MUX m
-	    set_kernel_config CONFIG_I2C_MUX_GPMUX m
-	    set_kernel_config CONFIG_I2C_MUX_PCA954x m
-	    set_kernel_config CONFIG_SPI_GPIO m
+		if [ "$ENABLE_HWRANDOM" = true ] ; then
+	      set_kernel_config CONFIG_HW_RANDOM_BCM2835 y
+	      set_kernel_config CONFIG_HW_RANDOM_TPM y
+		fi
+		set_kernel_config CONFIG_TCG_TPM m
+		set_kernel_config CONFIG_TCG_TIS y
+		if [ "$ENABLE_I2C" = true ] ; then
+		  set_kernel_config CONFIG_I2C_MUX m
+		  set_kernel_config CONFIG_I2C_MUX_GPMUX m
+		  set_kernel_config CONFIG_I2C_MUX_PCA954x m
+		fi
+		if [ "$ENABLE_SPI" = true ] ; then
+	      set_kernel_config CONFIG_SPI_GPIO m
+	      set_kernel_config CONFIG_TCG_TIS_SPI m
+		fi
 	    set_kernel_config CONFIG_BATTERY_MAX17040 m
 	    set_kernel_config CONFIG_SENSORS_GPIO_FAN m
 	    set_kernel_config CONFIG_SENSORS_RASPBERRYPI_HWMON m
 	    set_kernel_config CONFIG_BCM2835_THERMAL y
-	    set_kernel_config CONFIG_RC_CORE y
-	    set_kernel_config CONFIG_RC_MAP y
-	    set_kernel_config CONFIG_LIRC y
-	    set_kernel_config CONFIG_RC_DECODERS y
-	    set_kernel_config CONFIG_IR_NEC_DECODER m
-	    set_kernel_config CONFIG_IR_RC5_DECODER m
-	    set_kernel_config CONFIG_IR_RC6_DECODER m
-	    set_kernel_config CONFIG_IR_JVC_DECODER m
-	    set_kernel_config CONFIG_IR_SONY_DECODER m
-	    set_kernel_config CONFIG_IR_SANYO_DECODER m
-	    set_kernel_config CONFIG_IR_SHARP_DECODER m
-	    set_kernel_config CONFIG_IR_MCE_KBD_DECODER m
-	    set_kernel_config CONFIG_IR_XMP_DECODER m
-	    set_kernel_config CONFIG_IR_IMON_DECODER m
-	    set_kernel_config CONFIG_RC_DEVICES y
-	    set_kernel_config CONFIG_RC_ATI_REMOTE m
-	    set_kernel_config CONFIG_IR_IMON m
-	    set_kernel_config CONFIG_IR_MCEUSB m
-	    set_kernel_config CONFIG_IR_REDRAT3 m
-	    set_kernel_config CONFIG_IR_STREAMZAP m
-	    set_kernel_config CONFIG_IR_IGUANA m
-	    set_kernel_config CONFIG_IR_TTUSBIR m
-	    set_kernel_config CONFIG_RC_LOOPBACK m
-	    set_kernel_config CONFIG_IR_GPIO_CIR m
-	    set_kernel_config CONFIG_IR_GPIO_TX m
-	    set_kernel_config CONFIG_IR_PWM_TX m
-	    set_kernel_config CONFIG_VIDEO_V4L2_SUBDEV_API y
-	    set_kernel_config CONFIG_VIDEO_AU0828_RC y
-	    set_kernel_config CONFIG_VIDEO_CX231XX m
-	    set_kernel_config CONFIG_VIDEO_CX231XX_RC y
-	    set_kernel_config CONFIG_VIDEO_CX231XX_ALSA m
-	    set_kernel_config CONFIG_VIDEO_CX231XX_DVB m
-	    set_kernel_config CONFIG_VIDEO_TM6000 m
-	    set_kernel_config CONFIG_VIDEO_TM6000_ALSA m
-	    set_kernel_config CONFIG_VIDEO_TM6000_DVB m
-	    set_kernel_config CONFIG_DVB_USB m
-	    set_kernel_config CONFIG_DVB_USB_DIB3000MC m
-	    set_kernel_config CONFIG_DVB_USB_A800 m
-	    set_kernel_config CONFIG_DVB_USB_DIBUSB_MB m
-	    set_kernel_config CONFIG_DVB_USB_DIBUSB_MB_FAULTY y
-	    set_kernel_config CONFIG_DVB_USB_DIBUSB_MC m
-	    set_kernel_config CONFIG_DVB_USB_DIB0700 m
-	    set_kernel_config CONFIG_DVB_USB_UMT_010 m
-	    set_kernel_config CONFIG_DVB_USB_CXUSB m
-	    set_kernel_config CONFIG_DVB_USB_M920X m
-	    set_kernel_config CONFIG_DVB_USB_DIGITV m
-	    set_kernel_config CONFIG_DVB_USB_VP7045 m
-	    set_kernel_config CONFIG_DVB_USB_VP702X m
-	    set_kernel_config CONFIG_DVB_USB_GP8PSK m
-	    set_kernel_config CONFIG_DVB_USB_NOVA_T_USB2 m
-	    set_kernel_config CONFIG_DVB_USB_TTUSB2 m
-	    set_kernel_config CONFIG_DVB_USB_DTT200U m
-	    set_kernel_config CONFIG_DVB_USB_OPERA1 m
-	    set_kernel_config CONFIG_DVB_USB_AF9005 m
-	    set_kernel_config CONFIG_DVB_USB_AF9005_REMOTE m
-	    set_kernel_config CONFIG_DVB_USB_PCTV452E m
-	    set_kernel_config CONFIG_DVB_USB_DW2102 m
-	    set_kernel_config CONFIG_DVB_USB_CINERGY_T2 m
-	    set_kernel_config CONFIG_DVB_USB_DTV5100 m
-	    set_kernel_config CONFIG_DVB_USB_AZ6027 m
-	    set_kernel_config CONFIG_DVB_USB_TECHNISAT_USB2 m
-	    set_kernel_config CONFIG_DVB_USB_AF9015 m
-	    set_kernel_config CONFIG_DVB_USB_LME2510 m
-	    set_kernel_config CONFIG_DVB_USB_RTL28XXU m
-	    set_kernel_config CONFIG_VIDEO_EM28XX_RC m
-	    set_kernel_config CONFIG_VIDEO_IR_I2C m
-	    set_kernel_config CONFIG_VIDEO_ADV7180 m
-	    set_kernel_config CONFIG_VIDEO_TC358743 m
-	    set_kernel_config CONFIG_VIDEO_OV5647 m
-	    set_kernel_config CONFIG_DVB_M88DS3103 m
-	    set_kernel_config CONFIG_DVB_AF9013 m
-	    set_kernel_config CONFIG_DVB_RTL2830 m
-	    set_kernel_config CONFIG_DVB_RTL2832 m
-	    set_kernel_config CONFIG_DVB_SI2168 m
-	    set_kernel_config CONFIG_DVB_GP8PSK_FE m
-	    set_kernel_config CONFIG_DVB_USB m
-	    set_kernel_config CONFIG_DVB_LGDT3306A m
+		# IR = Infrared,
+		# RC=Remotecontrol,
+		# Video/DVB=TV,
+		# SND=Sound
+		# TCG=Trusted Platform Module
+		#
+		# Uncomment if you want them.
+		#if [ "$Enable_DVB" = true ] ; then
+	    #set_kernel_config CONFIG_RC_CORE y
+	    #set_kernel_config CONFIG_RC_MAP y
+	    #set_kernel_config CONFIG_LIRC y
+	    #set_kernel_config CONFIG_RC_DECODERS y
+	    #set_kernel_config CONFIG_IR_NEC_DECODER m
+	    #set_kernel_config CONFIG_IR_RC5_DECODER m
+	    #set_kernel_config CONFIG_IR_RC6_DECODER m
+	    #set_kernel_config CONFIG_IR_JVC_DECODER m
+	    #set_kernel_config CONFIG_IR_SONY_DECODER m
+	    #set_kernel_config CONFIG_IR_SANYO_DECODER m
+	    #set_kernel_config CONFIG_IR_SHARP_DECODER m
+	    #set_kernel_config CONFIG_IR_MCE_KBD_DECODER m
+	    #set_kernel_config CONFIG_IR_XMP_DECODER m
+	    #set_kernel_config CONFIG_IR_IMON_DECODER m
+	    #set_kernel_config CONFIG_RC_DEVICES y
+	    #set_kernel_config CONFIG_RC_ATI_REMOTE m
+	    #set_kernel_config CONFIG_IR_IMON m
+	    #set_kernel_config CONFIG_IR_MCEUSB m
+	    #set_kernel_config CONFIG_IR_REDRAT3 m
+	    #set_kernel_config CONFIG_IR_STREAMZAP m
+	    #set_kernel_config CONFIG_IR_IGUANA m
+	    #set_kernel_config CONFIG_IR_TTUSBIR m
+	    #set_kernel_config CONFIG_RC_LOOPBACK m
+	    #set_kernel_config CONFIG_IR_GPIO_CIR m
+	    #set_kernel_config CONFIG_IR_GPIO_TX m
+	    #set_kernel_config CONFIG_IR_PWM_TX m
+	    #set_kernel_config CONFIG_VIDEO_V4L2_SUBDEV_API y
+	    #set_kernel_config CONFIG_VIDEO_AU0828_RC y
+	    #set_kernel_config CONFIG_VIDEO_CX231XX m
+	    #set_kernel_config CONFIG_VIDEO_CX231XX_RC y
+	    #set_kernel_config CONFIG_VIDEO_CX231XX_ALSA m
+	    #set_kernel_config CONFIG_VIDEO_CX231XX_DVB m
+	    #set_kernel_config CONFIG_VIDEO_TM6000 m
+	    #set_kernel_config CONFIG_VIDEO_TM6000_ALSA m
+	    #set_kernel_config CONFIG_VIDEO_TM6000_DVB m
+	    #set_kernel_config CONFIG_DVB_USB m
+	    #set_kernel_config CONFIG_DVB_USB_DIB3000MC m
+	    #set_kernel_config CONFIG_DVB_USB_A800 m
+	    #set_kernel_config CONFIG_DVB_USB_DIBUSB_MB m
+	    #set_kernel_config CONFIG_DVB_USB_DIBUSB_MB_FAULTY y
+	    #set_kernel_config CONFIG_DVB_USB_DIBUSB_MC m
+	    #set_kernel_config CONFIG_DVB_USB_DIB0700 m
+	    #set_kernel_config CONFIG_DVB_USB_UMT_010 m
+	    #set_kernel_config CONFIG_DVB_USB_CXUSB m
+	    #set_kernel_config CONFIG_DVB_USB_M920X m
+	    #set_kernel_config CONFIG_DVB_USB_DIGITV m
+	    #set_kernel_config CONFIG_DVB_USB_VP7045 m
+	    #set_kernel_config CONFIG_DVB_USB_VP702X m
+	    #set_kernel_config CONFIG_DVB_USB_GP8PSK m
+	    #set_kernel_config CONFIG_DVB_USB_NOVA_T_USB2 m
+	    #set_kernel_config CONFIG_DVB_USB_TTUSB2 m
+	    #set_kernel_config CONFIG_DVB_USB_DTT200U m
+	    #set_kernel_config CONFIG_DVB_USB_OPERA1 m
+	    #set_kernel_config CONFIG_DVB_USB_AF9005 m
+	    #set_kernel_config CONFIG_DVB_USB_AF9005_REMOTE m
+	    #set_kernel_config CONFIG_DVB_USB_PCTV452E m
+	    #set_kernel_config CONFIG_DVB_USB_DW2102 m
+	    #set_kernel_config CONFIG_DVB_USB_CINERGY_T2 m
+	    #set_kernel_config CONFIG_DVB_USB_DTV5100 m
+	    #set_kernel_config CONFIG_DVB_USB_AZ6027 m
+	    #set_kernel_config CONFIG_DVB_USB_TECHNISAT_USB2 m
+	    #set_kernel_config CONFIG_DVB_USB_AF9015 m
+	    #set_kernel_config CONFIG_DVB_USB_LME2510 m
+	    #set_kernel_config CONFIG_DVB_USB_RTL28XXU m
+	    #set_kernel_config CONFIG_VIDEO_EM28XX_RC m
+	    #set_kernel_config CONFIG_VIDEO_IR_I2C m
+	    #set_kernel_config CONFIG_VIDEO_ADV7180 m
+	    #set_kernel_config CONFIG_VIDEO_TC358743 m
+	    #set_kernel_config CONFIG_VIDEO_OV5647 m
+	    #set_kernel_config CONFIG_DVB_M88DS3103 m
+	    #set_kernel_config CONFIG_DVB_AF9013 m
+	    #set_kernel_config CONFIG_DVB_RTL2830 m
+	    #set_kernel_config CONFIG_DVB_RTL2832 m
+	    #set_kernel_config CONFIG_DVB_SI2168 m
+	    #set_kernel_config CONFIG_DVB_GP8PSK_FE m
+	    #set_kernel_config CONFIG_DVB_USB m
+	    #set_kernel_config CONFIG_DVB_LGDT3306A m
+		#fi
 	    set_kernel_config CONFIG_FB_SIMPLE y
-	    set_kernel_config CONFIG_SND_BCM2708_SOC_IQAUDIO_CODEC m
-	    set_kernel_config CONFIG_SND_BCM2708_SOC_I_SABRE_Q2M m
-	    set_kernel_config CONFIG_SND_AUDIOSENSE_PI m
-	    set_kernel_config CONFIG_SND_SOC_AD193X m
-	    set_kernel_config CONFIG_SND_SOC_AD193X_SPI m
-	    set_kernel_config CONFIG_SND_SOC_AD193X_I2C m
-	    set_kernel_config CONFIG_SND_SOC_CS4265 m
-	    set_kernel_config CONFIG_SND_SOC_DA7213 m
-	    set_kernel_config CONFIG_SND_SOC_ICS43432 m
-	    set_kernel_config CONFIG_SND_SOC_TLV320AIC32X4 m
-	    set_kernel_config CONFIG_SND_SOC_TLV320AIC32X4_I2C m
-	    set_kernel_config CONFIG_SND_SOC_I_SABRE_CODEC m
+		if [ "$ENABLE_SOUND" = true ] ; then
+	      set_kernel_config CONFIG_SND_BCM2708_SOC_IQAUDIO_CODEC m
+	      set_kernel_config CONFIG_SND_BCM2708_SOC_I_SABRE_Q2M m
+	      set_kernel_config CONFIG_SND_AUDIOSENSE_PI m
+	      set_kernel_config CONFIG_SND_SOC_AD193X m
+	      set_kernel_config CONFIG_SND_SOC_AD193X_SPI m
+	      set_kernel_config CONFIG_SND_SOC_AD193X_I2C m
+	      set_kernel_config CONFIG_SND_SOC_CS4265 m
+	      set_kernel_config CONFIG_SND_SOC_DA7213 m
+	      set_kernel_config CONFIG_SND_SOC_ICS43432 m
+	      set_kernel_config CONFIG_SND_SOC_TLV320AIC32X4 m
+	      set_kernel_config CONFIG_SND_SOC_TLV320AIC32X4_I2C m
+	      set_kernel_config CONFIG_SND_SOC_I_SABRE_CODEC m
+		fi
 	    set_kernel_config CONFIG_HID_BIGBEN_FF m
 	    set_kernel_config CONFIG_USB_XHCI_PLATFORM y
 	    set_kernel_config CONFIG_USB_TMC m
@@ -370,10 +355,15 @@ if [ "$BUILD_KERNEL" = true ] ; then
 	    # Ceph support for Block Device (RBD) and Filesystem (FS)
 	    # https://docs.ceph.com/docs/master/
 	    set_kernel_config CONFIG_CEPH_LIB m
+		set_kernel_config CONFIG_CEPH_LIB_PRETTYDEBUG
 	    set_kernel_config CONFIG_CEPH_LIB_USE_DNS_RESOLVER y
 	    set_kernel_config CONFIG_CEPH_FS m
 	    set_kernel_config CONFIG_CEPH_FSCACHE y
 	    set_kernel_config CONFIG_CEPH_FS_POSIX_ACL y
+		
+		# Diffie-Hellman operations on retained keys
+		# (required for >keyutils-1.6)
+		set_kernel_config CONFIG_KEY_DH_OPERATIONS y
 	  fi
 
       # enable basic KVM support; see https://www.raspberrypi.org/forums/viewtopic.php?f=63&t=210546&start=25#p1300453
