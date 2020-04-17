@@ -284,8 +284,8 @@ mkdir -p "${LIB_DIR}/modules-load.d/"
 install_readonly files/modules/rpi2.conf "${LIB_DIR}/modules-load.d/rpi2.conf"
 
 # Load hardware random module at boot
-if [ "$ENABLE_HWRANDOM" = false ]
-echo "dtparam=audio=on" >> "${BOOT_DIR}/config.txt"
+if [ "$ENABLE_HWRANDOM" = false ] ; then
+echo "dtparam=random=off" >> "${BOOT_DIR}/config.txt"
 fi
 
 # Load sound module at boot

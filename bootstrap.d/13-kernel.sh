@@ -290,6 +290,9 @@ if [ "$BUILD_KERNEL" = true ] ; then
 	      set_kernel_config CONFIG_SND_SOC_TLV320AIC32X4 m
 	      set_kernel_config CONFIG_SND_SOC_TLV320AIC32X4_I2C m
 	      set_kernel_config CONFIG_SND_SOC_I_SABRE_CODEC m
+		  
+	    # pulseaudio wants a buffer of at least this size
+	    set_kernel_config CONFIG_SND_HDA_PREALLOC_SIZE 2048
 		fi
 	    set_kernel_config CONFIG_HID_BIGBEN_FF m
 	    set_kernel_config CONFIG_USB_XHCI_PLATFORM y
@@ -330,9 +333,6 @@ if [ "$BUILD_KERNEL" = true ] ; then
 	    # Safer to build this in
 	    set_kernel_config CONFIG_BINFMT_MISC y
 
-	    # pulseaudio wants a buffer of at least this size
-	    set_kernel_config CONFIG_SND_HDA_PREALLOC_SIZE 2048
-
 	    # PR#3063: enable 3D acceleration with 64-bit kernel on RPi4
 	    # set the appropriate kernel configs unlocked by this PR
 	    set_kernel_config CONFIG_ARCH_BCM y
@@ -355,15 +355,12 @@ if [ "$BUILD_KERNEL" = true ] ; then
 	    # Ceph support for Block Device (RBD) and Filesystem (FS)
 	    # https://docs.ceph.com/docs/master/
 	    set_kernel_config CONFIG_CEPH_LIB m
-		set_kernel_config CONFIG_CEPH_LIB_PRETTYDEBUG
+		set_kernel_config CONFIG_CEPH_LIB_PRETTYDEBUG n
 	    set_kernel_config CONFIG_CEPH_LIB_USE_DNS_RESOLVER y
 	    set_kernel_config CONFIG_CEPH_FS m
 	    set_kernel_config CONFIG_CEPH_FSCACHE y
 	    set_kernel_config CONFIG_CEPH_FS_POSIX_ACL y
 		
-		# Diffie-Hellman operations on retained keys
-		# (required for >keyutils-1.6)
-		set_kernel_config CONFIG_KEY_DH_OPERATIONS y
 	  fi
 
       # enable basic KVM support; see https://www.raspberrypi.org/forums/viewtopic.php?f=63&t=210546&start=25#p1300453
