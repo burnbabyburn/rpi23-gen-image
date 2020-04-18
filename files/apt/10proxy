@@ -1,1 +1,2 @@
 Acquire::http:Proxy "";
+Acquire::https::Proxy "";

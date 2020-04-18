@@ -30,7 +30,7 @@ fi
 # Reduce the image size by various operations
 if [ "$ENABLE_REDUCE" = true ] ; then
   if [ "$REDUCE_APT" = true ] ; then
-     # Remove APT cache files
+    # Remove APT cache files
     rm -fr "${R}/var/cache/apt/pkgcache.bin"
     rm -fr "${R}/var/cache/apt/srcpkgcache.bin"
   fi

@@ -174,7 +174,7 @@ if [ "$RPI_MODEL" = 0 ] || [ "$RPI_MODEL" = 3 ] || [ "$RPI_MODEL" = 3P ] || [ "$
 	# see : https://www.raspberrypi.org/documentation/configuration/uart.md
     if [ "$ENABLE_MINIUART_OVERLAY" = true ] ; then
 	  # set overlay to swap ttyAMA0 and ttyS0
-      echo "dtoverlay=pi3-miniuart-bt" >> "${BOOT_DIR}/config.txt"
+      echo "dtoverlay=miniuart-bt" >> "${BOOT_DIR}/config.txt"
 
 	  if [ "$ENABLE_TURBO" = false ] ; then 
         echo "core_freq=250" >> "${BOOT_DIR}/config.txt"
@@ -187,8 +187,14 @@ if [ "$RPI_MODEL" = 0 ] || [ "$RPI_MODEL" = 3 ] || [ "$RPI_MODEL" = 3P ] || [ "$
 
   else # if ENABLE_BLUETOOTH = false
   	# set overlay to disable bluetooth
-    echo "dtoverlay=pi3-disable-bt" >> "${BOOT_DIR}/config.txt"
+	# pi3-disable-bt has been renamed to disable-bt
+    echo "dtoverlay=disable-bt" >> "${BOOT_DIR}/config.txt"
   fi # ENABLE_BLUETOOTH end
+fi
+
+if [ "$ENABLE_WIRELESS" = false ] ; then
+  	# set overlay to disable wifi
+    echo "dtoverlay=disable-wifi" >> "${BOOT_DIR}/config.txt"
 fi
 
 # may need sudo systemctl disable hciuart
