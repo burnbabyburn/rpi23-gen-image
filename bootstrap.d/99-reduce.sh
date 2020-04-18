@@ -30,17 +30,7 @@ fi
 # Reduce the image size by various operations
 if [ "$ENABLE_REDUCE" = true ] ; then
   if [ "$REDUCE_APT" = true ] ; then
-    # Install dpkg configuration file
-    if [ "$REDUCE_DOC" = true ] || [ "$REDUCE_MAN" = true ] ; then
-      install_readonly files/dpkg/01nodoc "${ETC_DIR}/dpkg/dpkg.cfg.d/01nodoc"
-    fi
-
-    # Install APT configuration files
-    install_readonly files/apt/02nocache "${ETC_DIR}/apt/apt.conf.d/02nocache"
-    install_readonly files/apt/03compress "${ETC_DIR}/apt/apt.conf.d/03compress"
-    install_readonly files/apt/04norecommends "${ETC_DIR}/apt/apt.conf.d/04norecommends"
-
-    # Remove APT cache files
+     # Remove APT cache files
     rm -fr "${R}/var/cache/apt/pkgcache.bin"
     rm -fr "${R}/var/cache/apt/srcpkgcache.bin"
   fi
