@@ -75,7 +75,7 @@ if [ "$SSH_ENABLE" = true ] ; then
   fi
 
   # Limit the users that are allowed to login via SSH
-  if [ "$SSH_LIMIT_USERS" = true ] && [ "$ENABLE_REDUCE" = false ] ; then
+  if [ "$SSH_LIMIT_USERS" = true ]; then
     allowed_users=""
     if [ "$ENABLE_ROOT" = true ] && [ "$SSH_ENABLE_ROOT" = true ] ; then
       allowed_users="root"
