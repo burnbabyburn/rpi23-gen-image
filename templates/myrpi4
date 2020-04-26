@@ -115,7 +115,7 @@ ENABLE_UBOOT=false
 ENABLE_FBTURBO=false
 #FBTURBOSRC_DIR=
 ############################
-ENABLE_VIDEOCORE=false
+ENABLE_VIDEOCORE=true
 #VIDEOCORESRC_DIR=
 ############################
 ENABLE_NEXMON=false
