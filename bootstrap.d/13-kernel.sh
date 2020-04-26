@@ -131,6 +131,7 @@ if [ "$BUILD_KERNEL" = true ] ; then
 	  # (required for >keyutils-1.6)
 	  if [ "$KERNEL_DHKEY" = true ]; then
 		set_kernel_config CONFIG_KEY_DH_OPERATIONS y
+		set_kernel_config CONFIG_CRYPTO_LZO y
 	  fi 
 	  
 	  if [ "$KERNEL_ARCH" = arm64 ] && [ "$ENABLE_QEMU" = false ]; then
@@ -171,21 +172,21 @@ if [ "$BUILD_KERNEL" = true ] ; then
 	    set_kernel_config CONFIG_BCM_VC_SM m
 	    set_kernel_config CONFIG_BCM2835_SMI_DEV m
 	    set_kernel_config CONFIG_RPIVID_MEM m
-		if [ "$ENABLE_HWRANDOM" = true ] ; then
+		#if [ "$ENABLE_HWRANDOM" = true ] ; then
 	      set_kernel_config CONFIG_HW_RANDOM_BCM2835 y
 	      set_kernel_config CONFIG_HW_RANDOM_TPM y
-		fi
+		#fi
 		set_kernel_config CONFIG_TCG_TPM m
 		set_kernel_config CONFIG_TCG_TIS y
-		if [ "$ENABLE_I2C" = true ] ; then
+		#if [ "$ENABLE_I2C" = true ] ; then
 		  set_kernel_config CONFIG_I2C_MUX m
 		  set_kernel_config CONFIG_I2C_MUX_GPMUX m
 		  set_kernel_config CONFIG_I2C_MUX_PCA954x m
-		fi
-		if [ "$ENABLE_SPI" = true ] ; then
+		#fi
+		#if [ "$ENABLE_SPI" = true ] ; then
 	      set_kernel_config CONFIG_SPI_GPIO m
 	      set_kernel_config CONFIG_TCG_TIS_SPI m
-		fi
+		#fi
 	    set_kernel_config CONFIG_BATTERY_MAX17040 m
 	    set_kernel_config CONFIG_SENSORS_GPIO_FAN m
 	    set_kernel_config CONFIG_SENSORS_RASPBERRYPI_HWMON m
@@ -277,7 +278,7 @@ if [ "$BUILD_KERNEL" = true ] ; then
 	    #set_kernel_config CONFIG_DVB_LGDT3306A m
 		#fi
 	    set_kernel_config CONFIG_FB_SIMPLE y
-		if [ "$ENABLE_SOUND" = true ] ; then
+		#if [ "$ENABLE_SOUND" = true ] ; then
 	      set_kernel_config CONFIG_SND_BCM2708_SOC_IQAUDIO_CODEC m
 	      set_kernel_config CONFIG_SND_BCM2708_SOC_I_SABRE_Q2M m
 	      set_kernel_config CONFIG_SND_AUDIOSENSE_PI m
@@ -293,7 +294,7 @@ if [ "$BUILD_KERNEL" = true ] ; then
 		  
 	    # pulseaudio wants a buffer of at least this size
 	    set_kernel_config CONFIG_SND_HDA_PREALLOC_SIZE 2048
-		fi
+		#fi
 	    set_kernel_config CONFIG_HID_BIGBEN_FF m
 	    set_kernel_config CONFIG_USB_XHCI_PLATFORM y
 	    set_kernel_config CONFIG_USB_TMC m
