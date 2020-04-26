@@ -169,7 +169,7 @@ if [ "$BUILD_KERNEL" = true ] ; then
 	    set_kernel_config CONFIG_MT76x0U m
 	    set_kernel_config CONFIG_MT76x2U m
 	    #set_kernel_config CONFIG_TOUCHSCREEN_ILI210X m
-	    set_kernel_config CONFIG_BCM_VC_SM m
+	    set_kernel_config CONFIG_BCM_VC_SM Y
 	    set_kernel_config CONFIG_BCM2835_SMI_DEV m
 	    set_kernel_config CONFIG_RPIVID_MEM m
 		#if [ "$ENABLE_HWRANDOM" = true ] ; then

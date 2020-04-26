@@ -99,7 +99,7 @@ APT_PROXY=${APT_PROXY:=""}
 KEEP_APT_PROXY=${KEEP_APT_PROXY:=false}
 # Packages required in the chroot build environment
 APT_INCLUDES=${APT_INCLUDES:=""}
-APT_INCLUDES="${APT_INCLUDES},apt-transport-https,apt-utils,ca-certificates,debian-archive-keyring,dialog,sudo,systemd,systemd-sysv,sysvinit-utils,locales,keyboard-configuration,console-setup,libnss-systemd"
+APT_INCLUDES="${APT_INCLUDES},kmod,apt-transport-https,apt-utils,ca-certificates,debian-archive-keyring,dialog,sudo,systemd,systemd-sysv,sysvinit-utils,locales,keyboard-configuration,console-setup,libnss-systemd"
 # Packages to exclude from chroot build environment
 APT_EXCLUDES=${APT_EXCLUDES:=""}
 
