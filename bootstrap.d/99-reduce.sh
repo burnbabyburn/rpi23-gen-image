@@ -6,26 +6,28 @@
 . ./functions.sh
 
 if [ "$ENABLE_IPV6" = false ] ; then
-"$LIB_DIR"/xtables/libip6t_ah.so
-"$LIB_DIR"/xtables/libip6t_dst.so
-"$LIB_DIR"/xtables/libip6t_eui64.so
-"$LIB_DIR"/xtables/libip6t_frag.so
-"$LIB_DIR"/xtables/libip6t_hbh.so
-"$LIB_DIR"/xtables/libip6t_hl.so
-"$LIB_DIR"/xtables/libip6t_HL.so
-"$LIB_DIR"/xtables/libip6t_icmp6.so
-"$LIB_DIR"/xtables/libip6t_ipv6header.so
-"$LIB_DIR"/xtables/libip6t_LOG.so
-"$LIB_DIR"/xtables/libip6t_mh.so
-"$LIB_DIR"/xtables/libip6t_REJECT.so
-"$LIB_DIR"/xtables/libip6t_rt.so
-"$LIB_DIR"/xtables/libip6t_DNAT.so
-"$LIB_DIR"/xtables/libip6t_DNPT.so
-"$LIB_DIR"/xtables/libip6t_MASQUERADE.so
-"$LIB_DIR"/xtables/libip6t_NETMAP.so
-"$LIB_DIR"/xtables/libip6t_REDIRECT.so
-"$LIB_DIR"/xtables/libip6t_SNAT.so
-"$LIB_DIR"/xtables/libip6t_SNPT.so
+#netpath /libdir/aarch64-linux/xtables depends on arch
+#"$LIB_DIR"/xtables/libip6t_ah.so
+#"$LIB_DIR"/xtables/libip6t_dst.so
+#"$LIB_DIR"/xtables/libip6t_eui64.so
+#"$LIB_DIR"/xtables/libip6t_frag.so
+#"$LIB_DIR"/xtables/libip6t_hbh.so
+#"$LIB_DIR"/xtables/libip6t_hl.so
+#"$LIB_DIR"/xtables/libip6t_HL.so
+#"$LIB_DIR"/xtables/libip6t_icmp6.so
+#"$LIB_DIR"/xtables/libip6t_ipv6header.so
+#"$LIB_DIR"/xtables/libip6t_LOG.so
+#"$LIB_DIR"/xtables/libip6t_mh.so
+#"$LIB_DIR"/xtables/libip6t_REJECT.so
+#"$LIB_DIR"/xtables/libip6t_rt.so
+#"$LIB_DIR"/xtables/libip6t_DNAT.so
+#"$LIB_DIR"/xtables/libip6t_DNPT.so
+#"$LIB_DIR"/xtables/libip6t_MASQUERADE.so
+#"$LIB_DIR"/xtables/libip6t_NETMAP.so
+#"$LIB_DIR"/xtables/libip6t_REDIRECT.so
+#"$LIB_DIR"/xtables/libip6t_SNAT.so
+#"$LIB_DIR"/xtables/libip6t_SNPT.so
+find "$LIB_DIR" -mindepth 1 -maxdepth 3  -name '*libip6*' -print0
 fi
 # Reduce the image size by various operations
 if [ "$ENABLE_REDUCE" = true ] ; then
