@@ -178,6 +178,7 @@ The following static networking parameters are only supported if `ENABLE_WIFI_DH
 |ENABLE_NONFREE|boolean|false|`true`\|`false`|true=enable non-free\|false=disable non free. Edits /etc/apt/sources.list in your resulting image|
 |ENABLE_RSYSLOG|boolean|false|`true`\|`false`|true=keep rsyslog\|false=remove rsyslog. If rsyslog is removed (false), logs will be available only in journal files)|
 |ENABLE_SOUND|boolean|false|`true`\|`false`|true=Enable sound\|false=Disable sound|
+|ENABLE_SOUND_HDMI|boolean|true|`true`\|`false`|true=Does nothing - as hdmi sound is default with `dtoverlay=vc4-kms-v3d` \|false=Disable HDMI Sound|
 |ENABLE_HWRANDOM|boolean|true|`true`\|`false`|true=Enable Hardware Random Number Generator(RNG)\|false=Disable Hardware RNG\|Strong random numbers are important for most network-based communications that use encryption. It's recommended to be enabled|
 |ENABLE_MINGPU|boolean|false|`true`\|`false`|true=GPU 16MB RAM\|false=64MB RAM\|Minimize the amount of shared memory reserved for the GPU. It doesn't seem to be possible to fully disable the GPU. Also removes start.elf,fixup.dat,start_x.elf,fixup_x.dat form /boot|
 |ENABLE_XORG|boolean|false|`true`\|`false`|true=Install Xorg X Window System|\false=install no Xorg|

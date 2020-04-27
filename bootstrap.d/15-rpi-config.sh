@@ -290,32 +290,51 @@ mkdir -p "${LIB_DIR}/modules-load.d/"
 install_readonly files/modules/rpi2.conf "${LIB_DIR}/modules-load.d/rpi2.conf"
 
 # Load hardware random module at boot
-if [ "$ENABLE_HWRANDOM" = false ] ; then
-echo "dtparam=random=off" >> "${BOOT_DIR}/config.txt"
+if [ "$ENABLE_HWRANDOM" = true ] ; then
+#  if [ "$RPI_MODEL" = 0 ] || [ "$RPI_MODEL" = 1 ] || [ "$RPI_MODEL" = 1P ] ; then
+#    sed -i "s/^# bcm2708-rng/bcm2708-rng/" "${LIB_DIR}/modules-load.d/rpi2.conf"
+#  else
+#    sed -i "s/^# bcm2835-rng/bcm2835-rng/" "${LIB_DIR}/modules-load.d/rpi2.conf"
+#  fi
+  echo "dtparam=random=on" >> "${BOOT_DIR}/config.txt"
+else
+  echo "dtparam=random=off" >> "${BOOT_DIR}/config.txt"
 fi
 
 # Load sound module at boot
 if [ "$ENABLE_SOUND" = true ] ; then
-echo "dtparam=audio=on" >> "${BOOT_DIR}/config.txt"
-#  sed -i "s/^# snd_bcm2835/snd_bcm2835/" "${LIB_DIR}/modules-load.d/rpi2.conf"
-#else
-#  echo "dtparam=audio=off" >> "${BOOT_DIR}/config.txt"
+  echo "dtparam=audio=on" >> "${BOOT_DIR}/config.txt"
+  sed -i "s/^# snd_bcm2835/snd_bcm2835/" "${LIB_DIR}/modules-load.d/rpi2.conf"
+else
+  echo "dtparam=audio=off" >> "${BOOT_DIR}/config.txt"
+fi
+
+# https://www.gitmemory.com/issue/raspberrypi/linux/3181/528290800
+# https://retropie.org.uk/forum/topic/25370/good-news-regarding-tearing-and-low-emulationstation-performance-on-pi-4/35
+if [ "$ENABLE_SOUND_HDMI" = false ] ; then
+  #disable hdmi audio
+  echo "dtoverlay=vc4-kms-v3d,audio=off" >> "${BOOT_DIR}/config.txt"
 fi
 
 # Enable I2C interface
 if [ "$ENABLE_I2C" = true ] ; then
+  if [ "$RPI_MODEL" = 0 ] || [ "$RPI_MODEL" = 1 ] || [ "$RPI_MODEL" = 1P ] ; then
+    sed -i "s/^# i2c-bcm2708/i2c-bcm2708/" "${LIB_DIR}/modules-load.d/rpi2.conf"
+  else
+    sed -i "s/^# i2c-bcm2835/i2c-bcm2835/" "${LIB_DIR}/modules-load.d/rpi2.conf"
+  fi
+  sed -i "s/^# i2c-dev/i2c-dev/" "${LIB_DIR}/modules-load.d/rpi2.conf"
   echo "dtparam=i2c=on" >> "${BOOT_DIR}/config.txt"
-#  sed -i "s/^# i2c-bcm2708/i2c-bcm2708/" "${LIB_DIR}/modules-load.d/rpi2.conf"
-#  sed -i "s/^# i2c-dev/i2c-dev/" "${LIB_DIR}/modules-load.d/rpi2.conf"
 fi
 
 # Enable SPI interface
 if [ "$ENABLE_SPI" = true ] ; then
   echo "dtparam=spi=on" >> "${BOOT_DIR}/config.txt"
-#  echo "spi-bcm2708" >> "${LIB_DIR}/modules-load.d/rpi2.conf"
-#  if [ "$RPI_MODEL" = 3 ] || [ "$RPI_MODEL" = 3P ]; then
-#    sed -i "s/spi-bcm2708/spi-bcm2835/" "${LIB_DIR}/modules-load.d/rpi2.conf"
-#  fi
+  if [ "$RPI_MODEL" = 0 ] || [ "$RPI_MODEL" = 1 ] || [ "$RPI_MODEL" = 1P ] ; then
+    sed -i "s/^# spi-bcm2708/spi-bcm2708/" "${LIB_DIR}/modules-load.d/rpi2.conf"
+  else
+    sed -i "s/^# spi-bcm2835/spi-bcm2835/" "${LIB_DIR}/modules-load.d/rpi2.conf"
+  fi
 fi
 
 # Disable RPi2/3 under-voltage warnings
