@@ -32,17 +32,6 @@ if [ -z "$RELEASE" ] ; then
 sed -i "s/ buster/ ${RELEASE}/" "${ETC_DIR}/apt/sources.list"
 fi
 
-if [ "$REDUCE_APT" = true ] ; then
-  # Install APT configuration files
-  install_readonly files/apt/02nocache "${ETC_DIR}/apt/apt.conf.d/02nocache"
-  install_readonly files/apt/03compress "${ETC_DIR}/apt/apt.conf.d/03compress"
-  install_readonly files/apt/04norecommends "${ETC_DIR}/apt/apt.conf.d/04norecommends"
-fi
-
-if [ "$REDUCE_DOC" = true ] || [ "$REDUCE_MAN" = true ] ; then
-install_readonly files/dpkg/01nodoc "${ETC_DIR}/dpkg/dpkg.cfg.d/01nodoc"
-fi
-
 # Upgrade package index and update all installed packages and changed dependencies
 chroot_exec apt-get -qq -y update
 chroot_exec apt-get -qq -y -u dist-upgrade
