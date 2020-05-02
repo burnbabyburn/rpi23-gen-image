@@ -629,6 +629,11 @@ if [ "$ENABLE_HWRANDOM" = true ] ; then
   APT_INCLUDES="${APT_INCLUDES},rng-tools"
 fi
 
+# Add i2c-tools package
+if [ "$ENABLE_I2C" = true ] ; then
+  APT_INCLUDES="${APT_INCLUDES},i2c-tools"
+fi
+
 # Add fbturbo video driver
 if [ "$ENABLE_FBTURBO" = true ] ; then
   # Enable xorg package dependencies

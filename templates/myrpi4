@@ -9,7 +9,7 @@ APT_SERVER=ftp.debian.org
 APT_PROXY=
 KEEP_APT_PROXY=false
 APT_INCLUDES_LATE=
-APT_INCLUDES=
+APT_INCLUDES=nano,wget,curl,python,python-setuptools python-wheel
 ############################
 ##General system settings###
 ############################

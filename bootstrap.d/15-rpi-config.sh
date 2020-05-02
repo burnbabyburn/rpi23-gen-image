@@ -324,7 +324,7 @@ if [ "$ENABLE_I2C" = true ] ; then
     sed -i "s/^# i2c-bcm2835/i2c-bcm2835/" "${LIB_DIR}/modules-load.d/rpi2.conf"
   fi
   sed -i "s/^# i2c-dev/i2c-dev/" "${LIB_DIR}/modules-load.d/rpi2.conf"
-  echo "dtparam=i2c=on" >> "${BOOT_DIR}/config.txt"
+  echo "dtparam=i2c_arm=on" >> "${BOOT_DIR}/config.txt"
 fi
 
 # Enable SPI interface

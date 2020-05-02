@@ -22,3 +22,8 @@ else
   # Set no root password to disable root login
   chroot_exec usermod -p \'!\' root
 fi
+
+# Remove Password complexity checks in buster
+if [ "$ENABLE_PASSWORDPOLICY" = false ] ; then
+  sed "s/ obscure / /" /etc/pam.d/common-password
+fi
