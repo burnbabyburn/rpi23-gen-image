@@ -283,7 +283,7 @@ The following list of parameters is ignored if `ENABLE_REDUCE`=false.
 
 #### Encrypted root partition:
 #### On first boot, you will be asked to enter you password several time
-#### See cryptsetup options for a more information about opttion values(https://wiki.archlinux.org/index.php/Dm-crypt/Device_encryption)
+#### See cryptsetup options for detailed information (https://wiki.archlinux.org/index.php/Dm-crypt/Device_encryption)
 
 |Option|Value|default value|value format|desciption|
 |---|---|---|---|---|
